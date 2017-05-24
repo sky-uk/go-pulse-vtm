@@ -1,4 +1,4 @@
-package go_brocade_vtm
+package brocadevtm
 
 import (
 	"net/http"
