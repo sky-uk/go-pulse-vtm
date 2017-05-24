@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"github.com/sky-uk/go-brocade-vtm"
 	"github.com/sky-uk/go-brocade-vtm/api/monitor"
+	"os"
 )
 
 func main() {
@@ -21,7 +21,6 @@ func main() {
 	if len(os.Args) == 5 && os.Args[4] == "true" {
 		debug = true
 	}
-
 
 	vtmClient := go_brocade_vtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
 
@@ -51,4 +50,3 @@ func main() {
 	}
 
 }
-

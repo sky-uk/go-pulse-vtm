@@ -1,17 +1,17 @@
 package brocadevtm
 
 import (
-	"net/http"
-	"log"
 	"bytes"
-	"io/ioutil"
-	"encoding/xml"
-	"strings"
-	"fmt"
-	"io"
-	"github.com/sky-uk/go-brocade-vtm/api"
 	"crypto/tls"
 	"encoding/json"
+	"encoding/xml"
+	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
+	"io"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"strings"
 )
 
 // NewVTMClient  Creates a new nsxclient object.
