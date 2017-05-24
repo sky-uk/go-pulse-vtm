@@ -8,7 +8,7 @@ import (
 )
 
 var createMonitorAPI *CreateMonitorAPI
-var newMonitorName string = "exampleMonitor"
+var newMonitorName = "exampleMonitor"
 
 func createSetup() {
 

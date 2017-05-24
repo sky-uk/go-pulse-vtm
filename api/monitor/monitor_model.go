@@ -8,7 +8,7 @@ type Monitor struct {
 // Properties : Properties contains the overall monitor configuration
 type Properties struct {
 	Basic Basic `json:"basic"`
-	Http  HTTP  `json:"http"`
+	HTTP  HTTP  `json:"http"`
 }
 
 // Basic : Basic monitor configration

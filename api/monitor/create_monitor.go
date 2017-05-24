@@ -5,10 +5,12 @@ import (
 	"net/http"
 )
 
+// CreateMonitorApi : CreateMonitorAPI
 type CreateMonitorAPI struct {
 	*api.BaseAPI
 }
 
+// NewCreate : Create new monitor
 func NewCreate(monitorName string, monitor Monitor) *CreateMonitorAPI {
 	this := new(CreateMonitorAPI)
 	requestPayLoad := new(Monitor)
@@ -18,6 +20,7 @@ func NewCreate(monitorName string, monitor Monitor) *CreateMonitorAPI {
 	return this
 }
 
+// GetResponse : get response object from created monitor
 func (cma CreateMonitorAPI) GetResponse() string {
 	return cma.ResponseObject().(string)
 }
