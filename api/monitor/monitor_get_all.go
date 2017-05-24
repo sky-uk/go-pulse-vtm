@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// GetAllServiceAPI base object.
+// GetAllMonitors base object.
 type GetAllMonitors struct {
 	*api.BaseAPI
 }
