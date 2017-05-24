@@ -13,7 +13,7 @@ type GetAllMonitors struct {
 // NewGetAll returns a new object of GetAllMonitors.
 func NewGetAll() *GetAllMonitors {
 	this := new(GetAllMonitors)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/api/tm/3.4/config/active/monitors", nil, new(MonitorsList))
+	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/monitors", nil, new(MonitorsList))
 	return this
 }
 

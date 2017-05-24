@@ -19,5 +19,5 @@ func NewCreate(monitorName string, monitor Monitor) *CreateMonitorAPI {
 }
 
 func (cma CreateMonitorAPI) GetResponse() string {
-	return cma.RequestObject().(string)
+	return cma.ResponseObject().(string)
 }

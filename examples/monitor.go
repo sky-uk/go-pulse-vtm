@@ -8,7 +8,7 @@ import (
 
 func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 
-	vtmClient := go_brocade_vtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
+	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
 
 	//
 	// Get All Services.
@@ -27,8 +27,8 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	// check the status code and proceed accordingly.
 	if getAllAPI.StatusCode() == 200 {
 		AllMonitors := getAllAPI.GetResponse().Children
-		for _, service := range AllMonitors {
-			fmt.Printf("Name: %-20s HRef: %-20s\n", service.Name, service.HRef)
+		for _, monitor := range AllMonitors {
+			fmt.Printf("Name: %-20s HRef: %-20s\n", monitor.Name, monitor.HRef)
 		}
 	} else {
 		fmt.Println("Status code:", getAllAPI.StatusCode())
@@ -53,4 +53,5 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	} else {
 		fmt.Println("Failed to create new monitor %s", newMonitorName)
 	}
+	fmt.Println(createMonitorAPI.GetResponse())
 }
