@@ -1,10 +1,10 @@
 package monitor
 
 import (
-	"testing"
+	"encoding/json"
 	"github.com/stretchr/testify/assert"
 	"net/http"
-	"encoding/json"
+	"testing"
 )
 
 var createMonitorAPI *CreateMonitorAPI
@@ -12,9 +12,9 @@ var newMonitorName string = "exampleMonitor"
 
 func createSetup() {
 
-	newHTTPMonitor := MonitorHTTP{URIPath: "/download/private/status/check"}
-	newBasicMonitor := MonitorBasic{Delay: 6, Failures: 3, Type: "http", Timeout: 4}
-	newMonitorProperties := MonitorProperties{Basic: newBasicMonitor, Http: newHTTPMonitor}
+	newHTTPMonitor := HTTP{URIPath: "/download/private/status/check"}
+	newBasicMonitor := Basic{Delay: 6, Failures: 3, Type: "http", Timeout: 4}
+	newMonitorProperties := Properties{Basic: newBasicMonitor, Http: newHTTPMonitor}
 	newMonitor := Monitor{Properties: newMonitorProperties}
 
 	createMonitorAPI = NewCreate(newMonitorName, newMonitor)

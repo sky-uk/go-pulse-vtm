@@ -1,13 +1,14 @@
 package monitor
 
 import (
-	"testing"
+	"encoding/json"
 	"github.com/stretchr/testify/assert"
 	"net/http"
-	"encoding/json"
+	"testing"
 )
 
 var getAllMonitorAPI *GetAllMonitors
+
 //var getMonitorName string = "Simple HTTP"
 
 func setupGetAll() {
@@ -21,7 +22,7 @@ func TestGetAllMethod(t *testing.T) {
 
 func TestGetAllEndpoint(t *testing.T) {
 	setupGetAll()
-	assert.Equal(t,"/api/tm/3.8/config/active/monitors", getAllMonitorAPI.Endpoint())
+	assert.Equal(t, "/api/tm/3.8/config/active/monitors", getAllMonitorAPI.Endpoint())
 }
 
 func TestGetAllUnMarshalling(t *testing.T) {

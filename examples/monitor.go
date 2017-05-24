@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"github.com/sky-uk/go-brocade-vtm"
 	"github.com/sky-uk/go-brocade-vtm/api/monitor"
-	"fmt"
 )
 
 func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
@@ -38,9 +38,9 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	fmt.Println("== Running Create new Monitor with name 'PaaS_Test_Monitor' ==")
 
 	var newMonitorName string = "PaaSExampleHTTPMonitor"
-	newHTTPMonitor := monitor.MonitorHTTP{URIPath: "/download/private/status/check"}
-	newBasicMonitor := monitor.MonitorBasic{Delay: 6, Failures: 3, Type: "http", Timeout: 4}
-	newMonitorProperties := monitor.MonitorProperties{Basic: newBasicMonitor, Http: newHTTPMonitor}
+	newHTTPMonitor := monitor.HTTP{URIPath: "/download/private/status/check"}
+	newBasicMonitor := monitor.Basic{Delay: 6, Failures: 3, Type: "http", Timeout: 4}
+	newMonitorProperties := monitor.Properties{Basic: newBasicMonitor, Http: newHTTPMonitor}
 	newMonitor := monitor.Monitor{Properties: newMonitorProperties}
 
 	createMonitorAPI := monitor.NewCreate(newMonitorName, newMonitor)
@@ -51,7 +51,7 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	if createMonitorAPI.StatusCode() == 201 {
 		fmt.Printf("Monitor %s successfully created.\n", newMonitorName)
 	} else {
-		fmt.Println("Failed to create new monitor %s", newMonitorName)
+		fmt.Printf("Failed to create new monitor %s.\n", newMonitorName)
 	}
 	fmt.Println(createMonitorAPI.GetResponse())
 }

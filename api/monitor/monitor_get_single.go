@@ -1,7 +1,5 @@
 package monitor
 
-
-
 /*
 func (monitorList List) FilterMonitorsByName(name string) *Monitor {
 	var foundMonitor Monitor
