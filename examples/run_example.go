@@ -22,7 +22,7 @@ func main() {
 		debug = true
 	}
 
-	vtmClient := go_brocade_vtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
+	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
 
 	//
 	// Get All Services.
