@@ -6,6 +6,7 @@ import (
 	"github.com/sky-uk/go-brocade-vtm/api/monitor"
 )
 
+
 // RunMonitorExample : run the vTM monitor example
 func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 
