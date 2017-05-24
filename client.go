@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"crypto/tls"
 	"encoding/json"
-	"encoding/xml"
 	"fmt"
 	"github.com/sky-uk/go-brocade-vtm/api"
 	"io"
@@ -14,7 +13,7 @@ import (
 	"strings"
 )
 
-// NewVTMClient  Creates a new nsxclient object.
+// NewVTMClient  Creates a new vtmClient object.
 func NewVTMClient(url string, user string, password string, ignoreSSL bool, debug bool) *VTMClient {
 	vtmClient := new(VTMClient)
 	vtmClient.URL = url
@@ -41,14 +40,14 @@ func (vtmClient *VTMClient) Do(api api.VTMApi) error {
 
 	// TODO: change this to JSON
 	if api.RequestObject() != nil {
-		requestXMLBytes, marshallingErr := xml.Marshal(api.RequestObject())
+		requestJSONBytes, marshallingErr := json.Marshal(api.RequestObject())
 		if marshallingErr != nil {
 			log.Fatal(marshallingErr)
 		}
 		if vtmClient.debug {
-			log.Println(string(requestXMLBytes))
+			log.Println(string(requestJSONBytes))
 		}
-		requestPayload = bytes.NewReader(requestXMLBytes)
+		requestPayload = bytes.NewReader(requestJSONBytes)
 	}
 	if vtmClient.debug {
 		log.Println("requestURL:", requestURL)
