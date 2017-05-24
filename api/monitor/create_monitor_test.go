@@ -14,7 +14,7 @@ func createSetup() {
 
 	newHTTPMonitor := HTTP{URIPath: "/download/private/status/check"}
 	newBasicMonitor := Basic{Delay: 6, Failures: 3, Type: "http", Timeout: 4}
-	newMonitorProperties := Properties{Basic: newBasicMonitor, Http: newHTTPMonitor}
+	newMonitorProperties := Properties{Basic: newBasicMonitor, HTTP: newHTTPMonitor}
 	newMonitor := Monitor{Properties: newMonitorProperties}
 
 	createMonitorAPI = NewCreate(newMonitorName, newMonitor)

@@ -6,6 +6,7 @@ import (
 	"github.com/sky-uk/go-brocade-vtm/api/monitor"
 )
 
+// RunMonitorExample : run monitor example
 func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 
 	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
@@ -37,10 +38,10 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 
 	fmt.Println("== Running Create new Monitor with name 'PaaS_Test_Monitor' ==")
 
-	var newMonitorName string = "PaaSExampleHTTPMonitor"
+	var newMonitorName = "PaaSExampleHTTPMonitor"
 	newHTTPMonitor := monitor.HTTP{URIPath: "/download/private/status/check"}
 	newBasicMonitor := monitor.Basic{Delay: 6, Failures: 3, Type: "http", Timeout: 4}
-	newMonitorProperties := monitor.Properties{Basic: newBasicMonitor, Http: newHTTPMonitor}
+	newMonitorProperties := monitor.Properties{Basic: newBasicMonitor, HTTP: newHTTPMonitor}
 	newMonitor := monitor.Monitor{Properties: newMonitorProperties}
 
 	createMonitorAPI := monitor.NewCreate(newMonitorName, newMonitor)

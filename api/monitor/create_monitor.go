@@ -15,7 +15,7 @@ func NewCreate(monitorName string, monitor Monitor) *CreateMonitorAPI {
 	this := new(CreateMonitorAPI)
 	requestPayLoad := new(Monitor)
 	requestPayLoad.Properties.Basic = monitor.Properties.Basic
-	requestPayLoad.Properties.Http = monitor.Properties.Http
+	requestPayLoad.Properties.HTTP = monitor.Properties.HTTP
 	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/api/tm/3.8/config/active/monitors/"+monitorName, requestPayLoad, new(string))
 	return this
 }
