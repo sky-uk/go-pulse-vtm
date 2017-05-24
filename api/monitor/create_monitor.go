@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// CreateMonitorApi : Create Monitor API
+// CreateMonitorAPI : Create Monitor API
 type CreateMonitorAPI struct {
 	*api.BaseAPI
 }
