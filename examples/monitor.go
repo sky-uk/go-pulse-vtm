@@ -6,7 +6,7 @@ import (
 	"github.com/sky-uk/go-brocade-vtm/api/monitor"
 )
 
-// RunMonitorExample : run monitor example
+// RunMonitorExample : run the vTM monitor example
 func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 
 	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
@@ -55,4 +55,5 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Printf("Failed to create new monitor %s.\n", newMonitorName)
 	}
 	fmt.Println(createMonitorAPI.GetResponse())
+
 }
