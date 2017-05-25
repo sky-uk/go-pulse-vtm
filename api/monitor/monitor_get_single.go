@@ -18,5 +18,5 @@ func (monitorList MonitorsList) FilterByName(name string) *ChildMonitor {
 
 // String returns a string representation of the monitor
 func (monitor Monitor) String() string {
-	return fmt.Sprintf("Monitor: %s", monitor.Properties)
+	return fmt.Sprintf("Monitor: %v", monitor.Properties)
 }
