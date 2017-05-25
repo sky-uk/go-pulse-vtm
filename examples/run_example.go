@@ -30,10 +30,18 @@ func main() {
 		fmt.Println("running pool with:", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunPoolExample(vtmAddress, vtmUser, vtmPassword, debug)
 		return
+<<<<<<< HEAD
         case "virtual_server":
             fmt.Println("Running virtual server with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
             RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword, debug)
             return
+=======
+	}
+    case "virtual_server":
+        fmt.Println("Running virtual server with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
+        RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword, debug)
+        return
+>>>>>>> virtual server handling first draft
     }
 	fmt.Println("Example not implemented.")
 }

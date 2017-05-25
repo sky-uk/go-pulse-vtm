@@ -17,8 +17,6 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 	// Create api object.
 	getAllAPI := virtualserver.NewGetAll()
 
-	fmt.Println("Get all virtual servers")
-	fmt.Println("-------------------------------------------------------------------------")
 	// make api call.
 	err := vtmClient.Do(getAllAPI)
 
@@ -42,11 +40,11 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 
 	var newvirtualserverName = "PaaSExampleHTTPvirtualserver"
 	newBasicvirtualserver := virtualserver.Basic{
-		Enabled:            false,
-		DefaultTrafficPool: "pool_test_rui",
-		Port:               80,
-		Protocol:           "http",
-	}
+          Enabled:              false,
+          DefaultTrafficPool:   "pool_test_rui",
+          Port:                 80,
+          Protocol:             "http",
+    }
 	newvirtualserverProperties := virtualserver.Properties{Basic: newBasicvirtualserver}
 	newvirtualserver := virtualserver.VirtualServer{Properties: newvirtualserverProperties}
 
