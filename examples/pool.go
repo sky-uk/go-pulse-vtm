@@ -49,5 +49,4 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Println("Response: ", getSingleAPI.ResponseObject())
 	}
 
-
 }

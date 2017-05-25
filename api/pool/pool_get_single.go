@@ -1,14 +1,15 @@
 package pool
 
-import ("net/http"
+import (
 	"github.com/sky-uk/go-brocade-vtm/api"
-
+	"net/http"
 )
 
 // GetSinglePool - Base Struct
 type GetSinglePool struct {
 	*api.BaseAPI
 }
+
 // NewGetSingle - Returns a single pool
 func NewGetSingle(poolName string) *GetSinglePool {
 	this := new(GetSinglePool)
