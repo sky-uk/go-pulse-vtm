@@ -7,7 +7,7 @@ import (
 
 func main() {
 	if len(os.Args) < 5 {
-		fmt.Printf("syntax error\nUsages: %s [https://load_balancer_address] [username] [password] \n\n", os.Args[0])
+		fmt.Printf("syntax error\nUsages: %s [https://load_balancer_address] [username] [password] [example name]\n\n", os.Args[0])
 		os.Exit(1)
 	}
 
