@@ -6,11 +6,8 @@ type Pool struct {
 	Properties Properties `json:"properties"`
 }
 
-type SinglePool struct {
-	Properties Properties `json:"properties"`
-}
 
-// Properties
+// Properties - General Properties for the pool
 type Properties struct {
 	Basic         Basic         `json:"basic"`
 	Connection    Connection    `json:"connection"`
@@ -39,6 +36,7 @@ type Basic struct {
 	Transparent                  bool          `json:"transparent"`
 }
 
+// Connection - Connection setting
 type Connection struct {
 	MaxConnectTime        int `json:"max_connect_time"`
 	MaxConnectionsPerNode int `json:"max_connections_per_node"`
@@ -47,24 +45,26 @@ type Connection struct {
 	QueueTimeout          int `json:"queue_timeout"`
 }
 
-// HTTP
+// HTTP - http settings
 type HTTP struct {
-	HttpKeepAlive              bool `json:"keepalive"`
-	HttpKeepAliveNonIdempotent bool `json:"keepalive_non_idempotent"`
+	HTTPKeepAlive              bool `json:"keepalive"`
+	HTTPKeepAliveNonIdempotent bool `json:"keepalive_non_idempotent"`
 }
 
-// LoadBalancing
+// LoadBalancing - Pool Load balancing settings
 type LoadBalancing struct {
 	Algorithm       string `json:"algorithm"`
 	PriorityEnabled bool   `json:"priority_enabled"`
 	PriorityNodes   int    `json:"priority_nodes"`
 }
 
+// Node - Node Specific settings
 type Node struct {
 	CloseOnDeath  bool `json:"close_on_death"`
 	RetryFailTime int  `json:"retry_fail_time"`
 }
 
+// Ssl - SSL related settings
 type Ssl struct {
 	ClientAuth      bool     `json:"client_auth"`
 	CommonNameMatch []string `json:"common_name_match"`
@@ -73,16 +73,19 @@ type Ssl struct {
 	Enhance         bool     `json:"enhance"`
 }
 
+
+// MemberNodes - Pool membership details / node /state / weight
 type MemberNodes struct {
 	Node   string `json:"node"`
 	State  string `json:"state"`
 	Weight int    `json:"weight"`
 }
-
-type PoolList struct {
+// LBPoolList - Used to return all pools
+type LBPoolList struct {
 	ChildPools []ChildPools `json:"children"`
 }
 
+// ChildPools - Used to display data about all pools ie name and link
 type ChildPools struct {
 	Name string `json:"name"`
 	Href string `json:"href"`
