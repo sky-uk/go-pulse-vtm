@@ -92,8 +92,8 @@ func (vtmClient *VTMClient) handleResponse(api api.VTMApi, res *http.Response) e
 	if isJSON(res.Header.Get("Content-Type")) && api.StatusCode() == 200 {
 		JSONerr := json.Unmarshal(bodyText, api.ResponseObject())
 		if JSONerr != nil {
-			log.Println("ERROR unmarshalling response: ", err)
-			return err
+			log.Println("ERROR unmarshalling response: ", JSONerr)
+			return nil
 		}
 	} else {
 		api.SetResponseObject(string(bodyText))
