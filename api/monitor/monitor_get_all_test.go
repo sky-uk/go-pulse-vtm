@@ -9,8 +9,6 @@ import (
 
 var getAllMonitorAPI *GetAllMonitors
 
-//var getMonitorName string = "Simple HTTP"
-
 func setupGetAll() {
 	getAllMonitorAPI = NewGetAll()
 }

@@ -6,15 +6,15 @@ import (
 	"github.com/sky-uk/go-brocade-vtm/api/monitor"
 )
 
-// RunMonitorExample : run monitor example
+// RunMonitorExample : run the vTM monitor example
 func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 
 	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
 
 	//
-	// Get All Services.
+	// Get All Monitors. Create api object.
 	//
-	// Create api object.
+	//
 	getAllAPI := monitor.NewGetAll()
 
 	// make api call.
@@ -36,7 +36,10 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Println("Response: ", getAllAPI.ResponseObject())
 	}
 
-	fmt.Println("== Running Create new Monitor with name 'PaaS_Test_Monitor' ==")
+	//
+	// Create a new monitor
+	//
+	fmt.Println("== Running create new monitor with name 'PaaS_Test_Monitor' ==")
 
 	var newMonitorName = "PaaSExampleHTTPMonitor"
 	newHTTPMonitor := monitor.HTTP{URIPath: "/download/private/status/check"}
@@ -55,4 +58,38 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Printf("Failed to create new monitor %s.\n", newMonitorName)
 	}
 	fmt.Println(createMonitorAPI.GetResponse())
+
+	//
+	// Read a single monitor
+	//
+	fmt.Println("\n\n== Reading new monitor with name 'PaaS_Test_Monitor' ==")
+
+	err = vtmClient.Do(getAllAPI)
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+
+	// check the status code and search for example monitor
+	if getAllAPI.StatusCode() == 200 {
+		foundMonitor := getAllAPI.GetResponse().FilterByName("PaaSExampleHTTPMonitor")
+		fmt.Printf("Found monitor:\n \tName: %-20s Href: %-20s\n", foundMonitor.Name, foundMonitor.HRef)
+
+		getSingleMonitorAPI := monitor.NewGetSingleMonitor(foundMonitor.Name)
+
+		err = vtmClient.Do(getSingleMonitorAPI)
+		if err != nil {
+			fmt.Println("Error: ", err)
+		}
+		fmt.Printf("Retrieved monitor values are:\n")
+		fmt.Printf("\tHTTP->URIPath: %s\n", getSingleMonitorAPI.GetResponse().Properties.HTTP.URIPath)
+		fmt.Printf("\tBasic->Delay: %d\n", getSingleMonitorAPI.GetResponse().Properties.Basic.Delay)
+		fmt.Printf("\tBasic->Failures: %d\n", getSingleMonitorAPI.GetResponse().Properties.Basic.Failures)
+		fmt.Printf("\tBasic->Type: %s\n", getSingleMonitorAPI.GetResponse().Properties.Basic.Type)
+		fmt.Printf("\tBasic->Timeout: %d\n", getSingleMonitorAPI.GetResponse().Properties.Basic.Timeout)
+
+	} else {
+		fmt.Println("Status code:", getAllAPI.StatusCode())
+		fmt.Println("Response: ", getAllAPI.ResponseObject())
+	}
+
 }
