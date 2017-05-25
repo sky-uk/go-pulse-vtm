@@ -117,7 +117,7 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	}
 
 	//
-	// Delete a monitor
+	// Delete a single monitor
 	//
 	fmt.Printf("\n== Deleting monitor with name %s ==\n", exampleMonitorName)
 
