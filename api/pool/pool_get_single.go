@@ -5,11 +5,11 @@ import ("net/http"
 
 )
 
-
+// GetSinglePool - Base Struct
 type GetSinglePool struct {
 	*api.BaseAPI
 }
-
+// NewGetSingle - Returns a single pool
 func NewGetSingle(poolName string) *GetSinglePool {
 	this := new(GetSinglePool)
 	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/pools/"+poolName, nil, new(Pool))
