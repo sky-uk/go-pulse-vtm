@@ -26,10 +26,10 @@ func main() {
 		fmt.Println("Running monitor with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunMonitorExample(vtmAddress, vtmUser, vtmPassword, debug)
 		return
-    case "virtual_server":
-        fmt.Println("Running virtual server with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
-        RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword, debug)
-        return
-    }
+	case "virtual_server":
+		fmt.Println("Running virtual server with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
+		RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword, debug)
+		return
+	}
 	fmt.Println("Example not implemented.")
 }
