@@ -1,6 +1,6 @@
 # Contributing Guidelines
 
-Contribuations are always welcome, although please search issues and pull requests before adding something new to avoid duplicating
+Contributions are always welcome, although please search issues and pull requests before adding something new to avoid duplicating
 efforts and conversations.
 
 
