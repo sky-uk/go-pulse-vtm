@@ -17,6 +17,8 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 	// Create api object.
 	getAllAPI := virtualserver.NewGetAll()
 
+    fmt.Println("Get all virtual servers");
+    fmt.Println("-------------------------------------------------------------------------");
 	// make api call.
 	err := vtmClient.Do(getAllAPI)
 

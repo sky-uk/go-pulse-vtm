@@ -17,6 +17,7 @@ type Basic struct {
         Port                    int             `json:"port"`
         Protocol                string          `json:"protocol"`
 // all these attributes are not mandatory at creation time...
+/*
         ListenOnTrafficIps      []string        `json:"listen_on_traffic_ips"`
         Note                    string          `json:"note"`
         RequestRules            []string        `json:"request_rules"`
@@ -32,6 +33,7 @@ type Basic struct {
         AddxforwardedProto      bool            `json:"add_x_forwarded_proto"`
         CloseWithRst            bool            `json:"close_with_rst"`
         // TBC...
+*/
 }
 
 // VirtualServersList : List of nodes monitored
