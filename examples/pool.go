@@ -6,6 +6,7 @@ import (
 	"github.com/sky-uk/go-brocade-vtm/api/pool"
 )
 
+// RunPoolExample  - runs examples
 func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
 
