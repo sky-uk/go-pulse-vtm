@@ -72,7 +72,21 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	// check the status code and search for example monitor
 	if getAllAPI.StatusCode() == 200 {
 		foundMonitor := getAllAPI.GetResponse().FilterByName("PaaSExampleHTTPMonitor")
-		fmt.Printf("Found monitor:\n Name: %-20s Href: %-20s\n", foundMonitor.Name, foundMonitor.HRef)
+		fmt.Printf("Found monitor:\n \tName: %-20s Href: %-20s\n", foundMonitor.Name, foundMonitor.HRef)
+
+		getSingleMonitorAPI := monitor.NewGetSingleMonitor(foundMonitor.Name)
+
+		err = vtmClient.Do(getSingleMonitorAPI)
+		if err != nil {
+			fmt.Println("Error: ", err)
+		}
+		fmt.Printf("Retrieved monitor values are:\n")
+		fmt.Printf("\tHTTP->URIPath: %s\n", getSingleMonitorAPI.GetResponse().Properties.HTTP.URIPath)
+		fmt.Printf("\tBasic->Delay: %d\n", getSingleMonitorAPI.GetResponse().Properties.Basic.Delay)
+		fmt.Printf("\tBasic->Failures: %d\n", getSingleMonitorAPI.GetResponse().Properties.Basic.Failures)
+		fmt.Printf("\tBasic->Type: %s\n", getSingleMonitorAPI.GetResponse().Properties.Basic.Type)
+		fmt.Printf("\tBasic->Timeout: %d\n", getSingleMonitorAPI.GetResponse().Properties.Basic.Timeout)
+
 	} else {
 		fmt.Println("Status code:", getAllAPI.StatusCode())
 		fmt.Println("Response: ", getAllAPI.ResponseObject())
