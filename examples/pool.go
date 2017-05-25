@@ -34,4 +34,19 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Println("Response: ", getAllAPI.ResponseObject())
 	}
 
+	getSingleAPI := pool.NewGetSingle("pool_test_rui_2")
+	// make api call.
+	err2 := vtmClient.Do(getSingleAPI)
+	if err2 != nil {
+		fmt.Println("Error: ", err2)
+	}
+	if getSingleAPI.StatusCode() == 200 {
+		MyPool := getSingleAPI.GetResponse().Properties
+		fmt.Println(MyPool)
+	} else {
+		fmt.Println("Status code:", getSingleAPI.StatusCode())
+		fmt.Println("Response: ", getSingleAPI.ResponseObject())
+	}
+
+
 }
