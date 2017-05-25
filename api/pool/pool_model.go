@@ -6,7 +6,6 @@ type Pool struct {
 	Properties Properties `json:"properties"`
 }
 
-
 // Properties - General Properties for the pool
 type Properties struct {
 	Basic         Basic         `json:"basic"`
@@ -73,13 +72,13 @@ type Ssl struct {
 	Enhance         bool     `json:"enhance"`
 }
 
-
 // MemberNodes - Pool membership details / node /state / weight
 type MemberNodes struct {
 	Node   string `json:"node"`
 	State  string `json:"state"`
 	Weight int    `json:"weight"`
 }
+
 // LBPoolList - Used to return all pools
 type LBPoolList struct {
 	ChildPools []ChildPools `json:"children"`
