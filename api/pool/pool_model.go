@@ -10,13 +10,28 @@ type Pool struct {
 type Properties struct {
 	Basic          Basic          `json:"basic"`
 	HTTP           HTTP           `json:"http"`
-	Load_Balancing Load_Balancing `json:"load_balancing"`
+	LoadBalancing  LoadBalancing  `json:"load_balancing"`
 }
 
 // Basic - main pool definitions
 type Basic struct {
-	Monitors    []Monitors `json:"children"`
-	Nodes_Table []Nodes    `json:"children"`
+	BandwidthClass string     `json:"bandwidth_class"`
+	FailurePool    string     `json:"failure_pool"`
+	Monitors       []Monitors `json:"children"`
+	//NodesTable     []Nodes    `json:"children"`
+}
+
+
+type LoadBalancing struct {
+	Algorithm string `json:"algorithm"`
+	PriorityEnabled bool `json:"priority_enabled"`
+	PriorityNodes   int `json:"priority_nodes"`
+}
+
+// Monitor
+
+type Monitors struct {
+	MonitorType []string
 }
 
 // HTTP
