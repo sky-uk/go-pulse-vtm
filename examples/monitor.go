@@ -97,8 +97,10 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	//
 	fmt.Printf("\n\n== Updating monitor with name %s to use /private/status/check ==\n", exampleMonitorName)
 
-	newMonitor.Properties.HTTP.URIPath = "/private/status/check"
-	updateMonitorAPI := monitor.NewUpdate(exampleMonitorName, newMonitor)
+	var updateMonitor monitor.Monitor
+
+	updateMonitor.Properties.HTTP.URIPath = "/private/status/check"
+	updateMonitorAPI := monitor.NewUpdate(exampleMonitorName, updateMonitor)
 	err = vtmClient.Do(updateMonitorAPI)
 	if err != nil {
 		fmt.Println("Error: ", err)
