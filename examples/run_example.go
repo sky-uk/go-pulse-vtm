@@ -26,6 +26,10 @@ func main() {
 		fmt.Println("running monitor with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunMonitorExample(vtmAddress, vtmUser, vtmPassword, debug)
 		return
+	case "traffic_ip_groups":
+		fmt.Println("running traffic_ip_groups with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
+		RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword, debug)
+		return
 	}
 	fmt.Println("Example not implemented.")
 }
