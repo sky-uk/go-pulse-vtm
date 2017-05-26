@@ -49,4 +49,17 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Println("Response: ", getSingleAPI.ResponseObject())
 	}
 
+	DeleteAPI := pool.NewDelete("pool_test_rui_3")
+	// make api call.
+	err3 := vtmClient.Do(DeleteAPI)
+	if err3 != nil {
+		fmt.Println("Error: ", err3)
+	}
+	if DeleteAPI.StatusCode() == 200 {
+		fmt.Println("Deleted ")
+	} else {
+		fmt.Println("Status code:", DeleteAPI.StatusCode())
+		fmt.Println("Response: ", DeleteAPI.ResponseObject())
+	}
+
 }
