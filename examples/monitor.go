@@ -93,6 +93,30 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	}
 
 	//
+	// Update a monitor
+	//
+	fmt.Printf("\n\n== Updating monitor with name %s to use /private/status/check ==\n", exampleMonitorName)
+
+	var updateMonitor monitor.Monitor
+
+	updateMonitor.Properties.HTTP.URIPath = "/private/status/check"
+	updateMonitorAPI := monitor.NewUpdate(exampleMonitorName, updateMonitor)
+	err = vtmClient.Do(updateMonitorAPI)
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+
+	if updateMonitorAPI.StatusCode() == 200 {
+		fmt.Printf("Successfully updated monitor %s to use /private/status/check\n", exampleMonitorName)
+		getSingleMonitorAPI := monitor.NewGetSingleMonitor(exampleMonitorName)
+		err = vtmClient.Do(getSingleMonitorAPI)
+		if err != nil {
+			fmt.Println("Error: ", err)
+		}
+		fmt.Printf("New value for HTTP->URIPath is %s.\n", getSingleMonitorAPI.GetResponse().Properties.HTTP.URIPath)
+	}
+
+	//
 	// Delete a single monitor
 	//
 	fmt.Printf("\n== Deleting monitor with name %s ==\n", exampleMonitorName)
@@ -107,5 +131,4 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	} else {
 		fmt.Printf("Monitor %s wasn't deleted\n", exampleMonitorName)
 	}
-
 }

@@ -43,7 +43,6 @@ func TestGetResponse(t *testing.T) {
 	createSetup()
 	getResponse := createMonitorAPI.GetResponse()
 	assert.Equal(t, getResponse, "/download/private/status/check")
-
 }
 
 //TODO
