@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/sky-uk/go-brocade-vtm"
 	"github.com/sky-uk/go-brocade-vtm/api/traffic_ip_group"
-	"github.com/davecgh/go-spew/spew"
 )
 
 func RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
@@ -36,7 +36,6 @@ func RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword string, debug bo
 		fmt.Println("Response: ", getAllAPI.ResponseObject())
 	}
 
-
 	tipg := "craig-test-group-1"
 	getSingleAPI := trafficIpGroups.NewGetSingle(tipg)
 
@@ -50,7 +49,7 @@ func RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword string, debug bo
 	if getSingleAPI.StatusCode() == 200 {
 		singleTrafficGroup := getSingleAPI.GetResponse().Properties.Basic
 		spew.Dump(singleTrafficGroup)
-	}else {
+	} else {
 		fmt.Println("Status code:", getSingleAPI.StatusCode())
 		fmt.Println("Response: ", getSingleAPI.ResponseObject())
 	}
@@ -59,13 +58,13 @@ func RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword string, debug bo
 
 	err = vtmClient.Do(deleteTrafficIPGroupAPI)
 
-	if err != nil{
+	if err != nil {
 		fmt.Println("Error: ", err)
 	}
 
 	if deleteTrafficIPGroupAPI.StatusCode() == 204 {
 		fmt.Println("Succesfully deleted: ", tipg)
-	}else {
+	} else {
 		fmt.Println("Status code:", deleteTrafficIPGroupAPI.StatusCode())
 		fmt.Println("Response: ", deleteTrafficIPGroupAPI.ResponseObject())
 	}
