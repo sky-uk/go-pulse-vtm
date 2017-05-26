@@ -26,6 +26,11 @@ func main() {
 		fmt.Println("running monitor with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunMonitorExample(vtmAddress, vtmUser, vtmPassword, debug)
 		return
+	case "pool":
+		fmt.Println("running pool with:", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
+		RunPoolExample(vtmAddress, vtmUser, vtmPassword, debug)
+		return
 	}
+
 	fmt.Println("Example not implemented.")
 }
