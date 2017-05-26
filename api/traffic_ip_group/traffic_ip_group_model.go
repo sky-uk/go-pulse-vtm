@@ -1,22 +1,27 @@
 package trafficIpGroups
 
+// TrafficIPGroupList : List of ChildTrafficIPGroup data structure
 type TrafficIPGroupList struct {
 	Children []ChildTrafficIPGroup `json:"children"`
 }
 
+// ChildTrafficIPGroup : Child of TrafficIPGroupList, contains name and href of an Traffic IP Group
 type ChildTrafficIPGroup struct {
 	Name string `json:"name"`
 	HRef string `json:"href"`
 }
 
+// TrafficIPGroup : Main traffic IP group data structure
 type TrafficIPGroup struct {
 	Properties Properties `json:"properties"`
 }
 
+// Properties : Stored within TrafficIPGroup, contains Basic data structure
 type Properties struct {
 	Basic Basic `json:"basic"`
 }
 
+// Basic : Stored within Properties, contains attributes of an TrafficIPGroup
 type Basic struct {
 	Enabled                      bool     `json:"enabled"`
 	HashSourcePort               bool     `json:"hash_source_port"`

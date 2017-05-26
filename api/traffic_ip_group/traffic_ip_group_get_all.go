@@ -17,6 +17,7 @@ func NewGetAll() *GetAllTrafficIPGroupsAPI {
 	return this
 }
 
+// GetResponse returns ResponseObject of GetAllTrafficIPGroupsAPI.
 func (ga GetAllTrafficIPGroupsAPI) GetResponse() *TrafficIPGroupList {
 	return ga.ResponseObject().(*TrafficIPGroupList)
 }
