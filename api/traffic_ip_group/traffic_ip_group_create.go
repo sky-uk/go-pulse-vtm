@@ -1,5 +1,6 @@
 package trafficIpGroups
 
+/*
 import (
 	"github.com/sky-uk/go-brocade-vtm/api"
 	"net/http"
@@ -16,7 +17,8 @@ func NewCreate(name string, requestPayload TrafficIPGroup) *CreateTrafficIPGroup
 	this.BaseAPI = api.NewBaseAPI(http.MethodDelete, "/api/tm/3.8/config/active/traffic_ip_groups/"+name, requestPayload, new(TrafficIPGroup))
 	return this
 }
-
+// GetResponse returns ResponseObject of CreateTrafficIPGroupAPI.
 func (ga CreateTrafficIPGroupAPI) GetResponse() *TrafficIPGroup {
 	return ga.ResponseObject().(*TrafficIPGroup)
 }
+*/
