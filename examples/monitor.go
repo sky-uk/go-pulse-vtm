@@ -39,30 +39,30 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	//
 	// Create a new monitor
 	//
-	fmt.Println("== Running create new monitor with name 'PaaS_Test_Monitor' ==")
+	var exampleMonitorName = "PaaSExampleHTTPMonitor"
+	fmt.Printf("\n== Running create new monitor with name %s ==\n", exampleMonitorName)
 
-	var newMonitorName = "PaaSExampleHTTPMonitor"
 	newHTTPMonitor := monitor.HTTP{URIPath: "/download/private/status/check"}
 	newBasicMonitor := monitor.Basic{Delay: 6, Failures: 3, Type: "http", Timeout: 4}
 	newMonitorProperties := monitor.Properties{Basic: newBasicMonitor, HTTP: newHTTPMonitor}
 	newMonitor := monitor.Monitor{Properties: newMonitorProperties}
 
-	createMonitorAPI := monitor.NewCreate(newMonitorName, newMonitor)
+	createMonitorAPI := monitor.NewCreate(exampleMonitorName, newMonitor)
 	err = vtmClient.Do(createMonitorAPI)
 	if err != nil {
 		fmt.Println("Error: ", err)
 	}
 	if createMonitorAPI.StatusCode() == 201 {
-		fmt.Printf("Monitor %s successfully created.\n", newMonitorName)
+		fmt.Printf("Monitor %s successfully created.\n", exampleMonitorName)
+		fmt.Printf("\tMonitor GetResponse was: %+v\n", createMonitorAPI.GetResponse())
 	} else {
-		fmt.Printf("Failed to create new monitor %s.\n", newMonitorName)
+		fmt.Printf("Failed to create new monitor %s.\n", exampleMonitorName)
 	}
-	fmt.Println(createMonitorAPI.GetResponse())
 
 	//
 	// Read a single monitor
 	//
-	fmt.Println("\n\n== Reading new monitor with name 'PaaS_Test_Monitor' ==")
+	fmt.Printf("\n== Reading new monitor with name %s ==\n", exampleMonitorName)
 
 	err = vtmClient.Do(getAllAPI)
 	if err != nil {
@@ -71,7 +71,7 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 
 	// check the status code and search for example monitor
 	if getAllAPI.StatusCode() == 200 {
-		foundMonitor := getAllAPI.GetResponse().FilterByName("PaaSExampleHTTPMonitor")
+		foundMonitor := getAllAPI.GetResponse().FilterByName(exampleMonitorName)
 		fmt.Printf("Found monitor:\n \tName: %-20s Href: %-20s\n", foundMonitor.Name, foundMonitor.HRef)
 
 		getSingleMonitorAPI := monitor.NewGetSingleMonitor(foundMonitor.Name)
@@ -80,7 +80,7 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		if err != nil {
 			fmt.Println("Error: ", err)
 		}
-		fmt.Printf("Retrieved monitor values are:\n")
+		fmt.Printf("\nRetrieved monitor values for %s are:\n", foundMonitor.Name)
 		fmt.Printf("\tHTTP->URIPath: %s\n", getSingleMonitorAPI.GetResponse().Properties.HTTP.URIPath)
 		fmt.Printf("\tBasic->Delay: %d\n", getSingleMonitorAPI.GetResponse().Properties.Basic.Delay)
 		fmt.Printf("\tBasic->Failures: %d\n", getSingleMonitorAPI.GetResponse().Properties.Basic.Failures)
@@ -88,8 +88,24 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Printf("\tBasic->Timeout: %d\n", getSingleMonitorAPI.GetResponse().Properties.Basic.Timeout)
 
 	} else {
-		fmt.Println("Status code:", getAllAPI.StatusCode())
-		fmt.Println("Response: ", getAllAPI.ResponseObject())
+		fmt.Printf("Status code: %+v\n", getAllAPI.StatusCode())
+		fmt.Printf("Response: +%v\n", getAllAPI.ResponseObject())
+	}
+
+	//
+	// Delete a single monitor
+	//
+	fmt.Printf("\n== Deleting monitor with name %s ==\n", exampleMonitorName)
+
+	deleteAPI := monitor.NewDelete(exampleMonitorName)
+	err = vtmClient.Do(deleteAPI)
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+	if deleteAPI.StatusCode() == 204 {
+		fmt.Printf("Monitor %s was successfully deleted\n", exampleMonitorName)
+	} else {
+		fmt.Printf("Monitor %s wasn't deleted\n", exampleMonitorName)
 	}
 
 }
