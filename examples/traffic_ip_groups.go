@@ -6,7 +6,7 @@ import (
 	"github.com/sky-uk/go-brocade-vtm"
 	"github.com/sky-uk/go-brocade-vtm/api/traffic_ip_group"
 )
-
+// RunTrafficIPGroupsExample : run traffic ip group example
 func RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
 
@@ -27,8 +27,8 @@ func RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword string, debug bo
 
 	// check the status code and proceed accordingly.
 	if getAllAPI.StatusCode() == 200 {
-		AllTrafficIpGroups := getAllAPI.GetResponse().Children
-		for _, trafficIPGroup := range AllTrafficIpGroups {
+		AllTrafficIPGroups := getAllAPI.GetResponse().Children
+		for _, trafficIPGroup := range AllTrafficIPGroups {
 			fmt.Printf("Name: %-20s HRef: %-20s\n", trafficIPGroup.Name, trafficIPGroup.HRef)
 		}
 	} else {
