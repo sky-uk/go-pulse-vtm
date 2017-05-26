@@ -6,6 +6,7 @@ import (
 	"github.com/sky-uk/go-brocade-vtm"
 	"github.com/sky-uk/go-brocade-vtm/api/traffic_ip_group"
 )
+
 // RunTrafficIPGroupsExample : run traffic ip group example
 func RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
