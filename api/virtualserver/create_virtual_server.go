@@ -15,7 +15,7 @@ func NewCreate(virtualServerName string, virtualServer VirtualServer) *CreateVir
 	this := new(CreateVirtualServerAPI)
 	requestPayLoad := new(VirtualServer)
 	requestPayLoad.Properties.Basic = virtualServer.Properties.Basic
-	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/api/tm/3.8/config/active/virtual_servers/"+virtualServerName, requestPayLoad, new(string))
+	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/api/tm/3.8/config/active/virtual_servers/"+virtualServerName, requestPayLoad, new(interface{}))
 	return this
 }
 
