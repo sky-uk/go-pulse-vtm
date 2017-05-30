@@ -66,14 +66,14 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 	newvirtualserver := virtualserver.VirtualServer{Properties: newvirtualserverProperties}
 
 	// trying to encode to json... -----------------------------------------
-	json_str, e := json.Marshal(newvirtualserver)
+	jsonStr, e := json.Marshal(newvirtualserver)
 	if e != nil {
 		fmt.Println("Error encoding structure to json: ", e)
 	} else {
-		//fmt.Printf("New virtual server json: \n%v", json_str )
+		//fmt.Printf("New virtual server json: \n%v", jsonStr )
 		fmt.Println("New Virtual Server:")
-		os.Stdout.Write(json_str)
-		fmt.Println("\n")
+		os.Stdout.Write(jsonStr)
+        fmt.Println()
 	}
 	//-----------------------------------------------------------------------
 
