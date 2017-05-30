@@ -21,7 +21,7 @@ func main() {
 		debug = true
 	}
 
-    fmt.Printf("Running %s with VTM addr: %s, VTM user: %s, VTM password: %s, debug: %v\n", exampleName, vtmAddress, vtmUser, vtmPassword, debug)
+	fmt.Printf("Running %s with VTM addr: %s, VTM user: %s, VTM password: %s, debug: %v\n", exampleName, vtmAddress, vtmUser, vtmPassword, debug)
 
 	switch exampleName {
 	case "monitor":
@@ -29,10 +29,10 @@ func main() {
 		return
 	case "pool":
 		RunPoolExample(vtmAddress, vtmUser, vtmPassword, debug)
-        return
+		return
 	case "virtual_server":
 		RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword, debug)
-        return
-    }
+		return
+	}
 	fmt.Println("Example not implemented.")
 }
