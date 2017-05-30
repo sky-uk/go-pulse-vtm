@@ -29,11 +29,9 @@ func main() {
 	case "pool":
 		fmt.Println("running pool with:", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunPoolExample(vtmAddress, vtmUser, vtmPassword, debug)
-		return
-	}
-    case "virtual_server":
-        fmt.Println("Running virtual server with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
-        RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword, debug)
+	case "virtual_server":
+		fmt.Println("Running virtual server with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
+		RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword, debug)
         return
     }
 	fmt.Println("Example not implemented.")
