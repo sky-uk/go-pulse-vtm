@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var DeleteAPI *DeletePool
+var DeleteAPI *DeletePoolAPI
 
 func setupDelete() {
 	DeleteAPI = NewDelete("pool_test_rui_2")

@@ -1,7 +1,6 @@
 package pool
 
 import (
-	//"encoding/json"
 	"encoding/json"
 	"fmt"
 	"github.com/stretchr/testify/assert"
