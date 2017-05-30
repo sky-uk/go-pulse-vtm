@@ -73,7 +73,7 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 		//fmt.Printf("New virtual server json: \n%v", jsonStr )
 		fmt.Println("New Virtual Server:")
 		os.Stdout.Write(jsonStr)
-        fmt.Println()
+		fmt.Println()
 	}
 	//-----------------------------------------------------------------------
 
