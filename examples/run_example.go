@@ -21,16 +21,16 @@ func main() {
 		debug = true
 	}
 
+    fmt.Printf("Running %s with VTM addr: %s, VTM user: %s, VTM password: %s, debug: %v\n", exampleName, vtmAddress, vtmUser, vtmPassword, debug)
+
 	switch exampleName {
 	case "monitor":
-		fmt.Println("Running monitor with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunMonitorExample(vtmAddress, vtmUser, vtmPassword, debug)
 		return
 	case "pool":
-		fmt.Println("running pool with:", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunPoolExample(vtmAddress, vtmUser, vtmPassword, debug)
+        return
 	case "virtual_server":
-		fmt.Println("Running virtual server with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword, debug)
         return
     }
