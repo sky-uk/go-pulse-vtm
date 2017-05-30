@@ -1,7 +1,6 @@
 package pool
 
 import (
-
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -47,3 +46,4 @@ func TestNewUpdate(t *testing.T) {
 	assert.Nil(t, updatePool.GetResponse().Properties.Basic.NodesTable)
 
 }
+

@@ -2,6 +2,7 @@ package pool
 
 // Pool - main pool struct
 type Pool struct {
+
 	Properties Properties `json:"properties"`
 }
 
