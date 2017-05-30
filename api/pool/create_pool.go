@@ -6,7 +6,7 @@ import (
 
 )
 
-// CreatePool - Base Struct
+// CreatePoolAPI - Base Struct
 type CreatePoolAPI struct {
 	*api.BaseAPI
 }
@@ -17,6 +17,7 @@ func NewCreate(poolName string , nodeList []MemberNodes, nodeMonitors []string) 
 	return execCreateUpdate(poolName,nodeList,nodeMonitors)
 }
 
+//NewUpdate - Placeholder to create
 func NewUpdate(poolName string , nodeList []MemberNodes, nodeMonitors []string) *CreatePoolAPI {
 	return execCreateUpdate(poolName,nodeList,nodeMonitors)
 }
@@ -30,6 +31,7 @@ func execCreateUpdate(poolName string , nodeList []MemberNodes, nodeMonitors []s
 	return this
 }
 
+// GetResponse - Returns the http call response
 func (cp CreatePoolAPI) GetResponse() *Pool {
 	return cp.ResponseObject().(*Pool)
 }
