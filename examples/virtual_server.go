@@ -1,12 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-    "os"
-    "encoding/json"
 	"github.com/sky-uk/go-brocade-vtm"
 	"github.com/sky-uk/go-brocade-vtm/api/virtualserver"
-    "log"
+	"log"
+	"os"
 )
 
 // RunVirtualServerExample : run virtualserver example
@@ -45,17 +45,17 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 
 	var newvirtualserverName = "PaaSExampleHTTPvirtualserver"
 
-    // ------------------  Deleting first the resource...
-    log.Print("Trying first to delete virtual server with name: ", newvirtualserverName )
-    deleteAPI := virtualserver.NewDelete(newvirtualserverName)
-    err = vtmClient.Do(deleteAPI)
+	// ------------------  Deleting first the resource...
+	log.Print("Trying first to delete virtual server with name: ", newvirtualserverName)
+	deleteAPI := virtualserver.NewDelete(newvirtualserverName)
+	err = vtmClient.Do(deleteAPI)
 	if err != nil {
 		log.Fatal(err)
 	} else {
-        log.Print("Resource successfully deleted")
-    }
+		log.Print("Resource successfully deleted")
+	}
 
-    // ------------------ then creating a new one...
+	// ------------------ then creating a new one...
 	newBasicvirtualserver := virtualserver.Basic{
 		Enabled:            false,
 		DefaultTrafficPool: "pool_test_rui",
@@ -65,17 +65,17 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 	newvirtualserverProperties := virtualserver.Properties{Basic: newBasicvirtualserver}
 	newvirtualserver := virtualserver.VirtualServer{Properties: newvirtualserverProperties}
 
-    // trying to encode to json... -----------------------------------------
-    json_str, e := json.Marshal( newvirtualserver)
-    if  e != nil {
-        fmt.Println("Error encoding structure to json: ", e)
-    } else {
-        //fmt.Printf("New virtual server json: \n%v", json_str )
-        fmt.Println("New Virtual Server:")
-        os.Stdout.Write(json_str)
-        fmt.Println("\n")
-    }
-    //-----------------------------------------------------------------------
+	// trying to encode to json... -----------------------------------------
+	json_str, e := json.Marshal(newvirtualserver)
+	if e != nil {
+		fmt.Println("Error encoding structure to json: ", e)
+	} else {
+		//fmt.Printf("New virtual server json: \n%v", json_str )
+		fmt.Println("New Virtual Server:")
+		os.Stdout.Write(json_str)
+		fmt.Println("\n")
+	}
+	//-----------------------------------------------------------------------
 
 	createvirtualserverAPI := virtualserver.NewCreate(newvirtualserverName, newvirtualserver)
 	err = vtmClient.Do(createvirtualserverAPI)
@@ -84,9 +84,9 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 	}
 	if createvirtualserverAPI.StatusCode() == 201 {
 		fmt.Printf("virtualserver %s successfully created.\n", newvirtualserverName)
-        if ( debug ) {
-	        fmt.Println(createvirtualserverAPI.GetResponse())
-        }
+		if debug {
+			fmt.Println(createvirtualserverAPI.GetResponse())
+		}
 	} else {
 		fmt.Printf("Failed to create new virtualserver %s.\n", newvirtualserverName)
 	}
