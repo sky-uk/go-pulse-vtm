@@ -1,10 +1,12 @@
 package pool
 
+
 import (
+	"testing"
 	"github.com/stretchr/testify/assert"
 	"net/http"
-	"testing"
 )
+
 
 var createPool *CreatePoolAPI
 var updatePool *CreatePoolAPI
@@ -46,4 +48,5 @@ func TestNewUpdate(t *testing.T) {
 	assert.Nil(t, updatePool.GetResponse().Properties.Basic.NodesTable)
 
 }
+
 
