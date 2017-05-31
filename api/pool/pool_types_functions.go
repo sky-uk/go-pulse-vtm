@@ -9,4 +9,5 @@ func NewMemberNode(host string, priority int, state string, weight int) MemberNo
 		Weight:   weight,
 	}
 	return memberNode
+
 }
