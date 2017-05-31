@@ -17,10 +17,6 @@ func NewCreate(poolName string, pool Pool) *CreatePoolAPI {
 }
 
 
-func NewUpdate(poolName string, pool Pool) *CreatePoolAPI {
-	return execCreateUpdate(poolName, pool)
-}
-
 //NewUpdate - Placeholder to create
 func NewUpdate(poolName string, pool Pool) *CreatePoolAPI {
 	return execCreateUpdate(poolName, pool)
