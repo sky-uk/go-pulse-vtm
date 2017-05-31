@@ -11,22 +11,23 @@ type CreatePoolAPI struct {
 }
 
 //NewCreate - Creates a new pool
-func NewCreate(poolName string, nodeList []MemberNodes, nodeMonitors []string) *CreatePoolAPI {
+//nodeList []MemberNodes, nodeMonitors []string
+func NewCreate(poolName string, pool Pool ) *CreatePoolAPI {
 
-	return execCreateUpdate(poolName, nodeList, nodeMonitors)
+	return execCreateUpdate(poolName, pool)
 }
 
 //NewUpdate - Placeholder to create
-func NewUpdate(poolName string, nodeList []MemberNodes, nodeMonitors []string) *CreatePoolAPI {
-	return execCreateUpdate(poolName, nodeList, nodeMonitors)
+func NewUpdate(poolName string, pool Pool) *CreatePoolAPI {
+	return execCreateUpdate(poolName, pool)
 }
 
-func execCreateUpdate(poolName string, nodeList []MemberNodes, nodeMonitors []string) *CreatePoolAPI {
+func execCreateUpdate(poolName string, pool Pool) *CreatePoolAPI {
 	this := new(CreatePoolAPI)
-	requestPayload := new(Pool)
+	/*requestPayload := new(Pool)
 	requestPayload.Properties.Basic.NodesTable = nodeList
-	requestPayload.Properties.Basic.Monitors = nodeMonitors
-	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/api/tm/3.8/config/active/pools/"+poolName, requestPayload, new(Pool))
+	requestPayload.Properties.Basic.Monitors = nodeMonitors*/
+	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/api/tm/3.8/config/active/pools/"+poolName, pool, new(Pool))
 	return this
 }
 

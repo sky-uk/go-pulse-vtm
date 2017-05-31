@@ -48,24 +48,26 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Println("Response: ", getSingleAPI.ResponseObject())
 	}
 
-	poolNodes := []pool.MemberNodes{}
 
-	poolNodes = append(poolNodes, pool.NewMemberNodes("127.0.0.1:80", 1, "active", 1))
-	poolNodes = append(poolNodes, pool.NewMemberNodes("127.0.0.1:82", 2, "active", 1))
-
-	CreateAPI := pool.NewCreate("pool_test_rui_5", poolNodes, []string{"ping"})
+	poolNodes := []pool.MemberNode{}
+	poolNodes = append(poolNodes, pool.NewMemberNode("127.0.0.1:80", 1, "active", 1))
+	poolNodes = append(poolNodes, pool.NewMemberNode("127.0.0.1:81", 2, "active", 1))
+	myPool := pool.Pool{}
+        myPool.Properties.Basic.NodesTable = poolNodes
+	myPool.Properties.Basic.Monitors = []string{"ping"}
+	CreateAPI := pool.NewCreate("pool_test_rui_5",myPool)
 	errCreate := vtmClient.Do(CreateAPI)
 	if errCreate != nil {
 		fmt.Println("Error Creating:", errCreate)
 	}
-	if CreateAPI.StatusCode() == 200 {
+	if CreateAPI.StatusCode() == 200 || CreateAPI.StatusCode() == 201 {
 		fmt.Println("Created")
 	} else {
 		fmt.Println("Status code:", CreateAPI.StatusCode())
 		fmt.Println("Response: ", CreateAPI.ResponseObject())
 	}
 
-	DeleteAPI := pool.NewDelete("pool_test_rui_5")
+	/*DeleteAPI := pool.NewDelete("pool_test_rui_5")
 	// make api call.
 	errDelete := vtmClient.Do(DeleteAPI)
 	if errDelete != nil {
@@ -76,6 +78,6 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	} else {
 		fmt.Println("Status code:", DeleteAPI.StatusCode())
 		fmt.Println("Response: ", DeleteAPI.ResponseObject())
-	}
+	}*/
 
 }

@@ -2,7 +2,7 @@ package pool
 
 // Pool - main pool struct
 type Pool struct {
-	//Name       string     `json:"name,omitempty"`
+
 	Properties Properties `json:"properties"`
 }
 
@@ -28,7 +28,7 @@ type Basic struct {
 	NodeConnectionAttempts       int           `json:"node_connection_attempts,omitempty"`
 	NodeDeleteBehavior           string        `json:"node_delete_behavior,omitempty"`
 	NodeDrainDeleteTimeout       int           `json:"node_drain_to_delete_timeout"`
-	NodesTable                   []MemberNodes `json:"nodes_table"`
+	NodesTable                   []MemberNode `json:"nodes_table"`
 	Note                         string        `json:"note"`
 	PassiveMonitoring            bool          `json:"passive_monitoring"`
 	PersistenceClass             string        `json:"persistence_class,omitempty"`
@@ -77,7 +77,7 @@ type Ssl struct {
 }
 
 // MemberNodes - Pool membership details / node /state / weight
-type MemberNodes struct {
+type MemberNode struct {
 	Node     string `json:"node"`
 	Priority int    `json:"priority"`
 	State    string `json:"state"`
