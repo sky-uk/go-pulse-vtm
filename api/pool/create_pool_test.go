@@ -1,21 +1,23 @@
 package pool
 
 import (
-	//"encoding/json"
-	//"fmt"
+
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
 
 var createPool *CreatePoolAPI
-var node MemberNodes
-var node2 MemberNodes
+var node MemberNode
+var node2 MemberNode
 
 func setupCreatePool() {
-	node = NewMemberNodes("127.0.0.1:80", 1, "active", 1)
-	node2 = NewMemberNodes("127.0.0.1:81", 1, "active", 1)
-	createPool = NewCreate("pool_test_rui_4", []MemberNodes{node, node2}, []string{"ping"})
+	node = NewMemberNode("127.0.0.1:80", 1, "active", 1)
+	node2 = NewMemberNode("127.0.0.1:81", 1, "active", 1)
+	testPool := Pool{}
+	testPool.Properties.Basic.NodesTable = []MemberNode{node, node2}
+	testPool.Properties.Basic.Monitors = []string{"ping"}
+	createPool = NewCreate("pool_test_rui_4", testPool )
 }
 
 func TestNewCreate(t *testing.T) {
