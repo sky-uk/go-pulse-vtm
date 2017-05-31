@@ -10,10 +10,7 @@ import (
 func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
 
-	//
-	// Get All Services.
-	//
-	// Create api object.
+	//Example to get all the pools
 	getAllAPI := pool.NewGetAll()
 
 	// make api call.
@@ -35,6 +32,7 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Println("Response: ", getAllAPI.ResponseObject())
 	}
 
+	//Example to get a single pool
 	getSingleAPI := pool.NewGetSingle("pool_test_rui_2")
 	// make api call.
 	err2 := vtmClient.Do(getSingleAPI)
@@ -43,23 +41,42 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	}
 	if getSingleAPI.StatusCode() == 200 {
 		MyPool := getSingleAPI.GetResponse().Properties
+		fmt.Println("Response: ", getSingleAPI.ResponseObject())
 		fmt.Println(MyPool)
 	} else {
 		fmt.Println("Status code:", getSingleAPI.StatusCode())
 		fmt.Println("Response: ", getSingleAPI.ResponseObject())
 	}
 
-	DeleteAPI := pool.NewDelete("pool_test_rui_3")
+	poolNodes := []pool.MemberNode{}
+	poolNodes = append(poolNodes, pool.NewMemberNode("127.0.0.1:80", 1, "active", 1))
+	poolNodes = append(poolNodes, pool.NewMemberNode("127.0.0.1:81", 2, "active", 1))
+	myPool := pool.Pool{}
+	myPool.Properties.Basic.NodesTable = poolNodes
+	myPool.Properties.Basic.Monitors = []string{"ping"}
+	CreateAPI := pool.NewCreate("pool_test_rui_5", myPool)
+	errCreate := vtmClient.Do(CreateAPI)
+	if errCreate != nil {
+		fmt.Println("Error Creating:", errCreate)
+	}
+	if CreateAPI.StatusCode() == 200 || CreateAPI.StatusCode() == 201 {
+		fmt.Println("Created")
+	} else {
+		fmt.Println("Status code:", CreateAPI.StatusCode())
+		fmt.Println("Response: ", CreateAPI.ResponseObject())
+	}
+
+	/*DeleteAPI := pool.NewDelete("pool_test_rui_5")
 	// make api call.
-	err3 := vtmClient.Do(DeleteAPI)
-	if err3 != nil {
-		fmt.Println("Error: ", err3)
+	errDelete := vtmClient.Do(DeleteAPI)
+	if errDelete != nil {
+		fmt.Println("Error: ", errDelete)
 	}
 	if DeleteAPI.StatusCode() == 200 {
 		fmt.Println("Deleted ")
 	} else {
 		fmt.Println("Status code:", DeleteAPI.StatusCode())
 		fmt.Println("Response: ", DeleteAPI.ResponseObject())
-	}
+	}*/
 
 }
