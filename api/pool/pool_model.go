@@ -76,6 +76,7 @@ type Ssl struct {
 	SslCiphers          string   `json:"ssl_ciphers,ommitempty"`
 }
 
+
 // MemberNode - Pool membership details / node /state / weight
 type MemberNode struct {
 	Node     string `json:"node"`

@@ -11,13 +11,11 @@ type CreatePoolAPI struct {
 	*api.BaseAPI
 }
 
-
 //NewCreate - Creates a new pool
 func NewCreate(poolName string, pool Pool) *CreatePoolAPI {
 	return execCreateUpdate(poolName, pool)
 }
 
-//NewUpdate - Placeholder to create
 
 func NewUpdate(poolName string, pool Pool) *CreatePoolAPI {
 	return execCreateUpdate(poolName, pool)
