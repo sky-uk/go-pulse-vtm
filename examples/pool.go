@@ -51,6 +51,7 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 
 
 
+
 	poolNodes := []pool.MemberNode{}
 	poolNodes = append(poolNodes, pool.NewMemberNode("127.0.0.1:80", 1, "active", 1))
 	poolNodes = append(poolNodes, pool.NewMemberNode("127.0.0.1:81", 2, "active", 1))
@@ -68,6 +69,7 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	}
 
 	/*DeleteAPI := pool.NewDelete("pool_test_rui_5")
+
 	// make api call.
 	errDelete := vtmClient.Do(DeleteAPI)
 	if errDelete != nil {
