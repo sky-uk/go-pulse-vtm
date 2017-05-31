@@ -11,8 +11,7 @@ type CreatePoolAPI struct {
 }
 
 //NewCreate - Creates a new pool
-//nodeList []MemberNodes, nodeMonitors []string
-func NewCreate(poolName string, pool Pool ) *CreatePoolAPI {
+func NewCreate(poolName string, pool Pool) *CreatePoolAPI {
 
 	return execCreateUpdate(poolName, pool)
 }

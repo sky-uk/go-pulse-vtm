@@ -2,7 +2,6 @@ package pool
 
 // Pool - main pool struct
 type Pool struct {
-
 	Properties Properties `json:"properties"`
 }
 
@@ -18,21 +17,21 @@ type Properties struct {
 
 // Basic - main pool definitions
 type Basic struct {
-	BandwidthClass               string        `json:"bandwidth_class,omitempty"`
-	FailurePool                  string        `json:"failure_pool,omitempty"`
-	MaxConnectionAttempts        int           `json:"max_connection_attempts"`
-	MaxIdleConnectionsPerNode    int           `json:"max_idle_connections_pernode"`
-	MaxTimeoutConnectionAttempts int           `json:"max_timed_out_connection_attempts"`
-	Monitors                     []string      `json:"monitors"`
-	NodeCloseWithReset           bool          `json:"node_close_with_rst"`
-	NodeConnectionAttempts       int           `json:"node_connection_attempts,omitempty"`
-	NodeDeleteBehavior           string        `json:"node_delete_behavior,omitempty"`
-	NodeDrainDeleteTimeout       int           `json:"node_drain_to_delete_timeout"`
+	BandwidthClass               string       `json:"bandwidth_class,omitempty"`
+	FailurePool                  string       `json:"failure_pool,omitempty"`
+	MaxConnectionAttempts        int          `json:"max_connection_attempts"`
+	MaxIdleConnectionsPerNode    int          `json:"max_idle_connections_pernode"`
+	MaxTimeoutConnectionAttempts int          `json:"max_timed_out_connection_attempts"`
+	Monitors                     []string     `json:"monitors"`
+	NodeCloseWithReset           bool         `json:"node_close_with_rst"`
+	NodeConnectionAttempts       int          `json:"node_connection_attempts,omitempty"`
+	NodeDeleteBehavior           string       `json:"node_delete_behavior,omitempty"`
+	NodeDrainDeleteTimeout       int          `json:"node_drain_to_delete_timeout"`
 	NodesTable                   []MemberNode `json:"nodes_table"`
-	Note                         string        `json:"note"`
-	PassiveMonitoring            bool          `json:"passive_monitoring"`
-	PersistenceClass             string        `json:"persistence_class,omitempty"`
-	Transparent                  bool          `json:"transparent"`
+	Note                         string       `json:"note"`
+	PassiveMonitoring            bool         `json:"passive_monitoring"`
+	PersistenceClass             string       `json:"persistence_class,omitempty"`
+	Transparent                  bool         `json:"transparent"`
 }
 
 // Connection - Connection setting

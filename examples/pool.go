@@ -48,14 +48,13 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Println("Response: ", getSingleAPI.ResponseObject())
 	}
 
-
 	poolNodes := []pool.MemberNode{}
 	poolNodes = append(poolNodes, pool.NewMemberNode("127.0.0.1:80", 1, "active", 1))
 	poolNodes = append(poolNodes, pool.NewMemberNode("127.0.0.1:81", 2, "active", 1))
 	myPool := pool.Pool{}
-        myPool.Properties.Basic.NodesTable = poolNodes
+	myPool.Properties.Basic.NodesTable = poolNodes
 	myPool.Properties.Basic.Monitors = []string{"ping"}
-	CreateAPI := pool.NewCreate("pool_test_rui_5",myPool)
+	CreateAPI := pool.NewCreate("pool_test_rui_5", myPool)
 	errCreate := vtmClient.Do(CreateAPI)
 	if errCreate != nil {
 		fmt.Println("Error Creating:", errCreate)
