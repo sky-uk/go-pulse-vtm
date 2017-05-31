@@ -1,14 +1,12 @@
 package pool
 
-
 // NewMemberNodes - Returns the Membernodes object
-func NewMemberNodes(host string,priority int, state string, weight int ) MemberNodes{
-     memberNodes := MemberNodes{
-        Node: host,
-	Priority: priority,
-	State: state,
-	Weight: weight,
-     }
+func NewMemberNodes(host string, priority int, state string, weight int) MemberNodes {
+	memberNodes := MemberNodes{
+		Node:     host,
+		Priority: priority,
+		State:    state,
+		Weight:   weight,
+	}
 	return memberNodes
 }
-

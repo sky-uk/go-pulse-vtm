@@ -10,7 +10,6 @@ import (
 func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
 
-	/*
 	//Example to get all the pools
 	getAllAPI := pool.NewGetAll()
 
@@ -49,13 +48,10 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Println("Response: ", getSingleAPI.ResponseObject())
 	}
 
+	poolNodes := []pool.MemberNodes{}
 
-*/
-
-        poolNodes := []pool.MemberNodes{}
-
-	poolNodes = append(pool_nodes,pool.NewMemberNodes("127.0.0.1:80",1,"active",1 ))
-	poolNodes = append(pool_nodes,pool.NewMemberNodes("127.0.0.1:82",2,"active",1 ))
+	poolNodes = append(poolNodes, pool.NewMemberNodes("127.0.0.1:80", 1, "active", 1))
+	poolNodes = append(poolNodes, pool.NewMemberNodes("127.0.0.1:82", 2, "active", 1))
 
 	CreateAPI := pool.NewCreate("pool_test_rui_5", poolNodes, []string{"ping"})
 	errCreate := vtmClient.Do(CreateAPI)

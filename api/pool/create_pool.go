@@ -3,7 +3,6 @@ package pool
 import (
 	"github.com/sky-uk/go-brocade-vtm/api"
 	"net/http"
-
 )
 
 // CreatePoolAPI - Base Struct
@@ -12,17 +11,17 @@ type CreatePoolAPI struct {
 }
 
 //NewCreate - Creates a new pool
-func NewCreate(poolName string , nodeList []MemberNodes, nodeMonitors []string) *CreatePoolAPI {
+func NewCreate(poolName string, nodeList []MemberNodes, nodeMonitors []string) *CreatePoolAPI {
 
-	return execCreateUpdate(poolName,nodeList,nodeMonitors)
+	return execCreateUpdate(poolName, nodeList, nodeMonitors)
 }
 
 //NewUpdate - Placeholder to create
-func NewUpdate(poolName string , nodeList []MemberNodes, nodeMonitors []string) *CreatePoolAPI {
-	return execCreateUpdate(poolName,nodeList,nodeMonitors)
+func NewUpdate(poolName string, nodeList []MemberNodes, nodeMonitors []string) *CreatePoolAPI {
+	return execCreateUpdate(poolName, nodeList, nodeMonitors)
 }
 
-func execCreateUpdate(poolName string , nodeList []MemberNodes, nodeMonitors []string) *CreatePoolAPI {
+func execCreateUpdate(poolName string, nodeList []MemberNodes, nodeMonitors []string) *CreatePoolAPI {
 	this := new(CreatePoolAPI)
 	requestPayload := new(Pool)
 	requestPayload.Properties.Basic.NodesTable = nodeList

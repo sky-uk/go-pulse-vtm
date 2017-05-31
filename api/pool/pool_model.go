@@ -8,7 +8,7 @@ type Pool struct {
 
 // Properties - General Properties for the pool
 type Properties struct {
-	Basic Basic `json:"basic,omitempty"`
+	Basic         Basic         `json:"basic,omitempty"`
 	Connection    Connection    `json:"connection,omitempty"`
 	HTTP          HTTP          `json:"http,omitempty"`
 	LoadBalancing LoadBalancing `json:"load_balancing,omitempty"`
