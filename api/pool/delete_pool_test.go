@@ -17,4 +17,8 @@ func TestNewDelete(t *testing.T) {
 	assert.Equal(t, http.MethodDelete, DeleteAPI.Method())
 	assert.Equal(t, "/api/tm/3.8/config/active/pools/pool_test_rui_2", DeleteAPI.Endpoint())
 	assert.Equal(t, 0, DeleteAPI.StatusCode())
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8b461f7e26a3bc1f8cd0128d196fa7e2f0107ef6
 }
