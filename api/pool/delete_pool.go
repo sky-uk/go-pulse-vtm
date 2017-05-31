@@ -5,10 +5,7 @@ import (
 	"net/http"
 )
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 8b461f7e26a3bc1f8cd0128d196fa7e2f0107ef6
 // DeletePoolAPI - Base Struct
 type DeletePoolAPI struct {
 	*api.BaseAPI
