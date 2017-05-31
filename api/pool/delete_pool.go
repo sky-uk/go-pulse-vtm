@@ -5,7 +5,6 @@ import (
 	"net/http"
 )
 
-
 // DeletePoolAPI - Base Struct
 type DeletePoolAPI struct {
 	*api.BaseAPI

@@ -5,7 +5,6 @@ import (
 	"net/http"
 )
 
-
 // CreatePoolAPI - Base Struct
 type CreatePoolAPI struct {
 	*api.BaseAPI
@@ -15,7 +14,6 @@ type CreatePoolAPI struct {
 func NewCreate(poolName string, pool Pool) *CreatePoolAPI {
 	return execCreateUpdate(poolName, pool)
 }
-
 
 //NewUpdate - Placeholder to create
 func NewUpdate(poolName string, pool Pool) *CreatePoolAPI {
@@ -32,4 +30,3 @@ func execCreateUpdate(poolName string, pool Pool) *CreatePoolAPI {
 func (cp CreatePoolAPI) GetResponse() *Pool {
 	return cp.ResponseObject().(*Pool)
 }
-
