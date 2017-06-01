@@ -29,6 +29,9 @@ func main() {
 		return
 	case "pool":
 		RunPoolExample(vtmAddress, vtmUser, vtmPassword, debug)
+	case "traffic_ip_groups":
+		fmt.Println("running traffic_ip_groups with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
+		RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword, debug)
 		return
 	case "virtual_server":
 		RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword, debug)
