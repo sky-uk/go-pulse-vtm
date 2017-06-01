@@ -43,7 +43,8 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	fmt.Printf("\n== Running create new monitor with name %s ==\n", exampleMonitorName)
 
 	newHTTPMonitor := monitor.HTTP{URIPath: "/download/private/status/check"}
-	newBasicMonitor := monitor.Basic{Delay: 6, Failures: 3, Type: "http", Timeout: 4}
+	monitorVerbosity := true
+	newBasicMonitor := monitor.Basic{Delay: 6, Failures: 3, Type: "http", Timeout: 4, Verbose: &monitorVerbosity}
 	newMonitorProperties := monitor.Properties{Basic: newBasicMonitor, HTTP: newHTTPMonitor}
 	newMonitor := monitor.Monitor{Properties: newMonitorProperties}
 
@@ -100,6 +101,8 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	var updateMonitor monitor.Monitor
 
 	updateMonitor.Properties.HTTP.URIPath = "/private/status/check"
+	monitorVerbosity = false
+	updateMonitor.Properties.Basic.Verbose = &monitorVerbosity
 	updateMonitorAPI := monitor.NewUpdate(exampleMonitorName, updateMonitor)
 	err = vtmClient.Do(updateMonitorAPI)
 	if err != nil {

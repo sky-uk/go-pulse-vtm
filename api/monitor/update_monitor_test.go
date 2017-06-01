@@ -12,7 +12,8 @@ var updateMonitorName = "updateMonitor"
 
 func setup() {
 	newHTTPMonitor := HTTP{URIPath: "/private/status/check"}
-	newBasicMonitor := Basic{Delay: 6, Failures: 3, Type: "http", Timeout: 4}
+	monitorVerbosity := false
+	newBasicMonitor := Basic{Delay: 6, Failures: 3, Type: "http", Timeout: 4, Verbose: &monitorVerbosity}
 	newMonitorProperties := Properties{Basic: newBasicMonitor, HTTP: newHTTPMonitor}
 	newMonitor := Monitor{Properties: newMonitorProperties}
 
@@ -32,7 +33,7 @@ func TestUpdateEndpoint(t *testing.T) {
 
 func TestUpdateMarshalling(t *testing.T) {
 	setup()
-	expectedJSON := "{\"properties\":{\"basic\":{\"delay\":6,\"failures\":3,\"type\":\"http\",\"timeout\":4},\"http\":{\"path\":\"/private/status/check\"}}}"
+	expectedJSON := "{\"properties\":{\"basic\":{\"delay\":6,\"failures\":3,\"type\":\"http\",\"timeout\":4,\"verbose\":false},\"http\":{\"path\":\"/private/status/check\"}}}"
 	jsonBytes, err := json.Marshal(updateMonitorAPI.RequestObject())
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))
