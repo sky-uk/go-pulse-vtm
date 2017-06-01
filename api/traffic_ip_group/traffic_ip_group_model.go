@@ -21,23 +21,28 @@ type Properties struct {
 	Basic Basic `json:"basic"`
 }
 
+type IPMapping struct {
+	IP             string `json:"ip"`
+	TrafficManager string `json:"traffic_manager"`
+}
+
 // Basic : Stored within Properties, contains attributes of an TrafficIPGroup
 type Basic struct {
-	Enabled                      bool     `json:"enabled"`
-	HashSourcePort               bool     `json:"hash_source_port"`
-	IPAssignmentMode             string   `json:"ip_assignment_mode"`
-	IPMapping                    []string `json:"ip_mapping"`
-	IPAddresses                  []string `json:"ipaddresses"`
-	KeepTogether                 bool     `json:"keeptogether"`
-	Location                     int      `json:"location"`
-	Machines                     []string `json:"machines"`
-	Mode                         string   `json:"mode"`
-	Multicast                    string   `json:"multicast"`
-	Note                         string   `json:"note"`
-	RhiBgpMetricBase             int      `json:"rhi_bgp_metric_base"`
-	RhiBgpPassiveMetricOffset    int      `json:"rhi_bgp_passive_metric_offset"`
-	RhiOspfv2MetricBase          int      `json:"rhi_ospfv2_metric_base"`
-	RhiOspfv2PassiveMetricOffset int      `json:"rhi_ospfv2_passive_metric_offset"`
-	RhiProtocols                 string   `json:"rhi_protocols"`
-	Slaves                       []string `json:"slaves"`
+	Enabled                      bool        `json:"enabled,omitempty"`
+	HashSourcePort               bool        `json:"hash_source_port,omitempty"`
+	IPAssignmentMode             string      `json:"ip_assignment_mode,omitempty"`
+	IPMapping                    []IPMapping `json:"ip_mapping,omitempty"`
+	IPAddresses                  []string    `json:"ipaddresses,omitempty"`
+	KeepTogether                 bool        `json:"keeptogether,omitempty"`
+	Location                     int         `json:"location,omitempty"`
+	Machines                     []string    `json:"machines,omitempty"`
+	Mode                         string      `json:"mode,omitempty"`
+	Multicast                    string      `json:"multicast,omitempty"`
+	Note                         string      `json:"note,omitempty"`
+	RhiBgpMetricBase             uint        `json:"rhi_bgp_metric_base,omitempty"`
+	RhiBgpPassiveMetricOffset    uint        `json:"rhi_bgp_passive_metric_offset,omitempty"`
+	RhiOspfv2MetricBase          uint        `json:"rhi_ospfv2_metric_base,omitempty"`
+	RhiOspfv2PassiveMetricOffset uint        `json:"rhi_ospfv2_passive_metric_offset,omitempty"`
+	RhiProtocols                 string      `json:"rhi_protocols,omitempty"`
+	Slaves                       []string    `json:"slaves,omitempty"`
 }
