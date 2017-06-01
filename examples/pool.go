@@ -77,5 +77,4 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Println("Status code:", DeleteAPI.StatusCode())
 		fmt.Println("Response: ", DeleteAPI.ResponseObject())
 	}*/
-
 }

@@ -31,7 +31,6 @@ func main() {
 		RunPoolExample(vtmAddress, vtmUser, vtmPassword, debug)
 		return
 	case "virtual_server":
-		fmt.Println("Running virtual server with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword, debug)
 		return
 	}
