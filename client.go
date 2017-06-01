@@ -36,6 +36,7 @@ type VTMClient struct {
 // Do - makes the API call.
 func (vtmClient *VTMClient) Do(api api.VTMApi) error {
 	requestURL := fmt.Sprintf("%s%s", vtmClient.URL, api.Endpoint())
+	log.Print("Request URL:", requestURL)
 	var requestPayload io.Reader
 
 	// TODO: change this to JSON
@@ -43,9 +44,12 @@ func (vtmClient *VTMClient) Do(api api.VTMApi) error {
 		requestJSONBytes, marshallingErr := json.Marshal(api.RequestObject())
 		if marshallingErr != nil {
 			log.Fatal(marshallingErr)
+			return (marshallingErr)
 		}
 		if vtmClient.debug {
+			log.Println("Request payload as JSON:")
 			log.Println(string(requestJSONBytes))
+			log.Println("--------------------------------------------------------------")
 		}
 		requestPayload = bytes.NewReader(requestJSONBytes)
 	}

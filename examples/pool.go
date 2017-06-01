@@ -32,7 +32,6 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Println("Response: ", getAllAPI.ResponseObject())
 	}
 
-	//Example to get a single pool
 	getSingleAPI := pool.NewGetSingle("pool_test_rui_2")
 	// make api call.
 	err2 := vtmClient.Do(getSingleAPI)
@@ -78,5 +77,4 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		fmt.Println("Status code:", DeleteAPI.StatusCode())
 		fmt.Println("Response: ", DeleteAPI.ResponseObject())
 	}*/
-
 }
