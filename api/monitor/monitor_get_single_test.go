@@ -24,7 +24,8 @@ func setupGetSingleMonitor() *MonitorsList {
 func setupTestMonitorToString() *Monitor {
 
 	monitorHTTP := HTTP{URIPath: "/some/status/page"}
-	monitorBasic := Basic{Delay: 7, Failures: 2, Type: "http", Timeout: 11}
+	monitorVerbosity := true
+	monitorBasic := Basic{Delay: 7, Failures: 2, Type: "http", Timeout: 11, Verbose: &monitorVerbosity}
 	monitorProperties := Properties{Basic: monitorBasic, HTTP: monitorHTTP}
 	monitor := Monitor{Properties: monitorProperties}
 
@@ -62,13 +63,17 @@ func TestNewGetMonitorEndpoint(t *testing.T) {
 
 func TestNewGetMonitorUnmarshalling(t *testing.T) {
 	setupNewGetMonitor()
-	jsonContent := []byte("{\"properties\":{\"basic\":{\"delay\":6,\"failures\":3,\"timeout\":4,\"type\":\"http\"},\"http\":{\"path\":\"/download/private/status/check\"}}}")
+	verbosityCheck := true
+
+	jsonContent := []byte("{\"properties\":{\"basic\":{\"delay\":6,\"failures\":3,\"timeout\":4,\"type\":\"http\",\"verbose\":true},\"http\":{\"path\":\"/download/private/status/check\"}}}")
 	jsonErr := json.Unmarshal(jsonContent, getSingleMonitorAPI.ResponseObject())
 
 	assert.Nil(t, jsonErr)
-	assert.Equal(t, 6, getSingleMonitorAPI.GetResponse().Properties.Basic.Delay)
-	assert.Equal(t, 3, getSingleMonitorAPI.GetResponse().Properties.Basic.Failures)
-	assert.Equal(t, 4, getSingleMonitorAPI.GetResponse().Properties.Basic.Timeout)
-	assert.Equal(t, "http", getSingleMonitorAPI.GetResponse().Properties.Basic.Type)
-	assert.Equal(t, "/download/private/status/check", getSingleMonitorAPI.GetResponse().Properties.HTTP.URIPath)
+	response := getSingleMonitorAPI.GetResponse()
+	assert.Equal(t, 6, response.Properties.Basic.Delay)
+	assert.Equal(t, 3, response.Properties.Basic.Failures)
+	assert.Equal(t, 4, response.Properties.Basic.Timeout)
+	assert.Equal(t, "http", response.Properties.Basic.Type)
+	assert.Equal(t, "/download/private/status/check", response.Properties.HTTP.URIPath)
+	assert.Equal(t, &verbosityCheck, response.Properties.Basic.Verbose)
 }

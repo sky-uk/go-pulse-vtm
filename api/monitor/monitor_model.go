@@ -17,8 +17,8 @@ type Basic struct {
 	Failures int    `json:"failures,omitempty"`
 	Type     string `json:"type,omitempty"`
 	Timeout  int    `json:"timeout,omitempty"`
-	UseSSL   bool   `json:"use_ssl,omitempty"`
-	Verbose  bool   `json:"verbose,omitempty"`
+	UseSSL   *bool  `json:"use_ssl,omitempty"`
+	Verbose  *bool  `json:"verbose,omitempty"`
 }
 
 // HTTP : HTTP monitor set up
