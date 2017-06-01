@@ -20,17 +20,17 @@ type Properties struct {
 
 // Basic : Basic virtual server configration
 type Basic struct {
-	AddClusterIP         bool     `json:"add_cluster_ip,omitempty"`        // true
-	AddXForwarded        bool     `json:"add_x_forwarded_for,omitempty"`   // false
-	AddXForwardedProto   bool     `json:"add_x_forwarded_proto,omitempty"` // false
+	AddClusterIP         *bool    `json:"add_cluster_ip,omitempty"`        // true
+	AddXForwarded        *bool    `json:"add_x_forwarded_for,omitempty"`   // false
+	AddXForwardedProto   *bool    `json:"add_x_forwarded_proto,omitempty"` // false
 	BandwidthClass       string   `json:"bandwidth_class,omitempty"`       // ""
-	CloseWithRst         bool     `json:"close_with_rst,omitempty"`        // false
+	CloseWithRst         *bool    `json:"close_with_rst,omitempty"`        // false
 	CompletionRules      []string `json:"completionrules,omitempty"`       // []
 	ConnectTimeout       int      `json:"connect_timeout,omitempty"`       // 10
-	Enabled              bool     `json:"enabled"`
-	FtpForceServerSecure bool     `json:"ftp_force_server_secure,omitempty"` // true
+	Enabled              *bool    `json:"enabled"`
+	FtpForceServerSecure *bool    `json:"ftp_force_server_secure,omitempty"` // true
 	GlbServices          []string `json:"glb_services,omitempty"`            // []
-	ListenOnAny          bool     `json:"listen_on_any,omitempty"`           // false
+	ListenOnAny          *bool    `json:"listen_on_any,omitempty"`           // false
 	ListenOnHosts        []string `json:"listen_on_hosts,omitempty"`         // []
 	ListenOnTrafficIps   []string `json:"listen_on_traffic_ips,omitempty"`   // []
 	Note                 string   `json:"note,omitempty"`                    // ""
@@ -41,24 +41,24 @@ type Basic struct {
 	RequestRules         []string `json:"request_rules,omitempty"`    // []
 	ResponseRules        []string `json:"response_rules,omitempty"`   // []
 	SlmClass             string   `json:"slm_class,omitempty"`        // ""
-	SoNagle              bool     `json:"so_nagle,omitempty"`         // false,
+	SoNagle              *bool    `json:"so_nagle,omitempty"`         // false,
 	// SslClientCertHeaders : enum can accept these strings("all", "none"
 	// (default), "none"
 	SslClientCertHeaders string `json:"ssl_client_cert_headers,omitempty"` // "none"
-	SslDecrypt           bool   `json:"ssl_decrypt,omitempty"`             // false
+	SslDecrypt           *bool  `json:"ssl_decrypt,omitempty"`             // false
 	SslHonorFallbackScsv string `json:"ssl_honor_fallback_scsv,omitempty"` // "use_default"
-	Transparent          bool   `json:"transparent,omitempty"`             // false
+	Transparent          *bool  `json:"transparent,omitempty"`             // false
 }
 
 // Aptimizer : whether virtual server should aptimize web content
 type Aptimizer struct {
-	Enabled bool     `json:"enabled,omitempty"` // false
+	Enabled *bool    `json:"enabled,omitempty"` // false
 	Profile []string `json:"profile,omitempty"` // [], NOTE: actually more complex
 }
 
 // Connection : connection parameters
 type Connection struct {
-	Keepalive              bool   `json:"keepalive,omitempty"`                // false
+	Keepalive              *bool  `json:"keepalive,omitempty"`                // false
 	KeepaliveTimeout       int    `json:"keepalive_timeout,omitempty"`        // 10
 	MaxClientBuffer        int    `json:"max_client_buffer,omitempty"`        // 65536
 	MaxServerBuffer        int    `json:"max_server_buffer,omitempty"`        // 65536
@@ -86,31 +86,31 @@ type DNS struct {
 	EdnsUdpsize int      `json:"edns_udpsize,omitempty"` // 4096
 	MaxUdpsize  int      `json:"max_udpsize,omitempty"`  // 4096
 	RrsetOrder  string   `json:"rrset_order,omitempty"`  // "fixed"
-	Verbose     bool     `json:"verbose,omitempty"`      // false
+	Verbose     *bool    `json:"verbose,omitempty"`      // false
 	Zones       []string `json:"zones,omitempty"`        // []
 }
 
 // Ftp configuration section
 type Ftp struct {
-	DataSourcePort    int  `json:"data_source_port,omitempty"`    // 0
-	ForceClientSecure bool `json:"force_client_secure,omitempty"` // true
-	PortRangeHigh     int  `json:"port_range_high,omitempty"`     // 0
-	PortRangeLow      int  `json:"port_range_low,omitempty"`      // 0
-	SslData           bool `json:"ssl_data"`                      // true
+	DataSourcePort    int   `json:"data_source_port,omitempty"`    // 0
+	ForceClientSecure *bool `json:"force_client_secure,omitempty"` // true
+	PortRangeHigh     int   `json:"port_range_high,omitempty"`     // 0
+	PortRangeLow      int   `json:"port_range_low,omitempty"`      // 0
+	SslData           *bool `json:"ssl_data,omitempty"`            // true
 }
 
 // Gzip configuration section
 type Gzip struct {
 	CompressLevel int      `json:"compress_level,omitempty"` // 1
-	Enabled       bool     `json:"enabled,omitempty"`        // false
+	Enabled       *bool    `json:"enabled,omitempty"`        // false
 	EtagRewrite   string   `json:"etag_rewrite,omitempty"`   // "wrap"
 	IncludeMime   []string `json:"include_mime,omitempty"`   // [
 	// "text/html"
 	// "text/plain"
 	// ]
-	MaxSize int  `json:"max_size,omitempty"` // 10000000
-	MinSize int  `json:"min_size,omitempty"` // 1000
-	NoSize  bool `json:"no_size,omitempty"`  // true
+	MaxSize int   `json:"max_size,omitempty"` // 10000000
+	MinSize int   `json:"min_size,omitempty"` // 1000
+	NoSize  *bool `json:"no_size,omitempty"`  // true
 }
 
 // Ssl configuration section

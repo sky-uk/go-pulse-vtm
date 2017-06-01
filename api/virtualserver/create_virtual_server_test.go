@@ -11,8 +11,9 @@ var createVirtualServerAPI *CreateVirtualServerAPI
 var newVirtualServerName = "exampleVirtualServer"
 
 func createSetup() {
+	enabled := false
 	newBasicVirtualServer := Basic{
-		Enabled:  false,
+		Enabled:  &enabled,
 		Pool:     "pool_test_rui",
 		Port:     80,
 		Protocol: "http",
@@ -40,7 +41,7 @@ func TestCreateEndpoint(t *testing.T) {
 
 func TestCreateMarshalling(t *testing.T) {
 	createSetup()
-	expectedJSON := `{"properties":{"basic":{"enabled":false,"pool":"pool_test_rui","port":80,"protocol":"http"},"aptimizer":{},"connection":{},"connection_errors":{},"cookie":{},"dns":{},"ftp":{"ssl_data":false},"gzip":{},"ssl":{}}}`
+	expectedJSON := `{"properties":{"basic":{"enabled":false,"pool":"pool_test_rui","port":80,"protocol":"http"},"aptimizer":{},"connection":{},"connection_errors":{},"cookie":{},"dns":{},"ftp":{},"gzip":{},"ssl":{}}}`
 	jsonBytes, err := json.Marshal(createVirtualServerAPI.RequestObject())
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))

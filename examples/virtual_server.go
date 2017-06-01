@@ -60,8 +60,9 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 	//
 	// Create a virtual server
 	// ------------------ then creating a new one...
+	enabled := false
 	newBasicvirtualserver := virtualserver.Basic{
-		Enabled:  false,
+		Enabled:  &enabled,
 		Pool:     "pool_test_rui",
 		Port:     80,
 		Protocol: "http",
@@ -122,7 +123,7 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 	var updatevirtualserverName = "PaaSExampleHTTPvirtualserver"
 
 	updateBasicvirtualserver := virtualserver.Basic{
-		Enabled:  false,
+		Enabled:  &enabled,
 		Pool:     "pool_test_rui",
 		Port:     90,
 		Protocol: "http",

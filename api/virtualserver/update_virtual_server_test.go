@@ -11,8 +11,9 @@ var updateVirtualServerAPI *UpdateVirtualServerAPI
 var updateVirtualServerName = "updateVirtualServer"
 
 func setup() {
+	enabled := false
 	newBasicVirtualServer := Basic{
-		Enabled:  false,
+		Enabled:  &enabled,
 		Pool:     "pool_test_rui",
 		Port:     80,
 		Protocol: "http",
@@ -36,7 +37,7 @@ func TestUpdateEndpoint(t *testing.T) {
 
 func TestUpdateMarshalling(t *testing.T) {
 	setup()
-	expectedJSON := `{"properties":{"basic":{"enabled":false,"pool":"pool_test_rui","port":80,"protocol":"http"},"aptimizer":{},"connection":{},"connection_errors":{},"cookie":{},"dns":{},"ftp":{"ssl_data":false},"gzip":{},"ssl":{}}}`
+	expectedJSON := `{"properties":{"basic":{"enabled":false,"pool":"pool_test_rui","port":80,"protocol":"http"},"aptimizer":{},"connection":{},"connection_errors":{},"cookie":{},"dns":{},"ftp":{},"gzip":{},"ssl":{}}}`
 	jsonBytes, err := json.Marshal(updateVirtualServerAPI.RequestObject())
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))
