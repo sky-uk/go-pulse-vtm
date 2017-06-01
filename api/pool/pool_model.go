@@ -23,15 +23,15 @@ type Basic struct {
 	MaxIdleConnectionsPerNode    int          `json:"max_idle_connections_pernode"`
 	MaxTimeoutConnectionAttempts int          `json:"max_timed_out_connection_attempts"`
 	Monitors                     []string     `json:"monitors"`
-	NodeCloseWithReset           *bool         `json:"node_close_with_rst"`
+	NodeCloseWithReset           *bool        `json:"node_close_with_rst"`
 	NodeConnectionAttempts       int          `json:"node_connection_attempts,omitempty"`
 	NodeDeleteBehavior           string       `json:"node_delete_behavior,omitempty"`
 	NodeDrainDeleteTimeout       int          `json:"node_drain_to_delete_timeout"`
 	NodesTable                   []MemberNode `json:"nodes_table"`
 	Note                         string       `json:"note"`
-	PassiveMonitoring            *bool         `json:"passive_monitoring"`
+	PassiveMonitoring            *bool        `json:"passive_monitoring"`
 	PersistenceClass             string       `json:"persistence_class,omitempty"`
-	Transparent                  *bool         `json:"transparent"`
+	Transparent                  *bool        `json:"transparent"`
 }
 
 // Connection - Connection setting
@@ -52,25 +52,25 @@ type HTTP struct {
 // LoadBalancing - Pool Load balancing settings
 type LoadBalancing struct {
 	Algorithm       string `json:"algorithm,omitempty"`
-	PriorityEnabled *bool   `json:"priority_enabled,omitempty"`
+	PriorityEnabled *bool  `json:"priority_enabled,omitempty"`
 	PriorityNodes   int    `json:"priority_nodes,omitempty"`
 }
 
 // Node - Node Specific settings
 type Node struct {
 	CloseOnDeath  *bool `json:"close_on_death,omitempty"`
-	RetryFailTime int  `json:"retry_fail_time,omitempty"`
+	RetryFailTime int   `json:"retry_fail_time,omitempty"`
 }
 
 // Ssl - SSL related settings
 type Ssl struct {
-	ClientAuth          *bool     `json:"client_auth,omitempty"`
+	ClientAuth          *bool    `json:"client_auth,omitempty"`
 	CommonNameMatch     []string `json:"common_name_match,omitempty"`
 	ElipticCurves       []string `json:"eliptic_curves,omitempty"`
-	Enabled             *bool     `json:"enabled,omitempty"`
-	Enhance             *bool     `json:"enhance,omitempty"`
-	SendCloseAlerts     *bool     `json:"send_close_alerts,ommitempty"`
-	ServerName          *bool     `json:"server_name,ommitempty"`
+	Enabled             *bool    `json:"enabled,omitempty"`
+	Enhance             *bool    `json:"enhance,omitempty"`
+	SendCloseAlerts     *bool    `json:"send_close_alerts,ommitempty"`
+	ServerName          *bool    `json:"server_name,ommitempty"`
 	SignatureAlgorithms string   `json:"signature_algorithms,ommitempty"`
 	SslCiphers          string   `json:"ssl_ciphers,ommitempty"`
 }
