@@ -35,20 +35,20 @@ func TestGetAllUnMarshalling(t *testing.T) {
 	assert.Len(t, getAllVirtualServerAPI.GetResponse().Children, 5)
 	assert.Equal(t, "PaaSExampleHTTPvirtualserver", getAllVirtualServerAPI.GetResponse().Children[0].Name)
 	assert.Equal(
-          t,
-          "/api/tm/3.8/config/active/virtual_servers/PaaSExampleHTTPvirtualserver",
-          getAllVirtualServerAPI.GetResponse().Children[0].Href,
-        )
+		t,
+		"/api/tm/3.8/config/active/virtual_servers/PaaSExampleHTTPvirtualserver",
+		getAllVirtualServerAPI.GetResponse().Children[0].Href,
+	)
 	assert.Equal(
-          t,
-          "PaaSExampleHTTPvirtualserver1",
-          getAllVirtualServerAPI.GetResponse().Children[1].Name,
-        )
+		t,
+		"PaaSExampleHTTPvirtualserver1",
+		getAllVirtualServerAPI.GetResponse().Children[1].Name,
+	)
 	assert.Equal(
-          t,
-          "/api/tm/3.8/config/active/virtual_servers/PaaSExampleHTTPvirtualserver1",
-          getAllVirtualServerAPI.GetResponse().Children[1].Href,
-        )
+		t,
+		"/api/tm/3.8/config/active/virtual_servers/PaaSExampleHTTPvirtualserver1",
+		getAllVirtualServerAPI.GetResponse().Children[1].Href,
+	)
 }
 
 func TestGetAllVirtualServers_GetResponse(t *testing.T) {

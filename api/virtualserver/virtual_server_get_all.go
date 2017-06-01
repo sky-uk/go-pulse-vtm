@@ -14,11 +14,11 @@ type GetAllVirtualServers struct {
 func NewGetAll() *GetAllVirtualServers {
 	this := new(GetAllVirtualServers)
 	this.BaseAPI = api.NewBaseAPI(
-          http.MethodGet,
-          "/api/tm/3.8/config/active/virtual_servers",
-          nil,
-          new(VirtualServersList),
-        )
+		http.MethodGet,
+		"/api/tm/3.8/config/active/virtual_servers",
+		nil,
+		new(VirtualServersList),
+	)
 	return this
 }
 
