@@ -5,19 +5,19 @@ import (
 	"net/http"
 )
 
-// GetTrafficIPGroupAPI base object.
-type GetTrafficIPGroupAPI struct {
+// GetSingleTrafficIPGroupAPI base object.
+type GetSingleTrafficIPGroupAPI struct {
 	*api.BaseAPI
 }
 
 // NewGetSingle returns a new object of GetTrafficIPGroupAPI.
-func NewGetSingle(tipg string) *GetTrafficIPGroupAPI {
-	this := new(GetTrafficIPGroupAPI)
+func NewGetSingle(tipg string) *GetSingleTrafficIPGroupAPI {
+	this := new(GetSingleTrafficIPGroupAPI)
 	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/traffic_ip_groups/"+tipg, nil, new(TrafficIPGroup))
 	return this
 }
 
-// GetResponse returns ResponseObject of GetTrafficIPGroupAPI.
-func (ga GetTrafficIPGroupAPI) GetResponse() *TrafficIPGroup {
+// GetResponse returns ResponseObject of GetSingleTrafficIPGroupAPI.
+func (ga GetSingleTrafficIPGroupAPI) GetResponse() *TrafficIPGroup {
 	return ga.ResponseObject().(*TrafficIPGroup)
 }
