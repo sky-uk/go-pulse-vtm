@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// CreateTrafficIPGroupAPI base object.
+// CreateUpdateTrafficIPGroupAPI base object.
 type CreateUpdateTrafficIPGroupAPI struct {
 	*api.BaseAPI
 }
