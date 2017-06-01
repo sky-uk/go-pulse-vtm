@@ -57,10 +57,10 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 
 	// ------------------ then creating a new one...
 	newBasicvirtualserver := virtualserver.Basic{
-		Enabled:            false,
-		DefaultTrafficPool: "pool_test_rui",
-		Port:               80,
-		Protocol:           "http",
+		Enabled:  false,
+		Pool:     "pool_test_rui",
+		Port:     80,
+		Protocol: "http",
 	}
 	newvirtualserverProperties := virtualserver.Properties{Basic: newBasicvirtualserver}
 	newvirtualserver := virtualserver.VirtualServer{Properties: newvirtualserverProperties}
@@ -71,12 +71,11 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 		fmt.Println("Error encoding structure to json: ", e)
 	} else {
 		//fmt.Printf("New virtual server json: \n%v", jsonStr )
-		fmt.Println("New Virtual Server:")
+		fmt.Printf("New Virtual Server: ------- %s --------\n", newvirtualserverName)
 		os.Stdout.Write(jsonStr)
 		fmt.Println()
 	}
 	//-----------------------------------------------------------------------
-
 	createvirtualserverAPI := virtualserver.NewCreate(newvirtualserverName, newvirtualserver)
 	err = vtmClient.Do(createvirtualserverAPI)
 	if err != nil {
@@ -89,5 +88,7 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 		}
 	} else {
 		fmt.Printf("Failed to create new virtualserver %s.\n", newvirtualserverName)
+		fmt.Printf("Status Code:%d\n", createvirtualserverAPI.StatusCode())
+		fmt.Printf("Error: %+v\n", createvirtualserverAPI.Error())
 	}
 }
