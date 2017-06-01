@@ -45,6 +45,8 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 
 	var newvirtualserverName = "PaaSExampleHTTPvirtualserver"
 
+	//
+	// Delete a virtual server
 	// ------------------  Deleting first the resource...
 	log.Print("Trying first to delete virtual server with name: ", newvirtualserverName)
 	deleteAPI := virtualserver.NewDelete(newvirtualserverName)
@@ -55,6 +57,8 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 		log.Print("Resource successfully deleted")
 	}
 
+	//
+	// Create a virtual server
 	// ------------------ then creating a new one...
 	newBasicvirtualserver := virtualserver.Basic{
 		Enabled:  false,
@@ -91,4 +95,50 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 		fmt.Printf("Status Code:%d\n", createvirtualserverAPI.StatusCode())
 		fmt.Printf("Error: %+v\n", createvirtualserverAPI.Error())
 	}
+
+	//
+	// Get a single virtual server
+	//
+	fmt.Printf("\n== Reading the Virtual Server with name %s ==\n", newvirtualserverName)
+	getSingleVirtualServerAPI := virtualserver.NewGetSingle(newvirtualserverName)
+	err = vtmClient.Do(getSingleVirtualServerAPI)
+	if err != nil {
+		fmt.Println("Error getting single virtual server: ", err)
+	}
+
+	// check status code and what we got back...
+	if getSingleVirtualServerAPI.StatusCode() == 200 {
+		var foo *virtualserver.VirtualServer
+		foo = getSingleVirtualServerAPI.GetResponse()
+		fmt.Printf("virtual server pool: %s\n", foo.Properties.Basic.Pool)
+	} else {
+		fmt.Printf("Error: Status code: %+v\n", getSingleVirtualServerAPI.StatusCode())
+		fmt.Printf("Error: Response: +%v\n", getSingleVirtualServerAPI.ResponseObject())
+	}
+
+	//
+	// Update a virtual server...
+	fmt.Printf("\n== Updating a Virtual Server ==\n")
+	var updatevirtualserverName = "PaaSExampleHTTPvirtualserver"
+
+	updateBasicvirtualserver := virtualserver.Basic{
+		Enabled:  false,
+		Pool:     "pool_test_rui",
+		Port:     90,
+		Protocol: "http",
+	}
+	updatevirtualserverProperties := virtualserver.Properties{Basic: updateBasicvirtualserver}
+	updatevirtualserver := virtualserver.VirtualServer{Properties: updatevirtualserverProperties}
+
+	updateVirtualServerAPI := virtualserver.NewUpdate(
+		updatevirtualserverName,
+		updatevirtualserver,
+	)
+	err = vtmClient.Do(updateVirtualServerAPI)
+	if err != nil {
+		fmt.Println("Error updating virtual server: ", err)
+	} else {
+		fmt.Println("Virtual server updated succesfully")
+	}
+
 }
