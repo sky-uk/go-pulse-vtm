@@ -12,10 +12,10 @@ var newVirtualServerName = "exampleVirtualServer"
 
 func createSetup() {
 	newBasicVirtualServer := Basic{
-		Enabled:            false,
-		DefaultTrafficPool: "pool_test_rui",
-		Port:               80,
-		Protocol:           "http",
+		Enabled:  false,
+		Pool:     "pool_test_rui",
+		Port:     80,
+		Protocol: "http",
 	}
 	newVirtualServerProperties := Properties{Basic: newBasicVirtualServer}
 	newVirtualServer := VirtualServer{Properties: newVirtualServerProperties}
@@ -40,7 +40,7 @@ func TestCreateEndpoint(t *testing.T) {
 
 func TestCreateMarshalling(t *testing.T) {
 	createSetup()
-	expectedJSON := `{"properties":{"basic":{"enabled":false,"pool":"pool_test_rui","port":80,"protocol":"http"}}}`
+	expectedJSON := `{"properties":{"basic":{"enabled":false,"pool":"pool_test_rui","port":80,"protocol":"http"},"aptimizer":{},"connection":{},"connection_errors":{},"cookie":{},"dns":{},"ftp":{"ssl_data":false},"gzip":{},"ssl":{}}}`
 	jsonBytes, err := json.Marshal(createVirtualServerAPI.RequestObject())
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))
@@ -50,7 +50,6 @@ func TestGetResponse(t *testing.T) {
 	createSetup()
 	getResponse := createVirtualServerAPI.GetResponse()
 	assert.Equal(t, getResponse, "/download/private/status/check")
-
 }
 
 //TODO

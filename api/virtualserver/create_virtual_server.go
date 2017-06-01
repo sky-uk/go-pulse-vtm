@@ -1,3 +1,4 @@
+// Package virtualserver : Virtual server configuration handling
 package virtualserver
 
 import (
@@ -11,15 +12,24 @@ type CreateVirtualServerAPI struct {
 }
 
 // NewCreate : Create new virtualServer
-func NewCreate(virtualServerName string, virtualServer VirtualServer) *CreateVirtualServerAPI {
+// Input:
+//   virtualServerName : the name of the virtual server
+//   virtualServer     : the configMap of the new virtual
+//                       server
+func NewCreate(virtualServerName string,
+	virtualServer VirtualServer) *CreateVirtualServerAPI {
+
 	this := new(CreateVirtualServerAPI)
-	requestPayLoad := new(VirtualServer)
-	requestPayLoad.Properties.Basic = virtualServer.Properties.Basic
-	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/api/tm/3.8/config/active/virtual_servers/"+virtualServerName, requestPayLoad, new(interface{}))
+	this.BaseAPI = api.NewBaseAPI(
+		http.MethodPut,
+		"/api/tm/3.8/config/active/virtual_servers/"+virtualServerName,
+		virtualServer,
+		new(interface{}),
+	)
 	return this
 }
 
 // GetResponse : get response object from created virtualServer
-func (cma CreateVirtualServerAPI) GetResponse() string {
-	return cma.ResponseObject().(string)
+func (cvs CreateVirtualServerAPI) GetResponse() string {
+	return cvs.ResponseObject().(string)
 }

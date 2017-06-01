@@ -7,43 +7,128 @@ type VirtualServer struct {
 
 // Properties : Properties contains the overall monitor configuration
 type Properties struct {
-	Basic Basic `json:"basic"`
+	Basic            Basic            `json:"basic"`
+	Aptimizer        Aptimizer        `json:"aptimizer,omitempty"`
+	Connection       Connection       `json:"connection,omitempty"`
+	ConnectionErrors ConnectionErrors `json:"connection_errors,omitempty"`
+	Cookie           Cookie           `json:"cookie,omitempty"`
+	DNS              DNS              `json:"dns,omitempty"`
+	Ftp              Ftp              `json:"ftp,omitempty"`
+	Gzip             Gzip             `json:"gzip,omitempty"`
+	Ssl              Ssl              `json:"ssl,omitempty"`
 }
 
 // Basic : Basic virtual server configration
 type Basic struct {
-	Enabled             bool        `json:"enabled"`
-	DefaultTrafficPool  string      `json:"pool"`
-	Port                int         `json:"port"`
-	Protocol            string      `json:"protocol"`
-	// all following attributes have default values set at
-    // creation time if no value is specified...
-    AddClusterIp        bool        `json:"add_cluster_ip"`         // true
-    AddXForwardedFor    bool        `json:"add_x_forwarded_for"`    // false
-    AddXForwardedProto  bool        `json:"add_x_forwarded_proto"`  // false
-    BandwidthClass      string      `json:"bandwidth_class"`        // ""
-    CloseWithRst        bool        `json:"close_with_rst"`         // false
-    CompletionRules     []string    `json:"completionrules"`        // []
-    ConnectTimeout      int         `json:"connect_timeout"`        // 10
-	FtpForceServerSecure bool       `json:"ftp_force_server_secure"` // true
+	AddClusterIP         bool     `json:"add_cluster_ip,omitempty"`        // true
+	AddXForwarded        bool     `json:"add_x_forwarded_for,omitempty"`   // false
+	AddXForwardedProto   bool     `json:"add_x_forwarded_proto,omitempty"` // false
+	BandwidthClass       string   `json:"bandwidth_class,omitempty"`       // ""
+	CloseWithRst         bool     `json:"close_with_rst,omitempty"`        // false
+	CompletionRules      []string `json:"completionrules,omitempty"`       // []
+	ConnectTimeout       int      `json:"connect_timeout,omitempty"`       // 10
+	Enabled              bool     `json:"enabled"`
+	FtpForceServerSecure bool     `json:"ftp_force_server_secure,omitempty"` // true
+	GlbServices          []string `json:"glb_services,omitempty"`            // []
+	ListenOnAny          bool     `json:"listen_on_any,omitempty"`           // false
+	ListenOnHosts        []string `json:"listen_on_hosts,omitempty"`         // []
+	ListenOnTrafficIps   []string `json:"listen_on_traffic_ips,omitempty"`   // []
+	Note                 string   `json:"note,omitempty"`                    // ""
+	Pool                 string   `json:"pool"`
+	Port                 int      `json:"port"`
+	ProtectionClass      string   `json:"protection_class,omitempty"` // ""
+	Protocol             string   `json:"protocol,omitempty"`         // "http"
+	RequestRules         []string `json:"request_rules,omitempty"`    // []
+	ResponseRules        []string `json:"response_rules,omitempty"`   // []
+	SlmClass             string   `json:"slm_class,omitempty"`        // ""
+	SoNagle              bool     `json:"so_nagle,omitempty"`         // false,
+	// SslClientCertHeaders : enum can accept these strings("all", "none"
+	// (default), "none"
+	SslClientCertHeaders string `json:"ssl_client_cert_headers,omitempty"` // "none"
+	SslDecrypt           bool   `json:"ssl_decrypt,omitempty"`             // false
+	SslHonorFallbackScsv string `json:"ssl_honor_fallback_scsv,omitempty"` // "use_default"
+	Transparent          bool   `json:"transparent,omitempty"`             // false
+}
 
-	// all these attributes are not mandatory at creation time...
-	/*
-	   ListenOnTrafficIps      []string        `json:"listen_on_traffic_ips"`
-	   Note                    string          `json:"note"`
-	   RequestRules            []string        `json:"request_rules"`
-	   ResponseRules           []string        `"response_rules"`
-	   FtpForceServerSecure    bool            `json:"ftp_force_server_secure"`
-	   // SslClientCertHeaders : enum can accept these strings("all", "none"
-	   // (default), "simple"
-	   SslDecrypt              bool            `json:"ssl_decrypt"`
-	   SslClientCertHeaders    string          `json:"ssl_client_cert_headers"`
-	   SlmClass                string          `json:"slm_class"`
-	   Transparent             bool            `json:"transparent"`
-	   AddxforwardedProto      bool            `json:"add_x_forwarded_proto"`
-	   CloseWithRst            bool            `json:"close_with_rst"`
-	   // TBC...
-	*/
+// Aptimizer : whether virtual server should aptimize web content
+type Aptimizer struct {
+	Enabled bool     `json:"enabled,omitempty"` // false
+	Profile []string `json:"profile,omitempty"` // [], NOTE: actually more complex
+}
+
+// Connection : connection parameters
+type Connection struct {
+	Keepalive              bool   `json:"keepalive,omitempty"`                // false
+	KeepaliveTimeout       int    `json:"keepalive_timeout,omitempty"`        // 10
+	MaxClientBuffer        int    `json:"max_client_buffer,omitempty"`        // 65536
+	MaxServerBuffer        int    `json:"max_server_buffer,omitempty"`        // 65536
+	MaxTransactionDuration int    `json:"max_transaction_duration,omitempty"` // none
+	ServerFirstBanner      string `json:"server_first_banner,omitempty"`      // none
+	Timeout                int    `json:"timeout,omitempty"`                  // 300
+}
+
+// ConnectionErrors : error file params
+type ConnectionErrors struct {
+	ErrorFile string `json:"error_file,omitempty"` // "Default"
+}
+
+// Cookie : how cookies are handled 
+type Cookie struct {
+	Domain      string `json:"domain,omitempty"`       // "no_rewrite"
+	NewDomain   string `json:"new_domain,omitempty"`   // ""
+	PathRegex   string `json:"path_regex,omitempty"`   // ""
+	PathReplace string `json:"path_replace,omitempty"` // ""
+	Secure      string `json:"secure,omitempty"`       // "no_modify"
+}
+
+// DNS configuration section
+type DNS struct {
+	EdnsUdpsize int      `json:"edns_udpsize,omitempty"` // 4096
+	MaxUdpsize  int      `json:"max_udpsize,omitempty"`  // 4096
+	RrsetOrder  string   `json:"rrset_order,omitempty"`  // "fixed"
+	Verbose     bool     `json:"verbose,omitempty"`      // false
+	Zones       []string `json:"zones,omitempty"`        // []
+}
+
+// Ftp configuration section
+type Ftp struct {
+	DataSourcePort    int  `json:"data_source_port,omitempty"`    // 0
+	ForceClientSecure bool `json:"force_client_secure,omitempty"` // true
+	PortRangeHigh     int  `json:"port_range_high,omitempty"`     // 0
+	PortRangeLow      int  `json:"port_range_low,omitempty"`      // 0
+	SslData           bool `json:"ssl_data"`                      // true
+}
+
+// Gzip configuration section
+type Gzip struct {
+	CompressLevel int      `json:"compress_level,omitempty"` // 1
+	Enabled       bool     `json:"enabled,omitempty"`        // false
+	EtagRewrite   string   `json:"etag_rewrite,omitempty"`   // "wrap"
+	IncludeMime   []string `json:"include_mime,omitempty"`   // [
+	// "text/html"
+	// "text/plain"
+	// ]
+	MaxSize int  `json:"max_size,omitempty"` // 10000000
+	MinSize int  `json:"min_size,omitempty"` // 1000
+	NoSize  bool `json:"no_size,omitempty"`  // true
+}
+
+// Ssl configuration section
+type Ssl struct {
+	ServerCertDefault string     `json:"server_cert_default,omitempty"` // ""
+	ServerCertHostMap []CertItem `json:"server_cert_host_mapping,omitempty"`
+	SslSupportSsl2    string     `json:"ssl_support_ssl2,omitempty"`
+	SslSupportSsl3    string     `json:"ssl_support_ssl3,omitempty"`
+	SslSupportTLS1    string     `json:"ssl_support_tls1,omitempty"`
+	SslSupportTLS1_1  string     `json:"ssl_support_tls1_1,omitempty"`
+	SslSupportTLS1_2  string     `json:"ssl_support_tls1_2,omitempty"`
+}
+
+// CertItem : a single certificate item in the cert map
+type CertItem struct {
+	Host            string   `json:"host"`
+	AltCertificates []string `json:"alt_certificates"`
+	Certificate     string   `json:"certificate"`
 }
 
 // VirtualServersList : List of nodes monitored
