@@ -29,6 +29,9 @@ func main() {
 	case "pool":
 		fmt.Println("running pool with:", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunPoolExample(vtmAddress, vtmUser, vtmPassword, debug)
+	case "traffic_ip_groups":
+		fmt.Println("running traffic_ip_groups with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
+		RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword, debug)
 		return
 	}
 
