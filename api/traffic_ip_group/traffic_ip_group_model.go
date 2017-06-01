@@ -20,6 +20,7 @@ type TrafficIPGroup struct {
 type Properties struct {
 	Basic Basic `json:"basic"`
 }
+
 // IPMapping : IPMapping data structure for use within Basic data structure
 type IPMapping struct {
 	IP             string `json:"ip"`
