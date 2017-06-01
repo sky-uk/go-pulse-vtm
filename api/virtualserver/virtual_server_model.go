@@ -72,7 +72,7 @@ type ConnectionErrors struct {
 	ErrorFile string `json:"error_file,omitempty"` // "Default"
 }
 
-// Cookie : how cookies are handled 
+// Cookie : how cookies are handled
 type Cookie struct {
 	Domain      string `json:"domain,omitempty"`       // "no_rewrite"
 	NewDomain   string `json:"new_domain,omitempty"`   // ""
