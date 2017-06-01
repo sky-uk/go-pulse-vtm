@@ -26,9 +26,12 @@ func main() {
 		fmt.Println("running monitor with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunMonitorExample(vtmAddress, vtmUser, vtmPassword, debug)
 		return
+<<<<<<< HEAD
 	case "pool":
 		fmt.Println("running pool with:", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunPoolExample(vtmAddress, vtmUser, vtmPassword, debug)
+=======
+>>>>>>> 4676852f97e98a37f537c26ed04b8cec5a33bda4
 	case "traffic_ip_groups":
 		fmt.Println("running traffic_ip_groups with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword, debug)
