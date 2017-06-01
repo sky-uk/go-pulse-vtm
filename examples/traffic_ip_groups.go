@@ -11,39 +11,41 @@ import (
 func RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
 	tipgName := "cdu16-test-group"
-	/*
-		fmt.Println("\n--- Create Example ---\n")
 
-		tipgIPAddresses := []string{"172.0.0.1"}
-		tipgBasic := trafficIpGroups.Basic{Enabled:false,HashSourcePort:true,IPAddresses:tipgIPAddresses,KeepTogether:false,Location:0,Mode:"rhi",Note:"", RhiOspfv2MetricBase:10, RhiOspfv2PassiveMetricOffset:10}
-		tipgProperties := trafficIpGroups.Properties{tipgBasic}
-		tipgTrafficIPGroup := trafficIpGroups.TrafficIPGroup{tipgProperties}
+	fmt.Println("\n--- Create Example ---")
 
-		createTrafficIPGroupAPI := trafficIpGroups.NewCreate(tipgName,tipgTrafficIPGroup)
+	tipgIPAddresses := []string{"172.0.0.1"}
+	tipgBasic := trafficIpGroups.Basic{IPAddresses: tipgIPAddresses, Location: 0, Mode: "rhi", Note: "", RhiOspfv2MetricBase: 10, RhiOspfv2PassiveMetricOffset: 10}
+	tipgProperties := trafficIpGroups.Properties{tipgBasic}
+	tipgTrafficIPGroup := trafficIpGroups.TrafficIPGroup{tipgProperties}
 
-		err := vtmClient.Do(createTrafficIPGroupAPI)
+	createTrafficIPGroupAPI := trafficIpGroups.NewCreate(tipgName, tipgTrafficIPGroup)
 
-		if err != nil {
-			fmt.Println("Error: ", err)
-		}
-		if createTrafficIPGroupAPI.StatusCode() == 201 {
+	err := vtmClient.Do(createTrafficIPGroupAPI)
 
-			fmt.Println("Succesfully created: ",tipgName )
-			fmt.Println(createTrafficIPGroupAPI.StatusCode())
-			spew.Dump(createTrafficIPGroupAPI.ResponseObject())
-		} else {
-			fmt.Println("Status code: ",createTrafficIPGroupAPI.StatusCode())
-			fmt.Println("Response: ",createTrafficIPGroupAPI.ResponseObject())
-		}
-	*/
-	fmt.Println("\n--- Update Example ---\n")
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+	if createTrafficIPGroupAPI.StatusCode() == 201 {
 
-	tipgUpdateBasic := trafficIpGroups.Basic{RhiOspfv2MetricBase: 7}
+		fmt.Println("Succesfully created: ", tipgName)
+		fmt.Println(createTrafficIPGroupAPI.StatusCode())
+		spew.Dump(createTrafficIPGroupAPI.ResponseObject())
+	} else {
+		fmt.Println("Status code: ", createTrafficIPGroupAPI.StatusCode())
+		fmt.Println("Response: ", createTrafficIPGroupAPI.ResponseObject())
+	}
+
+	fmt.Println("\n--- Update Example ---")
+
+	keeptogether := true
+	tipgUpdateBasic := trafficIpGroups.Basic{KeepTogether: &keeptogether}
 	tipgUpdateProperties := trafficIpGroups.Properties{tipgUpdateBasic}
 	tipgUpdateTrafficIPGroup := trafficIpGroups.TrafficIPGroup{tipgUpdateProperties}
+
 	updateTrafficIPGroupAPI := trafficIpGroups.NewUpdate(tipgName, tipgUpdateTrafficIPGroup)
 
-	err := vtmClient.Do(updateTrafficIPGroupAPI)
+	err = vtmClient.Do(updateTrafficIPGroupAPI)
 
 	if err != nil {
 		fmt.Println("Error: ", err)
@@ -56,65 +58,63 @@ func RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword string, debug bo
 		fmt.Println("Status code: ", updateTrafficIPGroupAPI.StatusCode())
 		fmt.Println("Response: ", updateTrafficIPGroupAPI.ResponseObject())
 	}
-	/*
-		fmt.Println("\n--- Get All Example ---\n")
 
-		getAllAPI := trafficIpGroups.NewGetAll()
+	fmt.Println("\n--- Get All Example ---")
 
-		// make api call.
-		err = vtmClient.Do(getAllAPI)
+	getAllAPI := trafficIpGroups.NewGetAll()
 
-		// check if there were any errors
-		if err != nil {
-			fmt.Println("Error: ", err)
+	// make api call.
+	err = vtmClient.Do(getAllAPI)
+
+	// check if there were any errors
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+
+	// check the status code and proceed accordingly.
+	if getAllAPI.StatusCode() == 200 {
+		AllTrafficIPGroups := getAllAPI.GetResponse().Children
+		for _, trafficIPGroup := range AllTrafficIPGroups {
+			fmt.Printf("Name: %-20s HRef: %-20s\n", trafficIPGroup.Name, trafficIPGroup.HRef)
 		}
+	} else {
+		fmt.Println("Status code:", getAllAPI.StatusCode())
+		fmt.Println("Response: ", getAllAPI.ResponseObject())
+	}
 
-		// check the status code and proceed accordingly.
-		if getAllAPI.StatusCode() == 200 {
-			AllTrafficIPGroups := getAllAPI.GetResponse().Children
-			for _, trafficIPGroup := range AllTrafficIPGroups {
-				fmt.Printf("Name: %-20s HRef: %-20s\n", trafficIPGroup.Name, trafficIPGroup.HRef)
-			}
-		} else {
-			fmt.Println("Status code:", getAllAPI.StatusCode())
-			fmt.Println("Response: ", getAllAPI.ResponseObject())
-		}
+	fmt.Println("\n--- Get Single Example ---")
 
-		fmt.Println("\n--- Get Single Example ---\n")
+	getSingleAPI := trafficIpGroups.NewGetSingle(tipgName)
 
-		getSingleAPI := trafficIpGroups.NewGetSingle(tipgName)
+	err = vtmClient.Do(getSingleAPI)
 
-		err = vtmClient.Do(getSingleAPI)
+	// check if there were any errors
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
 
-		// check if there were any errors
-		if err != nil {
-			fmt.Println("Error: ", err)
-		}
+	if getSingleAPI.StatusCode() == 200 {
+		singleTrafficGroup := getSingleAPI.GetResponse().Properties.Basic
+		spew.Dump(singleTrafficGroup)
+	} else {
+		fmt.Println("Status code:", getSingleAPI.StatusCode())
+		fmt.Println("Response: ", getSingleAPI.ResponseObject())
+	}
 
-		if getSingleAPI.StatusCode() == 200 {
-			singleTrafficGroup := getSingleAPI.GetResponse().Properties.Basic
-			spew.Dump(singleTrafficGroup)
-		} else {
-			fmt.Println("Status code:", getSingleAPI.StatusCode())
-			fmt.Println("Response: ", getSingleAPI.ResponseObject())
-		}
+	fmt.Println("\n--- Delete Example ---")
 
-		fmt.Println("\n--- Delete Example ---\n")
+	deleteTrafficIPGroupAPI := trafficIpGroups.NewDelete(tipgName)
 
-		deleteTrafficIPGroupAPI := trafficIpGroups.NewDelete(tipgName)
+	err = vtmClient.Do(deleteTrafficIPGroupAPI)
 
-		err = vtmClient.Do(deleteTrafficIPGroupAPI)
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
 
-		if err != nil {
-			fmt.Println("Error: ", err)
-		}
-
-		if deleteTrafficIPGroupAPI.StatusCode() == 204 {
-			fmt.Println("Succesfully deleted: ", tipgName)
-		} else {
-			fmt.Println("Status code:", deleteTrafficIPGroupAPI.StatusCode())
-			fmt.Println("Response: ", deleteTrafficIPGroupAPI.ResponseObject())
-		}
-
-	*/
+	if deleteTrafficIPGroupAPI.StatusCode() == 204 {
+		fmt.Println("Succesfully deleted: ", tipgName)
+	} else {
+		fmt.Println("Status code:", deleteTrafficIPGroupAPI.StatusCode())
+		fmt.Println("Response: ", deleteTrafficIPGroupAPI.ResponseObject())
+	}
 }
