@@ -34,7 +34,7 @@ func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool
 	if getAllAPI.StatusCode() == 200 {
 		Allvirtualservers := getAllAPI.GetResponse().Children
 		for _, virtualserver := range Allvirtualservers {
-			fmt.Printf("Name: %-20s HRef: %-20s\n", virtualserver.Name, virtualserver.HRef)
+			fmt.Printf("Name: %-20s Href: %-20s\n", virtualserver.Name, virtualserver.Href)
 		}
 	} else {
 		fmt.Println("Status code:", getAllAPI.StatusCode())

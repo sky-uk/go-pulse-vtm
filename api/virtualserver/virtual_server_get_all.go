@@ -13,11 +13,16 @@ type GetAllVirtualServers struct {
 // NewGetAll returns a new object of GetAllVirtualServers.
 func NewGetAll() *GetAllVirtualServers {
 	this := new(GetAllVirtualServers)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/virtual_servers", nil, new(VirtualServersList))
+	this.BaseAPI = api.NewBaseAPI(
+          http.MethodGet,
+          "/api/tm/3.8/config/active/virtual_servers",
+          nil,
+          new(VirtualServersList),
+        )
 	return this
 }
 
 // GetResponse returns ResponseObject of GetAllVirtualServers.
-func (gam GetAllVirtualServers) GetResponse() *VirtualServersList {
-	return gam.ResponseObject().(*VirtualServersList)
+func (gav GetAllVirtualServers) GetResponse() *VirtualServersList {
+	return gav.ResponseObject().(*VirtualServersList)
 }

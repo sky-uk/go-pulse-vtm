@@ -139,5 +139,5 @@ type VirtualServersList struct {
 // ChildVirtualServer : monitored node structure
 type ChildVirtualServer struct {
 	Name string `json:"name"`
-	HRef string `json:"href"`
+	Href string `json:"href"`
 }
