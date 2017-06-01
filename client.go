@@ -52,7 +52,6 @@ func (vtmClient *VTMClient) Do(api api.VTMApi) error {
 	if vtmClient.debug {
 		log.Println("requestURL:", requestURL)
 	}
-
 	req, err := http.NewRequest(api.Method(), requestURL, requestPayload)
 	if err != nil {
 		log.Println("ERROR building the request: ", err)
