@@ -7,7 +7,7 @@ import (
 
 func main() {
 	if len(os.Args) < 5 {
-		fmt.Printf("syntax error\nUsages: %s [https://load_balancer_address] [username] [password] \n\n", os.Args[0])
+		fmt.Printf("syntax error\nUsages: %s [https://load_balancer_address] [username] [password] [example name]\n\n", os.Args[0])
 		os.Exit(1)
 	}
 
@@ -21,19 +21,21 @@ func main() {
 		debug = true
 	}
 
+	fmt.Printf("Running %s with VTM addr: %s, VTM user: %s, VTM password: %s, debug: %v\n", exampleName, vtmAddress, vtmUser, vtmPassword, debug)
+
 	switch exampleName {
 	case "monitor":
-		fmt.Println("running monitor with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunMonitorExample(vtmAddress, vtmUser, vtmPassword, debug)
 		return
 	case "pool":
-		fmt.Println("running pool with:", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunPoolExample(vtmAddress, vtmUser, vtmPassword, debug)
 	case "traffic_ip_groups":
 		fmt.Println("running traffic_ip_groups with: ", vtmAddress, vtmUser, vtmPassword, exampleName, debug)
 		RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword, debug)
 		return
+	case "virtual_server":
+		RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword, debug)
+		return
 	}
-
 	fmt.Println("Example not implemented.")
 }

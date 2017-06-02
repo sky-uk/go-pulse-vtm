@@ -43,9 +43,12 @@ func (vtmClient *VTMClient) Do(api api.VTMApi) error {
 		requestJSONBytes, marshallingErr := json.Marshal(api.RequestObject())
 		if marshallingErr != nil {
 			log.Fatal(marshallingErr)
+			return (marshallingErr)
 		}
 		if vtmClient.debug {
+			log.Println("Request payload as JSON:")
 			log.Println(string(requestJSONBytes))
+			log.Println("--------------------------------------------------------------")
 		}
 		requestPayload = bytes.NewReader(requestJSONBytes)
 	}
