@@ -68,9 +68,7 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 			fmt.Println("Response: ", CreateAPI.ResponseObject())
 		}
 
-
-
-	} else  {
+	} else {
 		/*DeleteAPI := pool.NewDelete("pool_test_rui_5")
 		// make api call.
 		errDelete := vtmClient.Do(DeleteAPI)
@@ -91,11 +89,12 @@ func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		updatePool.Properties.Basic.MaxConnectionAttempts = 3
 		updateAPI := pool.NewUpdate("pool_test_rui_5", updatePool)
 		errUpdate := vtmClient.Do(updateAPI)
-		if errUpdate != nil{
+		if errUpdate != nil {
 			fmt.Println("Error:", errUpdate)
-		}else {
+		} else {
 			fmt.Println("Updated")
 			fmt.Println(updateAPI.StatusCode())
 		}
 	}
 
+}
