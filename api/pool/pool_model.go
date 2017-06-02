@@ -19,19 +19,19 @@ type Properties struct {
 type Basic struct {
 	BandwidthClass               string       `json:"bandwidth_class,omitempty"`
 	FailurePool                  string       `json:"failure_pool,omitempty"`
-	MaxConnectionAttempts        int          `json:"max_connection_attempts"`
-	MaxIdleConnectionsPerNode    int          `json:"max_idle_connections_pernode"`
-	MaxTimeoutConnectionAttempts int          `json:"max_timed_out_connection_attempts"`
-	Monitors                     []string     `json:"monitors"`
-	NodeCloseWithReset           *bool        `json:"node_close_with_rst"`
+	MaxConnectionAttempts        int          `json:"max_connection_attempts,omitempty"`
+	MaxIdleConnectionsPerNode    int          `json:"max_idle_connections_pernode,omitempty"`
+	MaxTimeoutConnectionAttempts int          `json:"max_timed_out_connection_attempts,omitempty"`
+	Monitors                     []string     `json:"monitors,omitempty"`
+	NodeCloseWithReset           *bool        `json:"node_close_with_rst,omitempty"`
 	NodeConnectionAttempts       int          `json:"node_connection_attempts,omitempty"`
 	NodeDeleteBehavior           string       `json:"node_delete_behavior,omitempty"`
 	NodeDrainDeleteTimeout       int          `json:"node_drain_to_delete_timeout"`
-	NodesTable                   []MemberNode `json:"nodes_table"`
-	Note                         string       `json:"note"`
-	PassiveMonitoring            *bool        `json:"passive_monitoring"`
+	NodesTable                   []MemberNode `json:"nodes_table,omitempty"`
+	Note                         string       `json:"note,omitempty"`
+	PassiveMonitoring            *bool        `json:"passive_monitoring,omitempty"`
 	PersistenceClass             string       `json:"persistence_class,omitempty"`
-	Transparent                  *bool        `json:"transparent"`
+	Transparent                  *bool        `json:"transparent,omitempty"`
 }
 
 // Connection - Connection setting
@@ -69,10 +69,10 @@ type Ssl struct {
 	ElipticCurves       []string `json:"eliptic_curves,omitempty"`
 	Enabled             *bool    `json:"enabled,omitempty"`
 	Enhance             *bool    `json:"enhance,omitempty"`
-	SendCloseAlerts     *bool    `json:"send_close_alerts,ommitempty"`
-	ServerName          *bool    `json:"server_name,ommitempty"`
-	SignatureAlgorithms string   `json:"signature_algorithms,ommitempty"`
-	SslCiphers          string   `json:"ssl_ciphers,ommitempty"`
+	SendCloseAlerts     *bool    `json:"send_close_alerts,omitempty"`
+	ServerName          *bool    `json:"server_name,omitempty"`
+	SignatureAlgorithms string   `json:"signature_algorithms,omitempty"`
+	SslCiphers          string   `json:"ssl_ciphers,omitempty"`
 }
 
 // MemberNode - Pool membership details / node /state / weight
