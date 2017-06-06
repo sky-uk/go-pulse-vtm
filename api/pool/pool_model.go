@@ -13,7 +13,7 @@ type Properties struct {
 	LoadBalancing LoadBalancing `json:"load_balancing,omitempty"`
 	Node          Node          `json:"node,omitempty"`
 	Ssl           Ssl           `json:"ssl,omitempty"`
-	Tcp           TCP           `json:"tcp,omitempty"`
+	TCP           TCP           `json:"tcp,omitempty"`
 }
 
 // Basic - main pool definitions
