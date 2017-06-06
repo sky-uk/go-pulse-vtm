@@ -75,6 +75,12 @@ type Ssl struct {
 	SslCiphers          string   `json:"ssl_ciphers,omitempty"`
 }
 
+// Tcp - tcp setting
+
+type tcp struct {
+	Nagle *bool `json:"enabled,omitempty"`
+}
+
 // MemberNode - Pool membership details / node /state / weight
 type MemberNode struct {
 	Node     string `json:"node"`
