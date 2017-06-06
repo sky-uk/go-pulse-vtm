@@ -13,6 +13,7 @@ type Properties struct {
 	LoadBalancing LoadBalancing `json:"load_balancing,omitempty"`
 	Node          Node          `json:"node,omitempty"`
 	Ssl           Ssl           `json:"ssl,omitempty"`
+	TCP           TCP           `json:"tcp,omitempty"`
 }
 
 // Basic - main pool definitions
@@ -73,6 +74,11 @@ type Ssl struct {
 	ServerName          *bool    `json:"server_name,omitempty"`
 	SignatureAlgorithms string   `json:"signature_algorithms,omitempty"`
 	SslCiphers          string   `json:"ssl_ciphers,omitempty"`
+}
+
+// TCP - tcp setting
+type TCP struct {
+	Nagle *bool `json:"enabled,omitempty"`
 }
 
 // MemberNode - Pool membership details / node /state / weight
