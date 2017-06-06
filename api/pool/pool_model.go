@@ -13,7 +13,7 @@ type Properties struct {
 	LoadBalancing LoadBalancing `json:"load_balancing,omitempty"`
 	Node          Node          `json:"node,omitempty"`
 	Ssl           Ssl           `json:"ssl,omitempty"`
-	Tcp           Tcp           `json:"tcp,omitempty"`
+	Tcp           TCP           `json:"tcp,omitempty"`
 }
 
 // Basic - main pool definitions
@@ -78,7 +78,7 @@ type Ssl struct {
 
 // Tcp - tcp setting
 
-type Tcp struct {
+type TCP struct {
 	Nagle *bool `json:"enabled,omitempty"`
 }
 
