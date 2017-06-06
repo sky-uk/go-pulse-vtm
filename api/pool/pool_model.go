@@ -76,8 +76,7 @@ type Ssl struct {
 	SslCiphers          string   `json:"ssl_ciphers,omitempty"`
 }
 
-// Tcp - tcp setting
-
+// TCP - tcp setting
 type TCP struct {
 	Nagle *bool `json:"enabled,omitempty"`
 }
