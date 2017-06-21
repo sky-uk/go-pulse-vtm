@@ -18,12 +18,12 @@ type Basic struct {
 	Request string `json:"request,omitempty"`
 }
 
-// MonitorsList : List of nodes monitored
+// SSLServerKeysList : List of ssl server keys
 type SSLServerKeysList struct {
 	Children []ChildSSLServerKey `json:"children"`
 }
 
-// ChildMonitor : monitored node structure
+// ChildSSLServerKey : ssl server keys child nodes
 type ChildSSLServerKey struct {
 	Name string `json:"name"`
 	HRef string `json:"href"`
