@@ -11,7 +11,6 @@ type GetSSLServerKey struct {
 	*api.BaseAPI
 }
 
-
 // String returns a string representation of the monitor
 func (sslServerKey SSLServerKey) String() string {
 	return fmt.Sprintf("SSLServerKey: %+v", sslServerKey.Properties)
@@ -25,6 +24,6 @@ func NewGet(name string) *GetSSLServerKey {
 }
 
 // GetResponse returns ResponseObject of GetOneSSLServerKey.
-func (reqObj GetSSLServerKey) GetResponse() *SSLServerKey{
+func (reqObj GetSSLServerKey) GetResponse() *SSLServerKey {
 	return reqObj.ResponseObject().(*SSLServerKey)
 }

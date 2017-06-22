@@ -26,7 +26,7 @@ func TestCreateMethod(t *testing.T) {
 
 func TestCreateEndpoint(t *testing.T) {
 	createSetup()
-	assert.Equal(t, "/api/tm/3.8/config/active/ssl/server_keys/"+ newSSLServerKeyName, createSSLServerKeyAPI.Endpoint())
+	assert.Equal(t, "/api/tm/3.8/config/active/ssl/server_keys/"+newSSLServerKeyName, createSSLServerKeyAPI.Endpoint())
 }
 
 func TestCreateMarshalling(t *testing.T) {

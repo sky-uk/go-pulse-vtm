@@ -13,7 +13,6 @@ func setupNewGetSSLServerKey() {
 	getSSLServerKeyAPI = NewGet("test-ssl-server-key")
 }
 
-
 func TestNewGetMonitorMethod(t *testing.T) {
 	setupNewGetSSLServerKey()
 	assert.Equal(t, http.MethodGet, getSSLServerKeyAPI.Method())
