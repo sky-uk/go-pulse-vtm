@@ -31,12 +31,12 @@ func TestUpdateMethod(t *testing.T) {
 
 func TestUpdateEndpoint(t *testing.T) {
 	setup()
-	assert.Equal(t, "/api/tm/3.8/config/active/virtual_servers/"+updateSSLServerKeyName, updateSSLServerKeyAPI.Endpoint())
+	assert.Equal(t, "/api/tm/3.8/config/active/ssl/server_keys/"+updateSSLServerKeyName, updateSSLServerKeyAPI.Endpoint())
 }
 
 func TestUpdateMarshalling(t *testing.T) {
 	setup()
-	expectedJSON := `{"properties":{"basic":{"enabled":false,"pool":"pool_test_rui","port":80,"protocol":"http"},"aptimizer":{},"connection":{},"connection_errors":{},"cookie":{},"dns":{},"ftp":{},"gzip":{},"ssl":{}}}`
+	expectedJSON := `{"properties":{"basic":{"note":"test_note","private":"test_private.com","public":"test_public.com","request":"request"}}}`
 	jsonBytes, err := json.Marshal(updateSSLServerKeyAPI.RequestObject())
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))
@@ -45,6 +45,6 @@ func TestUpdateMarshalling(t *testing.T) {
 func TestUpdateGetResponse(t *testing.T) {
 	setup()
 	getResponse := updateSSLServerKeyAPI.GetResponse()
-	assert.Equal(t, getResponse, "/private/status/check")
+	assert.Equal(t, getResponse, "SSLServerKey updated")
 
 }
