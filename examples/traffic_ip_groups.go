@@ -11,17 +11,31 @@ import (
 func RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
 	tipgName := "cdu16-test-group"
+	var trafficManagers []string
+
+	fmt.Println("\n--- Get traffic managers ---")
+	getTrafficManagers := trafficIpGroups.NewGetTrafficManagerList()
+	err := vtmClient.Do(getTrafficManagers)
+	if err != nil {
+		fmt.Printf("Error getting a list of traffic managers %+v", err)
+	}
+
+	fmt.Printf("Here is a list of traffic managers:\n")
+	for _, trafficManager := range getTrafficManagers.GetResponse().Children {
+		trafficManagers = append(trafficManagers, trafficManager.Name)
+		fmt.Printf("\t- %s\n", trafficManager.Name)
+	}
 
 	fmt.Println("\n--- Create Example ---")
 
 	tipgIPAddresses := []string{"172.0.0.1"}
-	tipgBasic := trafficIpGroups.Basic{IPAddresses: tipgIPAddresses, Location: 0, Mode: "rhi", Note: "", RhiOspfv2MetricBase: 10, RhiOspfv2PassiveMetricOffset: 10}
+	tipgBasic := trafficIpGroups.Basic{IPAddresses: tipgIPAddresses, Location: 0, Mode: "rhi", Note: "", RhiOspfv2MetricBase: 10, RhiOspfv2PassiveMetricOffset: 10, Machines: trafficManagers}
 	tipgProperties := trafficIpGroups.Properties{tipgBasic}
 	tipgTrafficIPGroup := trafficIpGroups.TrafficIPGroup{tipgProperties}
 
 	createTrafficIPGroupAPI := trafficIpGroups.NewCreate(tipgName, tipgTrafficIPGroup)
 
-	err := vtmClient.Do(createTrafficIPGroupAPI)
+	err = vtmClient.Do(createTrafficIPGroupAPI)
 
 	if err != nil {
 		fmt.Println("Error: ", err)

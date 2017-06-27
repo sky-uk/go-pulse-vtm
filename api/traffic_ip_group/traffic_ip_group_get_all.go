@@ -21,3 +21,15 @@ func NewGetAll() *GetAllTrafficIPGroupsAPI {
 func (ga GetAllTrafficIPGroupsAPI) GetResponse() *TrafficIPGroupList {
 	return ga.ResponseObject().(*TrafficIPGroupList)
 }
+
+// FilterByName : returns a monitor object if the monitor name matches.
+func (trafficIPGroups TrafficIPGroupList) FilterByName(name string) *ChildTrafficIPGroup {
+	var trafficIPGroup ChildTrafficIPGroup
+	for _, childTrafficIPGroup := range trafficIPGroups.Children {
+		if childTrafficIPGroup.Name == name {
+			trafficIPGroup = childTrafficIPGroup
+			break
+		}
+	}
+	return &trafficIPGroup
+}
