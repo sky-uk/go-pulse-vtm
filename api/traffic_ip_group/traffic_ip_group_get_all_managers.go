@@ -21,4 +21,3 @@ func NewGetTrafficManagerList() *GetAllTrafficManagersAPI {
 func (getAllTrafficManagers GetAllTrafficManagersAPI) GetResponse() *TrafficManagerChildren {
 	return getAllTrafficManagers.ResponseObject().(*TrafficManagerChildren)
 }
-

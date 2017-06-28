@@ -1,10 +1,10 @@
 package trafficIpGroups
 
 import (
-	"testing"
+	"encoding/json"
 	"github.com/stretchr/testify/assert"
 	"net/http"
-	"encoding/json"
+	"testing"
 )
 
 var getAllTrafficManagersAPI *GetAllTrafficManagersAPI
@@ -33,7 +33,6 @@ func TestGetTrafficManagersUnmarshalling(t *testing.T) {
 	jsonErr := json.Unmarshal(jsonContent, getAllTrafficManagersAPI.ResponseObject())
 	assert.Nil(t, jsonErr)
 }
-
 
 func TestGetTrafficManagersGetResponse(t *testing.T) {
 	setupGetAllTrafficManagers()
