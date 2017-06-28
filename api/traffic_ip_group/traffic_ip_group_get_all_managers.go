@@ -10,7 +10,7 @@ type GetAllTrafficManagersAPI struct {
 	*api.BaseAPI
 }
 
-// GetTrafficManagers : Get a list of traffic managers
+// NewGetTrafficManagerList : Get a list of traffic managers
 func NewGetTrafficManagerList() *GetAllTrafficManagersAPI {
 	this := new(GetAllTrafficManagersAPI)
 	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/traffic_managers", nil, new(TrafficManagerChildren))
