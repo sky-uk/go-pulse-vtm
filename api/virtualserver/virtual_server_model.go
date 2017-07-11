@@ -26,7 +26,7 @@ type Basic struct {
 	BandwidthClass       string   `json:"bandwidth_class,omitempty"`       // ""
 	CloseWithRst         *bool    `json:"close_with_rst,omitempty"`        // false
 	CompletionRules      []string `json:"completionrules,omitempty"`       // []
-	ConnectTimeout       int      `json:"connect_timeout,omitempty"`       // 10
+	ConnectTimeout       uint     `json:"connect_timeout,omitempty"`       // 10
 	Enabled              *bool    `json:"enabled"`
 	FtpForceServerSecure *bool    `json:"ftp_force_server_secure,omitempty"` // true
 	GlbServices          []string `json:"glb_services,omitempty"`            // []
@@ -35,7 +35,7 @@ type Basic struct {
 	ListenOnTrafficIps   []string `json:"listen_on_traffic_ips,omitempty"`   // []
 	Note                 string   `json:"note,omitempty"`                    // ""
 	Pool                 string   `json:"pool"`
-	Port                 int      `json:"port"`
+	Port                 uint     `json:"port"`
 	ProtectionClass      string   `json:"protection_class,omitempty"` // ""
 	Protocol             string   `json:"protocol,omitempty"`         // "http"
 	RequestRules         []string `json:"request_rules,omitempty"`    // []
@@ -59,12 +59,12 @@ type Aptimizer struct {
 // Connection : connection parameters
 type Connection struct {
 	Keepalive              *bool  `json:"keepalive,omitempty"`                // false
-	KeepaliveTimeout       int    `json:"keepalive_timeout,omitempty"`        // 10
-	MaxClientBuffer        int    `json:"max_client_buffer,omitempty"`        // 65536
-	MaxServerBuffer        int    `json:"max_server_buffer,omitempty"`        // 65536
-	MaxTransactionDuration int    `json:"max_transaction_duration,omitempty"` // none
+	KeepaliveTimeout       uint   `json:"keepalive_timeout,omitempty"`        // 10
+	MaxClientBuffer        uint   `json:"max_client_buffer,omitempty"`        // 65536
+	MaxServerBuffer        uint   `json:"max_server_buffer,omitempty"`        // 65536
+	MaxTransactionDuration uint   `json:"max_transaction_duration,omitempty"` // none
 	ServerFirstBanner      string `json:"server_first_banner,omitempty"`      // none
-	Timeout                int    `json:"timeout,omitempty"`                  // 300
+	Timeout                uint   `json:"timeout,omitempty"`                  // 300
 }
 
 // ConnectionErrors : error file params
@@ -83,8 +83,8 @@ type Cookie struct {
 
 // DNS configuration section
 type DNS struct {
-	EdnsUdpsize int      `json:"edns_udpsize,omitempty"` // 4096
-	MaxUdpsize  int      `json:"max_udpsize,omitempty"`  // 4096
+	EdnsUdpsize uint     `json:"edns_udpsize,omitempty"` // 4096
+	MaxUdpsize  uint     `json:"max_udpsize,omitempty"`  // 4096
 	RrsetOrder  string   `json:"rrset_order,omitempty"`  // "fixed"
 	Verbose     *bool    `json:"verbose,omitempty"`      // false
 	Zones       []string `json:"zones,omitempty"`        // []
@@ -92,24 +92,24 @@ type DNS struct {
 
 // Ftp configuration section
 type Ftp struct {
-	DataSourcePort    int   `json:"data_source_port,omitempty"`    // 0
+	DataSourcePort    uint  `json:"data_source_port,omitempty"`    // 0
 	ForceClientSecure *bool `json:"force_client_secure,omitempty"` // true
-	PortRangeHigh     int   `json:"port_range_high,omitempty"`     // 0
-	PortRangeLow      int   `json:"port_range_low,omitempty"`      // 0
+	PortRangeHigh     uint  `json:"port_range_high,omitempty"`     // 0
+	PortRangeLow      uint  `json:"port_range_low,omitempty"`      // 0
 	SslData           *bool `json:"ssl_data,omitempty"`            // true
 }
 
 // Gzip configuration section
 type Gzip struct {
-	CompressLevel int      `json:"compress_level,omitempty"` // 1
+	CompressLevel uint     `json:"compress_level,omitempty"` // 1
 	Enabled       *bool    `json:"enabled,omitempty"`        // false
 	EtagRewrite   string   `json:"etag_rewrite,omitempty"`   // "wrap"
 	IncludeMime   []string `json:"include_mime,omitempty"`   // [
 	// "text/html"
 	// "text/plain"
 	// ]
-	MaxSize int   `json:"max_size,omitempty"` // 10000000
-	MinSize int   `json:"min_size,omitempty"` // 1000
+	MaxSize uint  `json:"max_size,omitempty"` // 10000000
+	MinSize uint  `json:"min_size,omitempty"` // 1000
 	NoSize  *bool `json:"no_size,omitempty"`  // true
 }
 
