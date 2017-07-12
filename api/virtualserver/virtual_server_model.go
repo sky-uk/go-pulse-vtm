@@ -34,8 +34,8 @@ type Basic struct {
 	ListenOnHosts        []string `json:"listen_on_hosts,omitempty"`         // []
 	ListenOnTrafficIps   []string `json:"listen_on_traffic_ips,omitempty"`   // []
 	Note                 string   `json:"note,omitempty"`                    // ""
-	Pool                 string   `json:"pool"`
-	Port                 uint     `json:"port"`
+	Pool                 string   `json:"pool,omitempty"`
+	Port                 uint     `json:"port,omitempty"`
 	ProtectionClass      string   `json:"protection_class,omitempty"` // ""
 	Protocol             string   `json:"protocol,omitempty"`         // "http"
 	RequestRules         []string `json:"request_rules,omitempty"`    // []
