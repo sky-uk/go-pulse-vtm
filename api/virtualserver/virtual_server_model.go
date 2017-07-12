@@ -27,7 +27,7 @@ type Basic struct {
 	CloseWithRst         *bool    `json:"close_with_rst,omitempty"`        // false
 	CompletionRules      []string `json:"completionrules,omitempty"`       // []
 	ConnectTimeout       uint     `json:"connect_timeout,omitempty"`       // 10
-	Enabled              *bool    `json:"enabled"`
+	Enabled              *bool    `json:"enabled,omitempty"`
 	FtpForceServerSecure *bool    `json:"ftp_force_server_secure,omitempty"` // true
 	GlbServices          []string `json:"glb_services,omitempty"`            // []
 	ListenOnAny          *bool    `json:"listen_on_any,omitempty"`           // false
@@ -126,9 +126,9 @@ type Ssl struct {
 
 // CertItem : a single certificate item in the cert map
 type CertItem struct {
-	Host            string   `json:"host"`
-	AltCertificates []string `json:"alt_certificates"`
-	Certificate     string   `json:"certificate"`
+	Host            string   `json:"host,omitempty"`
+	AltCertificates []string `json:"alt_certificates,omitempty"`
+	Certificate     string   `json:"certificate,omitempty"`
 }
 
 // VirtualServersList : List of nodes monitored
