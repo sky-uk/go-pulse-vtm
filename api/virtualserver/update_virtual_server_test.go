@@ -9,6 +9,7 @@ import (
 
 var updateVirtualServerAPI *UpdateVirtualServerAPI
 var updateVirtualServerName = "updateVirtualServer"
+var updateVirtualServer VirtualServer
 
 func setup() {
 	enabled := false
@@ -18,11 +19,11 @@ func setup() {
 		Port:     80,
 		Protocol: "http",
 	}
-	newVirtualServerProperties := Properties{Basic: newBasicVirtualServer}
-	newVirtualServer := VirtualServer{Properties: newVirtualServerProperties}
+	updateVirtualServerProperties := Properties{Basic: newBasicVirtualServer}
+	updateVirtualServer = VirtualServer{Properties: updateVirtualServerProperties}
 
-	updateVirtualServerAPI = NewUpdate(updateVirtualServerName, newVirtualServer)
-	updateVirtualServerAPI.SetResponseObject("/private/status/check")
+	updateVirtualServerAPI = NewUpdate(updateVirtualServerName, updateVirtualServer)
+	updateVirtualServerAPI.SetResponseObject(&updateVirtualServer)
 }
 
 func TestUpdateMethod(t *testing.T) {
@@ -46,6 +47,6 @@ func TestUpdateMarshalling(t *testing.T) {
 func TestUpdateGetResponse(t *testing.T) {
 	setup()
 	getResponse := updateVirtualServerAPI.GetResponse()
-	assert.Equal(t, getResponse, "/private/status/check")
+	assert.Equal(t, getResponse, updateVirtualServer)
 
 }

@@ -9,16 +9,17 @@ import (
 
 var updateMonitorAPI *UpdateMonitorAPI
 var updateMonitorName = "updateMonitor"
+var updateMonitor Monitor
 
 func setup() {
 	newHTTPMonitor := HTTP{URIPath: "/private/status/check"}
 	monitorVerbosity := false
 	newBasicMonitor := Basic{Delay: 6, Failures: 3, Type: "http", Timeout: 4, Verbose: &monitorVerbosity}
-	newMonitorProperties := Properties{Basic: newBasicMonitor, HTTP: newHTTPMonitor}
-	newMonitor := Monitor{Properties: newMonitorProperties}
+	updateMonitorProperties := Properties{Basic: newBasicMonitor, HTTP: newHTTPMonitor}
+	updateMonitor = Monitor{Properties: updateMonitorProperties}
 
-	updateMonitorAPI = NewUpdate(updateMonitorName, newMonitor)
-	updateMonitorAPI.SetResponseObject("/private/status/check")
+	updateMonitorAPI = NewUpdate(updateMonitorName, updateMonitor)
+	updateMonitorAPI.SetResponseObject(&updateMonitor)
 }
 
 func TestUpdateMethod(t *testing.T) {
@@ -42,6 +43,6 @@ func TestUpdateMarshalling(t *testing.T) {
 func TestUpdateGetResponse(t *testing.T) {
 	setup()
 	getResponse := updateMonitorAPI.GetResponse()
-	assert.Equal(t, getResponse, "/private/status/check")
+	assert.Equal(t, getResponse, updateMonitor)
 
 }
