@@ -28,6 +28,6 @@ func NewUpdate(name string, requestPayload TrafficIPGroup) *CreateUpdateTrafficI
 }
 
 // GetResponse returns ResponseObject of CreateTrafficIPGroupAPI.
-func (ga CreateUpdateTrafficIPGroupAPI) GetResponse() *TrafficIPGroup {
-	return ga.ResponseObject().(*TrafficIPGroup)
+func (ga CreateUpdateTrafficIPGroupAPI) GetResponse() TrafficIPGroup {
+	return *ga.ResponseObject().(*TrafficIPGroup)
 }
