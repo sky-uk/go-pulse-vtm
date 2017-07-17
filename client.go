@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"regexp"
 	"strings"
 )
 
@@ -35,11 +36,16 @@ type VTMClient struct {
 
 // Do - makes the API call.
 func (vtmClient *VTMClient) Do(api api.VTMApi) error {
-	requestURL := fmt.Sprintf("%s%s", vtmClient.URL, api.Endpoint())
+
+	apiEndpoint := api.Endpoint()
+
+	requestURL := fmt.Sprintf("%s%s", vtmClient.URL, apiEndpoint)
 	var requestPayload io.Reader
+	octetStreamURLS := regexp.MustCompilePOSIX(`^(/api/tm/3.8/config/active/rules/.*)`)
 
 	// TODO: change this to JSON
-	if api.RequestObject() != nil {
+	if api.RequestObject() != nil && !octetStreamURLS.MatchString(apiEndpoint) {
+		fmt.Printf("Encoding req object: %v", api.RequestObject())
 		requestJSONBytes, marshallingErr := json.Marshal(api.RequestObject())
 		if marshallingErr != nil {
 			log.Fatal(marshallingErr)
@@ -52,6 +58,11 @@ func (vtmClient *VTMClient) Do(api api.VTMApi) error {
 		}
 		requestPayload = bytes.NewReader(requestJSONBytes)
 	}
+
+	if requestPayload == nil && api.RequestObject() != nil {
+		requestPayload = bytes.NewReader(api.RequestObject().([]byte))
+	}
+
 	if vtmClient.debug {
 		log.Println("requestURL:", requestURL)
 	}
@@ -63,7 +74,12 @@ func (vtmClient *VTMClient) Do(api api.VTMApi) error {
 
 	req.SetBasicAuth(vtmClient.User, vtmClient.Password)
 	// TODO: remove this hardcoded value!
-	req.Header.Set("Content-Type", "application/json")
+	if octetStreamURLS.MatchString(apiEndpoint) {
+		req.Header.Set("Content-Type", "application/octet-stream")
+		req.Header.Set("Content-Transfer-Encoding", "text")
+	} else {
+		req.Header.Set("Content-Type", "application/json")
+	}
 
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: vtmClient.IgnoreSSL},
