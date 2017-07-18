@@ -8,7 +8,7 @@ import (
 
 // RunPoolExample  - runs examples
 func RunPoolExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
-	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
+	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug, nil)
 
 	//Example to get all the pools
 	getAllAPI := pool.NewGetAll()
