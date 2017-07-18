@@ -132,7 +132,6 @@ import (
         log.Printf("Monitor %s deleted", name)
     }
 ```
-<<<<<<< HEAD
 
 ### Working with Pools
 
