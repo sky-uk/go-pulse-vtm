@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// GetRule base object.
+// GetRuleAPI base object.
 type GetRuleAPI struct {
 	*api.BaseAPI
 }
@@ -21,11 +21,3 @@ func NewGetRule(ruleName string) *GetRuleAPI {
 func (getRule *GetRuleAPI) GetResponse() string {
 	return *getRule.ResponseObject().(*string)
 }
-
-/*
-// GetResponse : get response object from created zone
-func (cza *CreateZoneAuthAPI) GetResponse() string {
-	return *cza.ResponseObject().(*string)
-}
-
-*/
