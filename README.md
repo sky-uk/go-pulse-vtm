@@ -14,6 +14,7 @@ This wrapper uses the REST API interface provided by the vTM, currently version 
 | Pool                    |   Y    |   Y   |    Y    |   Y    |
 | SSL Server Key          |   Y    |   Y   |    Y    |   Y    |
 | Traffic IP Group        |   Y    |   Y   |    Y    |   Y    |
+| Virtual Server          |   Y    |   Y   |    Y    |   Y    |
 
 ### Notes
 [1] : Currently only HTTP monitoring is supported
