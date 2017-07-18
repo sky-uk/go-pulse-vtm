@@ -187,7 +187,7 @@ func (vtmClient *VTMClient) handleResponse(apiObj api.VTMApi, res *http.Response
 			}
 			return errors.New(errObj.Error.ErrorText)
 		}
-		
+
 	} else {
 		data := string(bodyText)
 		apiObj.SetResponseObject(&data)
