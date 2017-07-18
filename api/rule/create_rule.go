@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// createRuleAPI : create rule API object
+// CreateRuleAPI : create rule API object
 type CreateRuleAPI struct {
 	*api.BaseAPI
 }

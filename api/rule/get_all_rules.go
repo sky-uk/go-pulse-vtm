@@ -5,19 +5,19 @@ import (
 	"net/http"
 )
 
-// GetAllRules object
+// GetAllRules : used for retrieving a list of rules and their href
 type GetAllRules struct {
 	*api.BaseAPI
 }
 
-// NewGetAll() *GetAllRules {
+// NewGetAll : returns a list of rules {
 func NewGetAll() *GetAllRules {
 	this := new(GetAllRules)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/rules/", nil, new(RuleList))
+	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/rules/", nil, new(Rules))
 	return this
 }
 
 // GetResponse returns the response object of GetAllRules
-func (getAllRules GetAllRules) GetResponse() *RuleList {
-	return getAllRules.ResponseObject().(*RuleList)
+func (getAllRules GetAllRules) GetResponse() *Rules {
+	return getAllRules.ResponseObject().(*Rules)
 }

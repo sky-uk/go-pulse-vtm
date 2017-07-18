@@ -1,7 +1,7 @@
 package rule
 
-// RuleList : List of rules
-type RuleList struct {
+// Rules : List of rules
+type Rules struct {
 	Children []ChildRule `json:"children"`
 }
 
