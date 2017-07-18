@@ -1,6 +1,5 @@
 package rule
 
-
 import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
@@ -27,4 +26,3 @@ func TestCreateEndpoint(t *testing.T) {
 	createSetup()
 	assert.Equal(t, "/api/tm/3.8/config/active/rules/"+ruleName, createRuleAPI.Endpoint())
 }
-
