@@ -16,7 +16,7 @@ func createSetup() {
 	newSSLServerKeyProperties := Properties{Basic: newSSLServerKeyBasic}
 	newSSLServerKey = SSLServerKey{Properties: newSSLServerKeyProperties}
 
-	createSSLServerKeyAPI = NewCreate(newSSLServerKeyName, &newSSLServerKey)
+	createSSLServerKeyAPI = NewCreate(newSSLServerKeyName, newSSLServerKey)
 	createSSLServerKeyAPI.SetResponseObject(&newSSLServerKey)
 }
 

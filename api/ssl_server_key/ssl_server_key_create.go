@@ -11,9 +11,9 @@ type CreateSSLServerKeyAPI struct {
 }
 
 // NewCreate : Create new SSLServerKey
-func NewCreate(name string, requestPayload *SSLServerKey) *CreateSSLServerKeyAPI {
+func NewCreate(name string, key SSLServerKey) *CreateSSLServerKeyAPI {
 	this := new(CreateSSLServerKeyAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/api/tm/3.8/config/active/ssl/server_keys/"+name, requestPayload, new(SSLServerKey))
+	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/api/tm/3.8/config/active/ssl/server_keys/"+name, key, new(SSLServerKey))
 	return this
 }
 

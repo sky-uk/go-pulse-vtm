@@ -38,5 +38,5 @@ func TestGetAllUnMarshalling(t *testing.T) {
 
 func TestGetAllTrafficIPGroupsAPIGetResponse(t *testing.T) {
 	setupGetAll()
-	assert.IsType(t, getAllSSLServerKeysAPI.GetResponse(), &SSLServerKeysList{})
+	assert.IsType(t, getAllSSLServerKeysAPI.GetResponse(), SSLServerKeysList{})
 }

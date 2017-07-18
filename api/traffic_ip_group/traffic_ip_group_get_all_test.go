@@ -40,5 +40,5 @@ func TestGetAllUnMarshalling(t *testing.T) {
 
 func TestGetAllTrafficIPGroupsAPIGetResponse(t *testing.T) {
 	setupGetAll()
-	assert.IsType(t, getAllTrafficIPGroupsAPI.GetResponse(), &TrafficIPGroupList{})
+	assert.IsType(t, getAllTrafficIPGroupsAPI.GetResponse(), TrafficIPGroupList{})
 }
