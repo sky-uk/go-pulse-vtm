@@ -6,20 +6,20 @@ import (
 )
 
 // GetRule base object.
-type GetRule struct {
+type GetRuleAPI struct {
 	*api.BaseAPI
 }
 
 // NewGetRule : returns a rule
-func NewGetRule(ruleName string) *GetRule {
-	this := new(GetRule)
+func NewGetRule(ruleName string) *GetRuleAPI {
+	this := new(GetRuleAPI)
 	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/rules/"+ruleName, nil, new(string))
 	return this
 }
 
 // GetResponse returns the string representation of the traffic script
-func (getRule *GetRule) GetResponse() string {
-	return getRule.ResponseObject().(string)
+func (getRule *GetRuleAPI) GetResponse() string {
+	return *getRule.ResponseObject().(*string)
 }
 
 /*

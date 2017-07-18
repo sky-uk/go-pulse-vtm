@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var getRuleAPI *GetRule
+var getRuleAPI *GetRuleAPI
 var getRuleName string
 var getRuleResponseObject string
 
@@ -16,7 +16,7 @@ func setupGet() {
   		http.removeResponseHeader( "Keep-Alive" );
 	}`
 	getRuleAPI = NewGetRule(getRuleName)
-	getRuleAPI.SetResponseObject(getRuleResponseObject)
+	getRuleAPI.SetResponseObject(&getRuleResponseObject)
 }
 
 func TestGetMethod(t *testing.T) {

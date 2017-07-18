@@ -78,8 +78,12 @@ func main() {
 
 	flagSet := cmd.flagSet
 	flagSet.Parse(flag.Args()[1:])
+	headers := make(map[string]string)
 
-	client := brocadevtm.NewVTMClient(brocadeVTMServer, brocadeVTMUsername, brocadeVTMPassword, true, debug)
+	headers["Content-Type"] = "application/octet-stream"
+	headers["Content-Transfer-Encoding"] = "text"
+
+	client := brocadevtm.NewVTMClient(brocadeVTMServer, brocadeVTMUsername, brocadeVTMPassword, true, debug, headers)
 
 	cmd.exec(client, flagSet)
 }
