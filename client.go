@@ -111,6 +111,7 @@ func (vtmClient *VTMClient) handleResponse(apiObj api.VTMApi, res *http.Response
 			if err != nil {
 				log.Printf("Error unmarshalling error response:\n%v", err)
 			}
+			apiObj.SetResponseObject(errObj)
 			return errors.New(errObj.Error.ErrorText)
 		}
 	}

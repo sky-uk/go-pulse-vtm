@@ -154,7 +154,6 @@ import (
         log.Fatal(err)
     }
 
-    
     // returns a pool.LBPoolList object
     pools := api.GetResponse()
 ```
