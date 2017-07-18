@@ -9,7 +9,7 @@ import (
 
 // RunTrafficIPGroupsExample : run traffic ip group example
 func RunTrafficIPGroupsExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
-	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
+	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug, nil)
 	tipgName := "cdu16-test-group"
 	var trafficManagers []string
 

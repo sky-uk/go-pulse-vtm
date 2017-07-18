@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/tls"
 	"encoding/json"
+	"encoding/xml"
 	"errors"
 	"fmt"
 	"github.com/sky-uk/go-brocade-vtm/api"
@@ -15,13 +16,23 @@ import (
 )
 
 // NewVTMClient  Creates a new vtmClient object.
-func NewVTMClient(url string, user string, password string, ignoreSSL bool, debug bool) *VTMClient {
+func NewVTMClient(
+	url string,
+	user string,
+	password string,
+	ignoreSSL bool,
+	debug bool,
+	headers map[string]string,
+) *VTMClient {
+
 	vtmClient := new(VTMClient)
 	vtmClient.URL = url
 	vtmClient.User = user
 	vtmClient.Password = password
 	vtmClient.IgnoreSSL = ignoreSSL
 	vtmClient.debug = debug
+	vtmClient.headers = headers
+
 	return vtmClient
 }
 
@@ -32,27 +43,67 @@ type VTMClient struct {
 	Password  string
 	IgnoreSSL bool
 	debug     bool
+	headers   map[string]string
+}
+
+func (vtmClient *VTMClient) formatRequestPayload(api api.VTMApi) (io.Reader, error) {
+
+	var requestPayload io.Reader
+
+	var reqBytes []byte
+	if api.RequestObject() != nil {
+		var err error
+		contentType := vtmClient.headers["Content-Type"]
+		if contentType == "application/json" {
+			reqBytes, err = json.Marshal(api.RequestObject())
+			if err != nil {
+				log.Fatal(err)
+				return nil, err
+			}
+		}
+		if contentType == "application/xml" {
+			reqBytes, err = xml.Marshal(api.RequestObject())
+			if err != nil {
+				log.Fatal(err)
+				return nil, err
+			}
+		}
+		if contentType == "application/octet-stream" {
+			reqBytes = api.RequestObject().([]byte)
+		}
+
+		requestPayload = bytes.NewReader(reqBytes)
+	}
+
+	if vtmClient.debug {
+		log.Println("--------------------------------------------------------------")
+		log.Println("Request payload:")
+		log.Println(string(reqBytes))
+		log.Println("--------------------------------------------------------------")
+	}
+
+	return requestPayload, nil
 }
 
 // Do - makes the API call.
 func (vtmClient *VTMClient) Do(api api.VTMApi) error {
-	requestURL := fmt.Sprintf("%s%s", vtmClient.URL, api.Endpoint())
-	var requestPayload io.Reader
 
-	// TODO: change this to JSON
-	if api.RequestObject() != nil {
-		requestJSONBytes, marshallingErr := json.Marshal(api.RequestObject())
-		if marshallingErr != nil {
-			log.Fatal(marshallingErr)
-			return (marshallingErr)
-		}
-		if vtmClient.debug {
-			log.Println("Request payload as JSON:")
-			log.Println(string(requestJSONBytes))
-			log.Println("--------------------------------------------------------------")
-		}
-		requestPayload = bytes.NewReader(requestJSONBytes)
+	requestURL := fmt.Sprintf("%s%s", vtmClient.URL, api.Endpoint())
+
+	if vtmClient.headers == nil {
+		vtmClient.headers = make(map[string]string)
 	}
+
+	_, ok := vtmClient.headers["Content-Type"]
+	if !ok {
+		vtmClient.headers["Content-Type"] = "application/json"
+	}
+
+	requestPayload, err := vtmClient.formatRequestPayload(api)
+	if err != nil {
+		return err
+	}
+
 	if vtmClient.debug {
 		log.Println("requestURL:", requestURL)
 	}
@@ -63,8 +114,10 @@ func (vtmClient *VTMClient) Do(api api.VTMApi) error {
 	}
 
 	req.SetBasicAuth(vtmClient.User, vtmClient.Password)
-	// TODO: remove this hardcoded value!
-	req.Header.Set("Content-Type", "application/json")
+
+	for headerKey, headerValue := range vtmClient.headers {
+		req.Header.Set(headerKey, headerValue)
+	}
 
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: vtmClient.IgnoreSSL},
@@ -111,7 +164,6 @@ func (vtmClient *VTMClient) handleResponse(apiObj api.VTMApi, res *http.Response
 			if err != nil {
 				log.Printf("Error unmarshalling error response:\n%v", err)
 			}
-			apiObj.SetResponseObject(errObj)
 			return errors.New(errObj.Error.ErrorText)
 		}
 	}
