@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/tls"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/sky-uk/go-brocade-vtm/api"
 	"io"
@@ -78,28 +79,41 @@ func (vtmClient *VTMClient) Do(api api.VTMApi) error {
 	return vtmClient.handleResponse(api, res)
 }
 
-func (vtmClient *VTMClient) handleResponse(api api.VTMApi, res *http.Response) error {
-	api.SetStatusCode(res.StatusCode)
+func (vtmClient *VTMClient) handleResponse(apiObj api.VTMApi, res *http.Response) error {
+	apiObj.SetStatusCode(res.StatusCode)
 	bodyText, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		log.Println("ERROR reading response: ", err)
 		return err
 	}
 
-	api.SetRawResponse(bodyText)
+	apiObj.SetRawResponse(bodyText)
 
 	if vtmClient.debug {
 		log.Println(string(bodyText))
 	}
 
-	if isJSON(res.Header.Get("Content-Type")) && api.StatusCode() == 200 {
-		JSONerr := json.Unmarshal(bodyText, api.ResponseObject())
-		if JSONerr != nil {
-			log.Println("ERROR unmarshalling response: ", JSONerr)
+	if isJSON(res.Header.Get("Content-Type")) {
+		if apiObj.StatusCode() >= http.StatusOK && apiObj.StatusCode() < http.StatusBadRequest {
+			if len(bodyText) > 0 {
+				JSONerr := json.Unmarshal(bodyText, apiObj.ResponseObject())
+				if JSONerr != nil {
+					log.Println("ERROR unmarshalling response: ", JSONerr)
+					return JSONerr
+				}
+			}
 			return nil
 		}
-	} else {
-		api.SetResponseObject(string(bodyText))
+
+		if len(bodyText) > 0 {
+			var errObj api.ReqError
+			err := json.Unmarshal(bodyText, &errObj)
+			if err != nil {
+				log.Printf("Error unmarshalling error response:\n%v", err)
+			}
+			apiObj.SetResponseObject(errObj)
+			return errors.New(errObj.Error.ErrorText)
+		}
 	}
 	return nil
 }

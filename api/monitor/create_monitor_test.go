@@ -8,18 +8,25 @@ import (
 )
 
 var createMonitorAPI *CreateMonitorAPI
-var newMonitorName = "exampleMonitor"
+var createMonitorName = "exampleMonitor"
+var createMonitor Monitor
 
 func createSetup() {
 
 	newHTTPMonitor := HTTP{URIPath: "/download/private/status/check"}
 	monitorVerbosity := true
-	newBasicMonitor := Basic{Delay: 6, Failures: 3, Type: "http", Timeout: 4, Verbose: &monitorVerbosity}
-	newMonitorProperties := Properties{Basic: newBasicMonitor, HTTP: newHTTPMonitor}
-	newMonitor := Monitor{Properties: newMonitorProperties}
+	newBasicMonitor := Basic{
+		Delay:    6,
+		Failures: 3,
+		Type:     "http",
+		Timeout:  4,
+		Verbose:  &monitorVerbosity,
+	}
+	createMonitorProperties := Properties{Basic: newBasicMonitor, HTTP: newHTTPMonitor}
+	createMonitor = Monitor{Properties: createMonitorProperties}
 
-	createMonitorAPI = NewCreate(newMonitorName, newMonitor)
-	createMonitorAPI.SetResponseObject("/download/private/status/check")
+	createMonitorAPI = NewCreate(createMonitorName, createMonitor)
+	createMonitorAPI.SetResponseObject(&createMonitor)
 }
 
 func TestCreateMethod(t *testing.T) {
@@ -29,10 +36,10 @@ func TestCreateMethod(t *testing.T) {
 
 func TestCreateEndpoint(t *testing.T) {
 	createSetup()
-	assert.Equal(t, "/api/tm/3.8/config/active/monitors/"+newMonitorName, createMonitorAPI.Endpoint())
+	assert.Equal(t, "/api/tm/3.8/config/active/monitors/"+createMonitorName, createMonitorAPI.Endpoint())
 }
 
-func TestCreateMarshalling(t *testing.T) {
+func TestCreateRequestMarshalling(t *testing.T) {
 	createSetup()
 	expectedJSON := "{\"properties\":{\"basic\":{\"delay\":6,\"failures\":3,\"type\":\"http\",\"timeout\":4,\"verbose\":true},\"http\":{\"path\":\"/download/private/status/check\"}}}"
 	jsonBytes, err := json.Marshal(createMonitorAPI.RequestObject())
@@ -42,11 +49,6 @@ func TestCreateMarshalling(t *testing.T) {
 
 func TestGetResponse(t *testing.T) {
 	createSetup()
-	getResponse := createMonitorAPI.GetResponse()
-	assert.Equal(t, getResponse, "/download/private/status/check")
-}
-
-//TODO
-func TestCreateUnMarshalling(t *testing.T) {
-
+	monsList := createMonitorAPI.GetResponse()
+	assert.Equal(t, monsList, createMonitor)
 }

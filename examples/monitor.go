@@ -75,7 +75,7 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 		foundMonitor := getAllAPI.GetResponse().FilterByName(exampleMonitorName)
 		fmt.Printf("Found monitor:\n \tName: %-20s Href: %-20s\n", foundMonitor.Name, foundMonitor.HRef)
 
-		getSingleMonitorAPI := monitor.NewGetSingleMonitor(foundMonitor.Name)
+		getSingleMonitorAPI := monitor.NewGetSingle(foundMonitor.Name)
 
 		err = vtmClient.Do(getSingleMonitorAPI)
 		if err != nil {
@@ -111,7 +111,7 @@ func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 
 	if updateMonitorAPI.StatusCode() == 200 {
 		fmt.Printf("Successfully updated monitor %s to use /private/status/check\n", exampleMonitorName)
-		getSingleMonitorAPI := monitor.NewGetSingleMonitor(exampleMonitorName)
+		getSingleMonitorAPI := monitor.NewGetSingle(exampleMonitorName)
 		err = vtmClient.Do(getSingleMonitorAPI)
 		if err != nil {
 			fmt.Println("Error: ", err)

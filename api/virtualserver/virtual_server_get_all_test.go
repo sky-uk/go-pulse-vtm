@@ -53,6 +53,6 @@ func TestGetAllUnMarshalling(t *testing.T) {
 
 func TestGetAllVirtualServers_GetResponse(t *testing.T) {
 	setupGetAll()
-	assert.IsType(t, getAllVirtualServerAPI.GetResponse(), &VirtualServersList{})
+	assert.IsType(t, getAllVirtualServerAPI.GetResponse(), VirtualServersList{})
 
 }

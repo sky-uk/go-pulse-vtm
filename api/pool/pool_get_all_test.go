@@ -39,6 +39,6 @@ func TestGetAllUnMarshalling(t *testing.T) {
 
 func TestGetAllPools_GetResponse(t *testing.T) {
 	setupGetAll()
-	assert.IsType(t, getAllPoolAPI.GetResponse(), &LBPoolList{})
+	assert.IsType(t, getAllPoolAPI.GetResponse(), LBPoolList{})
 
 }

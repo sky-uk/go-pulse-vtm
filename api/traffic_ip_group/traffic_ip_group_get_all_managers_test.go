@@ -36,8 +36,8 @@ func TestGetTrafficManagersUnmarshalling(t *testing.T) {
 
 func TestGetTrafficManagersGetResponse(t *testing.T) {
 	setupGetAllTrafficManagers()
-	response := *getAllTrafficManagersAPI.GetResponse()
-	assert.IsType(t, getAllTrafficManagersAPI.GetResponse(), &TrafficManagerChildren{})
+	response := getAllTrafficManagersAPI.GetResponse()
+	assert.IsType(t, getAllTrafficManagersAPI.GetResponse(), TrafficManagerChildren{})
 	assert.Equal(t, "h1ist01-v00.paas.d50.ovp.bskyb.com", response.Children[0].Name)
 	assert.Equal(t, "/api/tm/3.8/config/active/traffic_managers/h1ist01-v00.paas.d50.ovp.bskyb.com", response.Children[0].HREF)
 }

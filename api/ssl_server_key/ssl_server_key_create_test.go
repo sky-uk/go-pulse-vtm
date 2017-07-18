@@ -9,14 +9,15 @@ import (
 
 var createSSLServerKeyAPI *CreateSSLServerKeyAPI
 var newSSLServerKeyName = "exampleSSLServerKey"
+var newSSLServerKey SSLServerKey
 
 func createSetup() {
 	newSSLServerKeyBasic := Basic{Note: "test", Private: "testprivate.com", Public: "testpublic.com", Request: "test"}
 	newSSLServerKeyProperties := Properties{Basic: newSSLServerKeyBasic}
-	newSSLServerKey := SSLServerKey{Properties: newSSLServerKeyProperties}
+	newSSLServerKey = SSLServerKey{Properties: newSSLServerKeyProperties}
 
-	createSSLServerKeyAPI = NewCreate(newSSLServerKeyName, &newSSLServerKey)
-	createSSLServerKeyAPI.SetResponseObject("test response")
+	createSSLServerKeyAPI = NewCreate(newSSLServerKeyName, newSSLServerKey)
+	createSSLServerKeyAPI.SetResponseObject(&newSSLServerKey)
 }
 
 func TestCreateMethod(t *testing.T) {
@@ -40,5 +41,5 @@ func TestCreateMarshalling(t *testing.T) {
 func TestGetResponse(t *testing.T) {
 	createSetup()
 	getResponse := createSSLServerKeyAPI.GetResponse()
-	assert.Equal(t, getResponse, "test response")
+	assert.Equal(t, getResponse, newSSLServerKey)
 }

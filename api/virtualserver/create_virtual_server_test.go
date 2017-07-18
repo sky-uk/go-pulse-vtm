@@ -8,6 +8,7 @@ import (
 )
 
 var createVirtualServerAPI *CreateVirtualServerAPI
+var newVirtualServer VirtualServer
 var newVirtualServerName = "exampleVirtualServer"
 
 func createSetup() {
@@ -19,10 +20,10 @@ func createSetup() {
 		Protocol: "http",
 	}
 	newVirtualServerProperties := Properties{Basic: newBasicVirtualServer}
-	newVirtualServer := VirtualServer{Properties: newVirtualServerProperties}
+	newVirtualServer = VirtualServer{Properties: newVirtualServerProperties}
 
 	createVirtualServerAPI = NewCreate(newVirtualServerName, newVirtualServer)
-	createVirtualServerAPI.SetResponseObject("/download/private/status/check")
+	createVirtualServerAPI.SetResponseObject(&newVirtualServer)
 }
 
 func TestCreateMethod(t *testing.T) {
@@ -49,8 +50,8 @@ func TestCreateMarshalling(t *testing.T) {
 
 func TestGetResponse(t *testing.T) {
 	createSetup()
-	getResponse := createVirtualServerAPI.GetResponse()
-	assert.Equal(t, getResponse, "/download/private/status/check")
+	response := createVirtualServerAPI.GetResponse()
+	assert.Equal(t, response, newVirtualServer)
 }
 
 //TODO

@@ -9,27 +9,28 @@ import (
 
 var createTrafficIPGroupAPI *CreateUpdateTrafficIPGroupAPI
 var updateTrafficIPGroupAPI *CreateUpdateTrafficIPGroupAPI
+var tipgTrafficIPGroup TrafficIPGroup
+var tipgName string
 
-func setupCreateTrafficIPGroup() {
-	tipgName := "test-tipg"
+func setupTrafficIPGroup() {
+	tipgName = "test-tipg"
 	tipgIPAddresses := []string{"172.0.0.1"}
 	tipgEnabled := true
 	tipgBasic := Basic{Enabled: &tipgEnabled, IPAddresses: tipgIPAddresses, Location: 0, Mode: "rhi", Note: "", RhiOspfv2MetricBase: 10, RhiOspfv2PassiveMetricOffset: 10}
 	tipgProperties := Properties{tipgBasic}
-	tipgTrafficIPGroup := TrafficIPGroup{tipgProperties}
+	tipgTrafficIPGroup = TrafficIPGroup{tipgProperties}
+}
 
+func setupCreateTrafficIPGroup() {
+	setupTrafficIPGroup()
 	createTrafficIPGroupAPI = NewCreate(tipgName, tipgTrafficIPGroup)
+	createTrafficIPGroupAPI.SetResponseObject(&tipgTrafficIPGroup)
 }
 
 func setupUpdateTrafficIPGroup() {
-	tipgName := "test-tipg"
-	tipgIPAddresses := []string{"172.0.0.1"}
-	tipgEnabled := true
-	tipgBasic := Basic{Enabled: &tipgEnabled, IPAddresses: tipgIPAddresses, Location: 0, Mode: "rhi", Note: "", RhiOspfv2MetricBase: 10, RhiOspfv2PassiveMetricOffset: 10}
-	tipgProperties := Properties{tipgBasic}
-	tipgTrafficIPGroup := TrafficIPGroup{tipgProperties}
-
+	setupTrafficIPGroup()
 	updateTrafficIPGroupAPI = NewUpdate(tipgName, tipgTrafficIPGroup)
+	updateTrafficIPGroupAPI.SetResponseObject(&tipgTrafficIPGroup)
 }
 
 func TestNewCreateMethod(t *testing.T) {
@@ -48,6 +49,7 @@ func TestNewCreateMarshalling(t *testing.T) {
 	jsonBytes, err := json.Marshal(createTrafficIPGroupAPI.RequestObject())
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))
+	assert.Equal(t, createTrafficIPGroupAPI.GetResponse(), tipgTrafficIPGroup)
 }
 
 func TestNewUpdateMethod(t *testing.T) {
@@ -66,4 +68,5 @@ func TestNewUpdateMarshalling(t *testing.T) {
 	jsonBytes, err := json.Marshal(updateTrafficIPGroupAPI.RequestObject())
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))
+	assert.Equal(t, updateTrafficIPGroupAPI.GetResponse(), tipgTrafficIPGroup)
 }

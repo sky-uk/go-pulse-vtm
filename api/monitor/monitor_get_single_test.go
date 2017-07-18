@@ -33,7 +33,7 @@ func setupTestMonitorToString() *Monitor {
 }
 
 func setupNewGetMonitor() {
-	getSingleMonitorAPI = NewGetSingleMonitor("somemonitor")
+	getSingleMonitorAPI = NewGetSingle("somemonitor")
 }
 
 func TestGetSingleMonitor(t *testing.T) {
