@@ -40,7 +40,7 @@ func createRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
 	}
 	httpResponseCode := createRuleAPI.StatusCode()
 	if httpResponseCode == http.StatusCreated || httpResponseCode == http.StatusNoContent {
-		fmt.Printf("\nSuccessfully create new rule %s\n", ruleName)
+		fmt.Printf("Successfully created new rule %s\n", ruleName)
 	} else {
 		fmt.Printf("\nError occurred while creating rule %s. Received invalid http response code %d\n", ruleName, httpResponseCode)
 		os.Exit(4)
