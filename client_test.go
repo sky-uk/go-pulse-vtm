@@ -39,12 +39,31 @@ func setup(statusCode int, responseBody string) {
 			w.WriteHeader(statusCode)
 			fmt.Fprintln(w, responseBody)
 		}))
-	vtmClient = NewVTMClient(server.URL, user, password, ignoreSSL, debug)
+	headers := make(map[string]string)
+	headers["Content-Type"] = "application/json"
+	vtmClient = NewVTMClient(server.URL, user, password, ignoreSSL, debug, headers)
+}
+
+func setupWrongHeader(statusCode int, responseBody string) {
+	basicAuthHeaderValue := "Basic " + base64.StdEncoding.EncodeToString([]byte(user+":"+password))
+	server = httptest.NewTLSServer(http.HandlerFunc(
+		func(w http.ResponseWriter, r *http.Request) {
+			if !hasHeader(r, "Authorization", basicAuthHeaderValue) {
+				w.WriteHeader(unauthorizedStatusCode)
+				fmt.Fprint(w, unauthorizedResponse)
+				return
+			}
+			w.WriteHeader(statusCode)
+			fmt.Fprintln(w, responseBody)
+		}))
+	headers := make(map[string]string)
+	headers["Content-Type"] = "foo/bar"
+	vtmClient = NewVTMClient(server.URL, user, password, ignoreSSL, debug, headers)
 }
 
 func TestHappyCase(t *testing.T) {
 	setup(200, "pong")
-	vtmClient = NewVTMClient(server.URL, user, password, ignoreSSL, debug)
+	vtmClient = NewVTMClient(server.URL, user, password, ignoreSSL, debug, nil)
 	apiRequest := api.NewBaseAPI(http.MethodGet, "/", nil, nil)
 
 	err := vtmClient.Do(apiRequest)
@@ -56,7 +75,7 @@ func TestHappyCase(t *testing.T) {
 
 func TestBasicAuthFailure(t *testing.T) {
 	setup(0, "")
-	vtmClient = NewVTMClient(server.URL, "invalidUser", "invalidPass", ignoreSSL, debug)
+	vtmClient = NewVTMClient(server.URL, "invalidUser", "invalidPass", ignoreSSL, debug, nil)
 
 	apiRequest := api.NewBaseAPI(http.MethodGet, "/", nil, nil)
 	vtmClient.Do(apiRequest)
