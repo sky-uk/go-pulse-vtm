@@ -9,7 +9,7 @@ import (
 // RunMonitorExample : run the vTM monitor example
 func RunMonitorExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 
-	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
+	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug, nil)
 
 	//
 	// Get All Monitors. Create api object.

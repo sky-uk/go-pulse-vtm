@@ -12,7 +12,7 @@ import (
 // RunVirtualServerExample : run virtualserver example
 func RunVirtualServerExample(vtmAddress, vtmUser, vtmPassword string, debug bool) {
 
-	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug)
+	vtmClient := brocadevtm.NewVTMClient(vtmAddress, vtmUser, vtmPassword, true, debug, nil)
 
 	//
 	// Get All Services.
