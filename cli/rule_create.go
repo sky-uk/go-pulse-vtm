@@ -33,6 +33,10 @@ func createRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
 	}
 
 	createRuleAPI := rule.NewCreate(ruleName, trafficScript)
+	headers := make(map[string]string)
+	headers["Content-Type"] = "application/octet-stream"
+	headers["Content-Transfer-Encoding"] = "text"
+	client.Headers = headers
 	err := client.Do(createRuleAPI)
 	if err != nil {
 		fmt.Printf("\nError occurred while creating rule %s. Error: %+v\n", ruleName, err)

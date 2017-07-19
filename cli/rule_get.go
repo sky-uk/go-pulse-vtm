@@ -21,6 +21,10 @@ func showRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
 	}
 
 	readAPI := rule.NewGetRule(readRuleName)
+	headers := make(map[string]string)
+	headers["Content-Type"] = "application/octet-stream"
+	headers["Content-Transfer-Encoding"] = "text"
+	client.Headers = headers
 	err := client.Do(readAPI)
 	if err != nil {
 		fmt.Printf("\nError retrieving rule %s from API. Error %+v", readRuleName, err)

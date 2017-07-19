@@ -19,5 +19,5 @@ func NewGetRule(ruleName string) *GetRuleAPI {
 
 // GetResponse returns the string representation of the traffic script
 func (getRule *GetRuleAPI) GetResponse() string {
-	return *getRule.ResponseObject().(*string)
+	return string(getRule.RawResponse())
 }

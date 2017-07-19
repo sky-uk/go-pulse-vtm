@@ -8,15 +8,15 @@ import (
 
 var getRuleAPI *GetRuleAPI
 var getRuleName string
-var getRuleResponseObject string
+var getRuleResponseObject []byte
 
 func setupGet() {
 	getRuleName = "test-rule"
-	getRuleResponseObject = `if( http.responseHeaderExists( "Keep-Alive" ) == 0) {
+	getRuleResponseObject = []byte(`if( http.responseHeaderExists( "Keep-Alive" ) == 0) {
   		http.removeResponseHeader( "Keep-Alive" );
-	}`
+	}`)
 	getRuleAPI = NewGetRule(getRuleName)
-	getRuleAPI.SetResponseObject(&getRuleResponseObject)
+	getRuleAPI.SetRawResponse(getRuleResponseObject)
 }
 
 func TestGetMethod(t *testing.T) {
@@ -32,5 +32,5 @@ func TestGetEndpoint(t *testing.T) {
 func TestGetResponse(t *testing.T) {
 	setupGet()
 	ruleGetResponse := getRuleAPI.GetResponse()
-	assert.Equal(t, getRuleResponseObject, ruleGetResponse)
+	assert.Equal(t, string(getRuleResponseObject), ruleGetResponse)
 }
