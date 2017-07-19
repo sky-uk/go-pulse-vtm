@@ -167,7 +167,36 @@ func (vtmClient *VTMClient) handleResponse(apiObj api.VTMApi, res *http.Response
 			return errors.New(errObj.Error.ErrorText)
 		}
 	}
+	if isXML(res.Header.Get("Content-Type")) {
+		if apiObj.StatusCode() >= http.StatusOK && apiObj.StatusCode() < http.StatusBadRequest {
+			if len(bodyText) > 0 {
+				xmlErr := xml.Unmarshal(bodyText, apiObj.ResponseObject())
+				if xmlErr != nil {
+					log.Println("ERROR unmarshalling response: ", xmlErr)
+					return xmlErr
+				}
+			}
+			return nil
+		}
+
+		if len(bodyText) > 0 {
+			var errObj api.ReqError
+			err := xml.Unmarshal(bodyText, &errObj)
+			if err != nil {
+				log.Printf("Error unmarshalling error response:\n%v", err)
+			}
+			return errors.New(errObj.Error.ErrorText)
+		}
+
+	} else {
+		data := string(bodyText)
+		apiObj.SetResponseObject(&data)
+	}
 	return nil
+}
+
+func isXML(contentType string) bool {
+	return strings.Contains(strings.ToLower(contentType), "/xml")
 }
 
 func isJSON(contentType string) bool {

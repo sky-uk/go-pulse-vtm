@@ -1,3 +1,5 @@
 .idea
 *.bak
 *.secret
+.gopath~/
+go-brocade-vtm-cli

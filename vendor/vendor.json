@@ -3,10 +3,22 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "XfErnZwZpGtN9gYvajUO2yM8HEs=",
+			"path": "github.com/crackcomm/go-clitable",
+			"revision": "53bcff2fea363f918b5fc960c654a5fb4b3f9950",
+			"revisionTime": "2015-11-21T23:02:30Z"
+		},
+		{
 			"checksumSHA1": "dvabztWVQX8f6oMLRyv4dLH+TGY=",
 			"path": "github.com/davecgh/go-spew/spew",
 			"revision": "346938d642f2ec3594ed81d874461961cd0faa76",
 			"revisionTime": "2016-10-29T20:57:26Z"
+		},
+		{
+			"checksumSHA1": "cJE7dphDlam/i7PhnsyosNWtbd4=",
+			"path": "github.com/mattn/go-runewidth",
+			"revision": "97311d9f7767e3d6f422ea06661bc2c7a19e8a5d",
+			"revisionTime": "2017-05-10T07:48:58Z"
 		},
 		{
 			"checksumSHA1": "LuFv4/jlrmFNnDb/5SCSEPAM9vU=",
