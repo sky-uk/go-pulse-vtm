@@ -30,8 +30,8 @@ func NewVTMClient(
 	vtmClient.User = user
 	vtmClient.Password = password
 	vtmClient.IgnoreSSL = ignoreSSL
-	vtmClient.debug = debug
-	vtmClient.headers = headers
+	vtmClient.Debug = debug
+	vtmClient.Headers = headers
 
 	return vtmClient
 }
@@ -42,8 +42,8 @@ type VTMClient struct {
 	User      string
 	Password  string
 	IgnoreSSL bool
-	debug     bool
-	headers   map[string]string
+	Debug     bool
+	Headers   map[string]string
 }
 
 func (vtmClient *VTMClient) formatRequestPayload(api api.VTMApi) (io.Reader, error) {
@@ -53,7 +53,7 @@ func (vtmClient *VTMClient) formatRequestPayload(api api.VTMApi) (io.Reader, err
 	var reqBytes []byte
 	if api.RequestObject() != nil {
 		var err error
-		contentType := vtmClient.headers["Content-Type"]
+		contentType := vtmClient.Headers["Content-Type"]
 		if contentType == "application/json" {
 			reqBytes, err = json.Marshal(api.RequestObject())
 			if err != nil {
@@ -75,7 +75,7 @@ func (vtmClient *VTMClient) formatRequestPayload(api api.VTMApi) (io.Reader, err
 		requestPayload = bytes.NewReader(reqBytes)
 	}
 
-	if vtmClient.debug {
+	if vtmClient.Debug {
 		log.Println("--------------------------------------------------------------")
 		log.Println("Request payload:")
 		log.Println(string(reqBytes))
@@ -90,13 +90,13 @@ func (vtmClient *VTMClient) Do(api api.VTMApi) error {
 
 	requestURL := fmt.Sprintf("%s%s", vtmClient.URL, api.Endpoint())
 
-	if vtmClient.headers == nil {
-		vtmClient.headers = make(map[string]string)
+	if vtmClient.Headers == nil {
+		vtmClient.Headers = make(map[string]string)
 	}
 
-	_, ok := vtmClient.headers["Content-Type"]
+	_, ok := vtmClient.Headers["Content-Type"]
 	if !ok {
-		vtmClient.headers["Content-Type"] = "application/json"
+		vtmClient.Headers["Content-Type"] = "application/json"
 	}
 
 	requestPayload, err := vtmClient.formatRequestPayload(api)
@@ -104,7 +104,7 @@ func (vtmClient *VTMClient) Do(api api.VTMApi) error {
 		return err
 	}
 
-	if vtmClient.debug {
+	if vtmClient.Debug {
 		log.Println("requestURL:", requestURL)
 	}
 	req, err := http.NewRequest(api.Method(), requestURL, requestPayload)
@@ -115,7 +115,7 @@ func (vtmClient *VTMClient) Do(api api.VTMApi) error {
 
 	req.SetBasicAuth(vtmClient.User, vtmClient.Password)
 
-	for headerKey, headerValue := range vtmClient.headers {
+	for headerKey, headerValue := range vtmClient.Headers {
 		req.Header.Set(headerKey, headerValue)
 	}
 
@@ -142,7 +142,7 @@ func (vtmClient *VTMClient) handleResponse(apiObj api.VTMApi, res *http.Response
 
 	apiObj.SetRawResponse(bodyText)
 
-	if vtmClient.debug {
+	if vtmClient.Debug {
 		log.Println(string(bodyText))
 	}
 
@@ -189,8 +189,8 @@ func (vtmClient *VTMClient) handleResponse(apiObj api.VTMApi, res *http.Response
 		}
 
 	} else {
-		data := string(bodyText)
-		apiObj.SetResponseObject(&data)
+		data := []byte(bodyText)
+		apiObj.SetRawResponse(data)
 	}
 	return nil
 }

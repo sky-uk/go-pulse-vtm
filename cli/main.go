@@ -80,8 +80,7 @@ func main() {
 	flagSet.Parse(flag.Args()[1:])
 
 	headers := make(map[string]string)
-	headers["Content-Type"] = "application/octet-stream"
-	headers["Content-Transfer-Encoding"] = "text"
+	headers["Content-Type"] = "application/json"
 
 	client := brocadevtm.NewVTMClient(brocadeVTMServer, brocadeVTMUsername, brocadeVTMPassword, true, debug, headers)
 
