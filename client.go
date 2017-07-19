@@ -202,3 +202,8 @@ func isXML(contentType string) bool {
 func isJSON(contentType string) bool {
 	return strings.Contains(strings.ToLower(contentType), "/json")
 }
+
+func (vtmClient *VTMClient) setHeaders(headers map[string]string) {
+	vtmClient.headers = headers
+}
+
