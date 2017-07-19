@@ -26,7 +26,7 @@ func deleteRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
 	}
 	httpResponseCode := deleteRuleAPI.StatusCode()
 	if httpResponseCode != http.StatusNoContent {
-		fmt.Printf("\nError while deleteing rule %s. Received invalid http response code %d", deleteRuleName, httpResponseCode)
+		fmt.Printf("\nError while deleting rule %s. Received invalid http response code %d", deleteRuleName, httpResponseCode)
 		os.Exit(3)
 	}
 	fmt.Printf("Successfully deleted rule %s\n", deleteRuleName)
