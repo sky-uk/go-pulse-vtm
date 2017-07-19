@@ -15,6 +15,7 @@ This wrapper uses the REST API interface provided by the vTM, currently version 
 | SSL Server Key          |   Y    |   Y   |    Y    |   Y    |
 | Traffic IP Group        |   Y    |   Y   |    Y    |   Y    |
 | Virtual Server          |   Y    |   Y   |    Y    |   Y    |
+| Rule                    |   Y    |   Y   |    Y    |   Y    |
 
 ### Notes
 [1] : Currently only HTTP monitoring is supported
@@ -485,4 +486,151 @@ import (
     } else {
         log.Printf("Virtual server %s deleted", name)
     }
+```
+
+### Working with rules
+
+#### Importing proper packages
+     
+     In order to work with rules, import the rule package section:
+     
+     ```
+     import (
+         "github.com/sky-uk/go-brocade-vtm/api/rule"
+     )
+     ```
+     
+#### Getting the list of rules
+
+```
+    api := rule.NewGetAll()
+    err := client.Do(api)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    
+    // returns a rule.Rules object which contains the name and href of each rule.
+    rules := api.GetResponse()
+```
+
+
+#### Retrieving a single rule
+
+```
+    api := rule.NewGetRule(name)
+    err := client.Do(api)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    // Returns the traffic script as a string
+    trafficScript := api.GetResponse()
+```
+
+#### Creating a rule
+
+```
+    ruleName := "my-rule"
+    trafficScript := []byte(`
+            if( string.ipmaskmatch( request.getremoteip(), "192.168.123.10" ) ){
+                    connection.discard();
+            }`)
+    
+    api := rule.NewCreate( ruleName, trafficScript )
+    err := client.Do(api)
+    if err != nil {
+        log.Fatal(err)
+    }
+    
+```
+
+#### Updating a rule
+
+```
+    ruleName := "my-rule"
+    updatedTrafficScript := []byte(`
+                                     if( string.ipmaskmatch( request.getremoteip(), "192.168.123.10" ) ){
+                                             connection.discard();
+                                     }`)
+                                     
+    api := virtualserver.NewUpdate( ruleName, updatedTrafficScript )
+    err := client.Do(api)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+```
+
+#### Deleting a rule
+
+```
+    nameRuleToDelete := "my-rule"
+
+    api := rule.NewDelete( nameRuleToDelete )
+    err := client.Do(api)
+    if err != nil {
+        log.Fatal(err)
+    } else {
+        log.Printf("Rule %s deleted", nameRuleToDelete)
+    }
+```     
+
+### Using the CLI
+
+Run ```make``` in the root of the repository to build the ```go-brocade-vtm-cli``` binary. Once built the binary may be found in the root of the repository.
+
+Currently only rules may be managed by the cli.
+
+
+#### Authentication
+
+Set the following shell environment variables to allow the cli to make changes to a Brocade vTM. Note that the cli automatically prefixes the BROCADEVTM_SERVER with https://.
+
+```
+$ export BROCADEVTM_USERNAME=admin
+$ export BROCADEVTM_PASSWORD=myPassword
+$ export BROCADEVTM_SERVER=my-brocade-vtm.example.com:9070
+```
+
+#### Getting help
+
+```
+$ ./go-brocade-vtm-cli -h
+```
+
+#### Working with rules
+
+##### Create a rule
+
+To create a rule ensure the traffic script is in the file /path/to/traffic_script.
+
+```
+$ ./go-brocade-vtm-cli rule-create -name my-rule -script /path/to/traffic_script
+```
+
+##### Showing rules
+
+To list all rules.
+```
+$ ./go-brocade-vtm-cli rule-show-all
+```
+
+To show a rule called 'my-rule'.
+```
+$ ./go-brocade-vtm-cli rule-show -name my-rule
+```
+
+##### Updating a rule
+
+To update a rule called 'my-rule' with the traffic script (file) /path/to/updated_traffic_script.
+```
+$ ./go-brocade-vtm-cli rule-update -name my-rule -script /path/to/updated_traffic_script
+```
+
+##### Deleting a rule
+
+To delete a rule
+```
+$ ./go-brocade-vtm-cli rule-delete -name my-rule
 ```
