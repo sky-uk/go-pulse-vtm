@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/sky-uk/go-brocade-vtm"
 	"github.com/sky-uk/go-brocade-vtm/api/rule"
+	"github.com/sky-uk/go-rest-api"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -13,7 +13,7 @@ import (
 var updateRuleName string
 var updateTrafficScriptFile string
 
-func updateRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
+func updateRule(client *rest.Client, flagSet *flag.FlagSet) {
 
 	if updateRuleName == "" {
 		fmt.Printf("\nName argument is required. Usage: -name vtm-rule-name\n")

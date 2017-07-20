@@ -3,15 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/sky-uk/go-brocade-vtm"
 	"github.com/sky-uk/go-brocade-vtm/api/rule"
+	"github.com/sky-uk/go-rest-api"
 	"net/http"
 	"os"
 )
 
 var deleteRuleName string
 
-func deleteRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
+func deleteRule(client *rest.Client, flagSet *flag.FlagSet) {
 
 	if deleteRuleName == "" {
 		fmt.Printf("\nError: name argument is required. Usage: -name rule-name")

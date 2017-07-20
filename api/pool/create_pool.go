@@ -2,12 +2,13 @@ package pool
 
 import (
 	"github.com/sky-uk/go-brocade-vtm/api"
+	"github.com/sky-uk/go-rest-api"
 	"net/http"
 )
 
 // CreatePoolAPI - Base Struct
 type CreatePoolAPI struct {
-	*api.BaseAPI
+	*rest.BaseAPI
 }
 
 //NewCreate - Creates a new pool
@@ -22,7 +23,7 @@ func NewUpdate(poolName string, pool Pool) *CreatePoolAPI {
 
 func execCreateUpdate(poolName string, pool Pool) *CreatePoolAPI {
 	this := new(CreatePoolAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/api/tm/3.8/config/active/pools/"+poolName, pool, new(Pool))
+	this.BaseAPI = rest.NewBaseAPI(http.MethodPut, "/api/tm/3.8/config/active/pools/"+poolName, pool, new(Pool), new(api.VTMError))
 	return this
 }
 

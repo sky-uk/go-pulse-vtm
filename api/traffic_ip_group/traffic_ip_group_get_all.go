@@ -2,18 +2,19 @@ package trafficIpGroups
 
 import (
 	"github.com/sky-uk/go-brocade-vtm/api"
+	"github.com/sky-uk/go-rest-api"
 	"net/http"
 )
 
 // GetAllTrafficIPGroupsAPI base object.
 type GetAllTrafficIPGroupsAPI struct {
-	*api.BaseAPI
+	*rest.BaseAPI
 }
 
 // NewGetAll returns a new object of GetAllTrafficIPGroupsAPI.
 func NewGetAll() *GetAllTrafficIPGroupsAPI {
 	this := new(GetAllTrafficIPGroupsAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/traffic_ip_groups", nil, new(TrafficIPGroupList))
+	this.BaseAPI = rest.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/traffic_ip_groups", nil, new(TrafficIPGroupList), new(api.VTMError))
 	return this
 }
 

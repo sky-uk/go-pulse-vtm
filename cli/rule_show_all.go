@@ -3,13 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/sky-uk/go-brocade-vtm"
 	"github.com/sky-uk/go-brocade-vtm/api/rule"
+	"github.com/sky-uk/go-rest-api"
 	"net/http"
 	"os"
 )
 
-func showAllRules(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
+func showAllRules(client *rest.Client, flagSet *flag.FlagSet) {
 
 	ruleShowAllAPI := rule.NewGetAll()
 	err := client.Do(ruleShowAllAPI)
@@ -20,7 +20,7 @@ func showAllRules(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
 
 	httpResponseCode := ruleShowAllAPI.StatusCode()
 	if httpResponseCode == http.StatusOK {
-		ruleList := ruleShowAllAPI.GetResponse()
+		ruleList := ruleShowAllAPI.ResponseObject().(*rule.Rules)
 		rows := []map[string]interface{}{}
 		headers := []string{"Name", "HREF"}
 

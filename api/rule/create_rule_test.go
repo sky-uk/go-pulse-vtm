@@ -1,12 +1,13 @@
 package rule
 
 import (
+	"github.com/sky-uk/go-rest-api"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
 
-var createRuleAPI *CreateRuleAPI
+var createRuleAPI *rest.BaseAPI
 var ruleName = "testRule"
 
 func createSetup() {
