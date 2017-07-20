@@ -1,12 +1,13 @@
 package rule
 
 import (
+	"github.com/sky-uk/go-rest-api"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
 
-var deleteRuleAPI *DeleteRuleAPI
+var deleteRuleAPI *rest.BaseAPI
 var deleteRuleName string
 
 func setupDelete() {

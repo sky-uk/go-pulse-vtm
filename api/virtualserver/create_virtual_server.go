@@ -3,12 +3,13 @@ package virtualserver
 
 import (
 	"github.com/sky-uk/go-brocade-vtm/api"
+	"github.com/sky-uk/go-rest-api"
 	"net/http"
 )
 
 // CreateVirtualServerAPI : Create VirtualServer API
 type CreateVirtualServerAPI struct {
-	*api.BaseAPI
+	*rest.BaseAPI
 }
 
 // NewCreate : Create new virtualServer
@@ -20,11 +21,12 @@ func NewCreate(virtualServerName string,
 	virtualServer VirtualServer) *CreateVirtualServerAPI {
 
 	this := new(CreateVirtualServerAPI)
-	this.BaseAPI = api.NewBaseAPI(
+	this.BaseAPI = rest.NewBaseAPI(
 		http.MethodPut,
 		"/api/tm/3.8/config/active/virtual_servers/"+virtualServerName,
 		virtualServer,
 		new(VirtualServer),
+		new(api.VTMError),
 	)
 	return this
 }

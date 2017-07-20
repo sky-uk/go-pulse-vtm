@@ -2,18 +2,19 @@ package pool
 
 import (
 	"github.com/sky-uk/go-brocade-vtm/api"
+	"github.com/sky-uk/go-rest-api"
 	"net/http"
 )
 
 // GetAllPools - Base struct
 type GetAllPools struct {
-	*api.BaseAPI
+	*rest.BaseAPI
 }
 
 // NewGetAll - Returns all pools
 func NewGetAll() *GetAllPools {
 	this := new(GetAllPools)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/pools", nil, new(LBPoolList))
+	this.BaseAPI = rest.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/pools", nil, new(LBPoolList), new(api.VTMError))
 	return this
 
 }

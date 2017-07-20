@@ -27,6 +27,22 @@
 			"revisionTime": "2016-01-10T10:55:54Z"
 		},
 		{
+			"checksumSHA1": "fVqoX1vvLBiWvYQvl6U79gm3UPs=",
+			"path": "github.com/sky-uk/go-rest-api",
+			"revision": "fd4fabf6177667e75e616a4fa26c09ac273fab5f",
+			"revisionTime": "2017-07-20T16:58:00Z",
+			"version": "master",
+			"versionExact": "master"
+		},
+		{
+			"checksumSHA1": "ZToPR4iUY6bYctEGtubGb074s9Y=",
+			"path": "github.com/sky-uk/go-rest-api/contenttype",
+			"revision": "fd4fabf6177667e75e616a4fa26c09ac273fab5f",
+			"revisionTime": "2017-07-20T16:58:00Z",
+			"version": "master",
+			"versionExact": "master"
+		},
+		{
 			"checksumSHA1": "JXUVA1jky8ZX8w09p2t5KLs97Nc=",
 			"path": "github.com/stretchr/testify/assert",
 			"revision": "4d4bfba8f1d1027c4fdbe371823030df51419987",

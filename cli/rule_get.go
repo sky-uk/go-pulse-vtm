@@ -3,15 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/sky-uk/go-brocade-vtm"
 	"github.com/sky-uk/go-brocade-vtm/api/rule"
+	"github.com/sky-uk/go-rest-api"
 	"net/http"
 	"os"
 )
 
 var readRuleName string
 
-func showRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
+func showRule(client *rest.Client, flagSet *flag.FlagSet) {
 
 	var trafficScriptRule rule.TrafficScriptRule
 
@@ -37,7 +37,10 @@ func showRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
 	}
 
 	trafficScriptRule.Name = readRuleName
-	trafficScriptRule.Script = readAPI.GetResponse()
+	trafficScriptBytes := readAPI.ResponseObject().(*[]byte)
+	trafficScriptRule.Script = string(*trafficScriptBytes)
+	//trafficScript := readAPI.ResponseObject().(*string)
+	//trafficScriptRule.Script = *trafficScript
 
 	fmt.Printf("The traffic script for the %s rule is: \n", trafficScriptRule.Name)
 	fmt.Printf("%s", trafficScriptRule.Script)

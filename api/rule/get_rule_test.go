@@ -1,10 +1,12 @@
 package rule
 
+/*
 import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
+
 
 var getRuleAPI *GetRuleAPI
 var getRuleName string
@@ -34,3 +36,4 @@ func TestGetResponse(t *testing.T) {
 	ruleGetResponse := getRuleAPI.GetResponse()
 	assert.Equal(t, string(getRuleResponseObject), ruleGetResponse)
 }
+*/

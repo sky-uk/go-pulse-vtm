@@ -2,12 +2,13 @@ package monitor
 
 import (
 	"github.com/sky-uk/go-brocade-vtm/api"
+	"github.com/sky-uk/go-rest-api"
 	"net/http"
 )
 
 // UpdateMonitorAPI : object we use to update a monitor
 type UpdateMonitorAPI struct {
-	*api.BaseAPI
+	*rest.BaseAPI
 }
 
 // NewUpdate : creates a new object of type UpdateMonitorAPI
@@ -16,7 +17,7 @@ func NewUpdate(name string, monitor Monitor) *UpdateMonitorAPI {
 	requestPayLoad := new(Monitor)
 	requestPayLoad.Properties.Basic = monitor.Properties.Basic
 	requestPayLoad.Properties.HTTP = monitor.Properties.HTTP
-	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/api/tm/3.8/config/active/monitors/"+name, requestPayLoad, new(Monitor))
+	this.BaseAPI = rest.NewBaseAPI(http.MethodPut, "/api/tm/3.8/config/active/monitors/"+name, requestPayLoad, new(Monitor), new(api.VTMError))
 	return this
 }
 

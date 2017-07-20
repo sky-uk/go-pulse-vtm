@@ -3,12 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/sky-uk/go-brocade-vtm"
+	"github.com/sky-uk/go-rest-api"
 	"os"
 )
 
 // ExecFunc executes the function for cli.
-type ExecFunc func(client *brocadevtm.VTMClient, flagSet *flag.FlagSet)
+type ExecFunc func(client *rest.Client, flagSet *flag.FlagSet)
 
 // Command struct - defines a cli command with flags and exec
 type Command struct {
@@ -82,7 +82,7 @@ func main() {
 	headers := make(map[string]string)
 	headers["Content-Type"] = "application/json"
 
-	client := brocadevtm.NewVTMClient(brocadeVTMServer, brocadeVTMUsername, brocadeVTMPassword, true, debug, headers)
+	client := rest.NewClient(brocadeVTMServer, brocadeVTMUsername, brocadeVTMPassword, true, debug, headers)
 
 	cmd.exec(client, flagSet)
 }

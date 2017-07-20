@@ -3,12 +3,13 @@ package monitor
 import (
 	"fmt"
 	"github.com/sky-uk/go-brocade-vtm/api"
+	"github.com/sky-uk/go-rest-api"
 	"net/http"
 )
 
 // GetSingleMonitor base object.
 type GetSingleMonitor struct {
-	*api.BaseAPI
+	*rest.BaseAPI
 }
 
 // FilterByName : returns a monitor object if the monitor name matches.
@@ -31,7 +32,7 @@ func (monitor Monitor) String() string {
 // NewGetSingle : returns the monitor details
 func NewGetSingle(name string) *GetSingleMonitor {
 	this := new(GetSingleMonitor)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/monitors/"+name, nil, new(Monitor))
+	this.BaseAPI = rest.NewBaseAPI(http.MethodGet, "/api/tm/3.8/config/active/monitors/"+name, nil, new(Monitor), new(api.VTMError))
 	return this
 }
 
