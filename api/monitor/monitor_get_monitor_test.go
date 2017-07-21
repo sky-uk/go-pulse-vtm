@@ -11,7 +11,7 @@ import (
 var getSingleMonitorAPI *rest.BaseAPI
 
 func setupNewGetMonitor() {
-	getSingleMonitorAPI = NewGetMonitor("somemonitor")
+	getSingleMonitorAPI = NewGet("somemonitor")
 }
 
 func TestNewGetMonitorMethod(t *testing.T) {

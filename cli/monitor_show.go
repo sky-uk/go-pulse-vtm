@@ -17,7 +17,7 @@ func showMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
-	readMonitorAPI := monitor.NewGetMonitor(showMonitorName)
+	readMonitorAPI := monitor.NewGet(showMonitorName)
 	err := client.Do(readMonitorAPI)
 	if err != nil {
 		fmt.Printf("\nError whilst retrieving monitor %s", showMonitorName)

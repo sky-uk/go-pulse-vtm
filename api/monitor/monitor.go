@@ -27,7 +27,7 @@ func NewGetAll() *rest.BaseAPI {
 }
 
 // NewGetMonitor : returns the monitor details
-func NewGetMonitor(name string) *rest.BaseAPI {
+func NewGet(name string) *rest.BaseAPI {
 	getMonitorAPI := rest.NewBaseAPI(http.MethodGet, monitorURI+"/"+name, nil, new(Monitor), new(api.VTMError))
 	return getMonitorAPI
 }
