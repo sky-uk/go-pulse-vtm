@@ -2,12 +2,13 @@ package sslServerKey
 
 import (
 	"encoding/json"
+	"github.com/sky-uk/go-rest-api"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
 
-var updateSSLServerKeyAPI *UpdateSSLServerKeyAPI
+var updateSSLServerKeyAPI *rest.BaseAPI
 var updateSSLServerKeyName = "updateSSLServerKey"
 
 func setup() {
@@ -44,7 +45,7 @@ func TestUpdateMarshalling(t *testing.T) {
 
 func TestUpdateGetResponse(t *testing.T) {
 	setup()
-	getResponse := updateSSLServerKeyAPI.GetResponse()
+	getResponse := updateSSLServerKeyAPI.ResponseObject()
 	assert.Equal(t, getResponse, "SSLServerKey updated")
 
 }

@@ -6,14 +6,8 @@ import (
 	"net/http"
 )
 
-// DeleteSSLServerKeyAPI : object used to call delete on monitor
-type DeleteSSLServerKeyAPI struct {
-	*rest.BaseAPI
-}
-
 // NewDelete : returns a new DeleteSSLServerKeyAPI object
-func NewDelete(name string) *DeleteSSLServerKeyAPI {
-	this := new(DeleteSSLServerKeyAPI)
-	this.BaseAPI = rest.NewBaseAPI(http.MethodDelete, "/api/tm/3.8/config/active/ssl/server_keys/"+name, nil, nil, new(api.VTMError))
-	return this
+func NewDelete(name string) *rest.BaseAPI {
+	sslServerKeyDeleteAPI := rest.NewBaseAPI(http.MethodDelete, "/api/tm/3.8/config/active/ssl/server_keys/"+name, nil, nil, new(api.VTMError))
+	return sslServerKeyDeleteAPI
 }

@@ -2,12 +2,13 @@ package monitor
 
 import (
 	"encoding/json"
+	"github.com/sky-uk/go-rest-api"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
 
-var createMonitorAPI *CreateMonitorAPI
+var createMonitorAPI *rest.BaseAPI
 var createMonitorName = "exampleMonitor"
 var createMonitor Monitor
 
@@ -45,10 +46,4 @@ func TestCreateRequestMarshalling(t *testing.T) {
 	jsonBytes, err := json.Marshal(createMonitorAPI.RequestObject())
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))
-}
-
-func TestGetResponse(t *testing.T) {
-	createSetup()
-	monsList := createMonitorAPI.GetResponse()
-	assert.Equal(t, monsList, createMonitor)
 }

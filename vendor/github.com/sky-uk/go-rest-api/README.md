@@ -11,7 +11,6 @@ Encoding schemes supported: json/xml.
 ```
 import(
     "rest"
-    "rest/api"
     "net/http"
 )
 ```
@@ -32,7 +31,7 @@ import(
 
 ```
     // Prepare a request...
-    api := api.NewRestAPI(
+    api := rest.NewRestAPI(
         http.MethodGet,         // request method
         "/",                    // request path
         nil,                    // request payload object
@@ -57,7 +56,7 @@ import(
     }
 
     // Prepare a request...
-    api := api.NewRestAPI(
+    api := rest.NewRestAPI(
         http.MethodGet,         // request method
         "/",                    // request path
         nil,                    // request payload object
