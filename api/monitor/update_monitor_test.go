@@ -2,12 +2,13 @@ package monitor
 
 import (
 	"encoding/json"
+	"github.com/sky-uk/go-rest-api"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
 
-var updateMonitorAPI *UpdateMonitorAPI
+var updateMonitorAPI *rest.BaseAPI
 var updateMonitorName = "updateMonitor"
 var updateMonitor Monitor
 
@@ -34,7 +35,7 @@ func TestUpdateEndpoint(t *testing.T) {
 
 func TestUpdateMarshalling(t *testing.T) {
 	setup()
-	expectedJSON := "{\"properties\":{\"basic\":{\"delay\":6,\"failures\":3,\"type\":\"http\",\"timeout\":4,\"verbose\":false},\"http\":{\"path\":\"/private/status/check\"}}}"
+	expectedJSON := `{"properties":{"basic":{"delay":6,"failures":3,"type":"http","timeout":4,"verbose":false},"http":{"path":"/private/status/check"}}}`
 	jsonBytes, err := json.Marshal(updateMonitorAPI.RequestObject())
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))
@@ -42,7 +43,7 @@ func TestUpdateMarshalling(t *testing.T) {
 
 func TestUpdateGetResponse(t *testing.T) {
 	setup()
-	getResponse := updateMonitorAPI.GetResponse()
+	getResponse := *updateMonitorAPI.ResponseObject().(*Monitor)
 	assert.Equal(t, getResponse, updateMonitor)
 
 }

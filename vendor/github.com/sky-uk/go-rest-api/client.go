@@ -52,7 +52,7 @@ func (restClient *Client) formatRequestPayload(api *BaseAPI) (io.Reader, error) 
 	var reqBytes []byte
 	if api.RequestObject() != nil {
 		var err error
-		contentType := restClient.Headers["Content-Type"]
+		contentType := contenttype.GetType(restClient.Headers["Content-Type"])
 
 		switch contentType {
 
@@ -135,7 +135,6 @@ func (restClient *Client) handleResponse(apiObj *BaseAPI, res *http.Response) er
 
 	apiObj.SetStatusCode(res.StatusCode)
 	bodyText, err := ioutil.ReadAll(res.Body)
-	fmt.Printf("-------------> BODY:\n%v", bodyText)
 	if err != nil {
 		log.Println("ERROR reading response: ", err)
 		return err
@@ -190,12 +189,13 @@ func (restClient *Client) handleResponse(apiObj *BaseAPI, res *http.Response) er
 			apiObj.SetResponseObject(&bodyText)
 
 		case "plain", "html":
-			data := string(bodyText)
-			apiObj.SetResponseObject(&data)
+			plainStr := string(bodyText)
+			apiObj.SetResponseObject(&plainStr)
 
 		default:
 			log.Printf("Content type %s not supported yet", contentType)
 		}
+	} else {
 	}
 
 	return nil

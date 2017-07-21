@@ -2,12 +2,13 @@ package sslServerKey
 
 import (
 	"encoding/json"
+	"github.com/sky-uk/go-rest-api"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
 
-var getSSLServerKeyAPI *GetSSLServerKey
+var getSSLServerKeyAPI *rest.BaseAPI
 
 func setupNewGetSSLServerKey() {
 	getSSLServerKeyAPI = NewGet("test-ssl-server-key")
@@ -30,7 +31,7 @@ func TestNewGetMonitorUnmarshalling(t *testing.T) {
 	jsonErr := json.Unmarshal(jsonContent, getSSLServerKeyAPI.ResponseObject())
 
 	assert.Nil(t, jsonErr)
-	response := getSSLServerKeyAPI.GetResponse()
+	response := *getSSLServerKeyAPI.ResponseObject().(*SSLServerKey)
 	assert.Equal(t, "test", response.Properties.Basic.Note)
 	assert.Equal(t, "test.public.com", response.Properties.Basic.Public)
 	assert.Equal(t, "test.private.com", response.Properties.Basic.Private)

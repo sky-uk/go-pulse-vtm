@@ -1,12 +1,13 @@
 package sslServerKey
 
 import (
+	"github.com/sky-uk/go-rest-api"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
 
-var deleteSSLServerKeyAPI *DeleteSSLServerKeyAPI
+var deleteSSLServerKeyAPI *rest.BaseAPI
 
 func setupDelete() {
 	deleteSSLServerKeyAPI = NewDelete("test-ssl-server-key-name")

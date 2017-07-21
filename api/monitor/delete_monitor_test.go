@@ -1,12 +1,13 @@
 package monitor
 
 import (
+	"github.com/sky-uk/go-rest-api"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
 
-var deleteMonitorAPI *DeleteMonitorAPI
+var deleteMonitorAPI *rest.BaseAPI
 
 func setupDelete() {
 	deleteMonitorAPI = NewDelete("test-delete-monitor")

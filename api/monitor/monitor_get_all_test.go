@@ -2,12 +2,13 @@ package monitor
 
 import (
 	"encoding/json"
+	"github.com/sky-uk/go-rest-api"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
 
-var getAllMonitorAPI *GetAllMonitors
+var getAllMonitorAPI *rest.BaseAPI
 
 func setupGetAll() {
 	getAllMonitorAPI = NewGetAll()
@@ -29,9 +30,11 @@ func TestGetAllUnMarshalling(t *testing.T) {
 	jsonErr := json.Unmarshal(jsonContent, getAllMonitorAPI.ResponseObject())
 
 	assert.Nil(t, jsonErr)
-	assert.Len(t, getAllMonitorAPI.GetResponse().Children, 2)
-	assert.Equal(t, "MonitorOne", getAllMonitorAPI.GetResponse().Children[0].Name)
-	assert.Equal(t, "/api/tm/3.8/config/active/monitors/MonitorOne", getAllMonitorAPI.GetResponse().Children[0].HRef)
-	assert.Equal(t, "MonitorTwo", getAllMonitorAPI.GetResponse().Children[1].Name)
-	assert.Equal(t, "/api/tm/3.8/config/active/monitors/MonitorTwo", getAllMonitorAPI.GetResponse().Children[1].HRef)
+
+	response := getAllMonitorAPI.ResponseObject().(*MonitorsList)
+	assert.Len(t, response.Children, 2)
+	assert.Equal(t, "MonitorOne", response.Children[0].Name)
+	assert.Equal(t, "/api/tm/3.8/config/active/monitors/MonitorOne", response.Children[0].HRef)
+	assert.Equal(t, "MonitorTwo", response.Children[1].Name)
+	assert.Equal(t, "/api/tm/3.8/config/active/monitors/MonitorTwo", response.Children[1].HRef)
 }
