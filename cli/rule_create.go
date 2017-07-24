@@ -37,7 +37,6 @@ func createRule(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(2)
 	}
 	createRuleAPI := rule.NewCreate(ruleName, trafficScript)
-	fmt.Printf("Request object is %+v", string(createRuleAPI.RequestObject().([]byte)))
 
 	err := client.Do(createRuleAPI)
 	if err != nil {
