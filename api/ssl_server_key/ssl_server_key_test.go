@@ -1,11 +1,11 @@
 package sslServerKey
 
 import (
-	"testing"
-	"github.com/stretchr/testify/assert"
-	"github.com/sky-uk/go-rest-api"
-	"net/http"
 	"encoding/json"
+	"github.com/sky-uk/go-rest-api"
+	"github.com/stretchr/testify/assert"
+	"net/http"
+	"testing"
 )
 
 const testSSlServerKeyEndpoint = "/api/tm/3.8/config/active/ssl/server_keys"
@@ -24,7 +24,6 @@ func setupSSLServerKeyTest() {
 
 	createSSLServerKeyAPI = NewCreate(testSSLServerKeyName, testSSLServerKey)
 	createSSLServerKeyAPI.SetResponseObject(&testSSLServerKey)
-
 
 	getAllSSLServerKeyAPI = NewGetAll()
 	testGetAllUnmarshalTestJSON = []byte(`{"children":[{"name":"test-ssl-server-key1","href":"/api/tm/3.8/config/active/ssl/server_keys/test-ssl-server-key1"},{"name":"test-ssl-server-key2","href":"/api/tm/3.8/config/active/ssl/server_keys/test-ssl-server-key2"}]}`)
@@ -45,7 +44,7 @@ func TestNewCreateMethod(t *testing.T) {
 
 func TestNewCreateEndpoint(t *testing.T) {
 	setupSSLServerKeyTest()
-	assert.Equal(t, testSSlServerKeyEndpoint + "/" + testSSLServerKeyName, createSSLServerKeyAPI.Endpoint())
+	assert.Equal(t, testSSlServerKeyEndpoint+"/"+testSSLServerKeyName, createSSLServerKeyAPI.Endpoint())
 }
 
 func TestNewCreateMarshalling(t *testing.T) {
@@ -86,7 +85,7 @@ func TestNewGetMethod(t *testing.T) {
 
 func TestNewGetEndpoint(t *testing.T) {
 	setupSSLServerKeyTest()
-	assert.Equal(t, testSSlServerKeyEndpoint + "/" + testSSLServerKeyName, getSSLServerKeyAPI.Endpoint())
+	assert.Equal(t, testSSlServerKeyEndpoint+"/"+testSSLServerKeyName, getSSLServerKeyAPI.Endpoint())
 }
 
 func TestNewGetUnmarshalling(t *testing.T) {
@@ -108,7 +107,7 @@ func TestNewUpdateMethod(t *testing.T) {
 
 func TestNewUpdateEndpoint(t *testing.T) {
 	setupSSLServerKeyTest()
-	assert.Equal(t, testSSlServerKeyEndpoint + "/" + testSSLServerKeyName, updateSSLServerKeyAPI.Endpoint())
+	assert.Equal(t, testSSlServerKeyEndpoint+"/"+testSSLServerKeyName, updateSSLServerKeyAPI.Endpoint())
 }
 
 func TestNewUpdateMarshalling(t *testing.T) {
@@ -126,5 +125,5 @@ func TestNewDeleteMethod(t *testing.T) {
 
 func TestNewDeleteEndpoint(t *testing.T) {
 	setupSSLServerKeyTest()
-	assert.Equal(t, testSSlServerKeyEndpoint + "/" + testSSLServerKeyName, deleteSSLServerKeyAPI.Endpoint())
+	assert.Equal(t, testSSlServerKeyEndpoint+"/"+testSSLServerKeyName, deleteSSLServerKeyAPI.Endpoint())
 }

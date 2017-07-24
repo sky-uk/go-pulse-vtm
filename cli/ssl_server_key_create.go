@@ -5,21 +5,8 @@ import (
 	"fmt"
 	"github.com/sky-uk/go-brocade-vtm/api/ssl_server_key"
 	"github.com/sky-uk/go-rest-api"
-	"io/ioutil"
 	"os"
 )
-
-func retrieveSSLKeyFile(fileName string) string {
-	if fileName != "" {
-		fileContents, fileErr := ioutil.ReadFile(fileName)
-		if fileErr != nil {
-			fmt.Printf("\nError reading file %s\n", fileName)
-			os.Exit(2)
-		}
-		return string(fileContents)
-	}
-	return ""
-}
 
 func createSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 
@@ -31,15 +18,15 @@ func createSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 	sslServerKeyObject.Properties.Basic.Note = flagSet.Lookup("note").Value.String()
-	privateKey := retrieveSSLKeyFile(flagSet.Lookup("private").Value.String())
-	certificate := retrieveSSLKeyFile(flagSet.Lookup("public").Value.String())
-	csr := retrieveSSLKeyFile(flagSet.Lookup("request").Value.String())
+	privateKey := retrieveSSLKeyFile(flagSet.Lookup("private-key-file").Value.String())
+	certificate := retrieveSSLKeyFile(flagSet.Lookup("certificate-file").Value.String())
+	csr := retrieveSSLKeyFile(flagSet.Lookup("csr-file").Value.String())
 
 	if privateKey != "" {
 		sslServerKeyObject.Properties.Basic.Private = privateKey
 	}
 	if certificate != "" {
-		sslServerKeyObject.Properties.Basic.Public = certificate
+		sslServerKeyObject.Properties.Basic.Public = string(certificate)
 	}
 	if csr != "" {
 		sslServerKeyObject.Properties.Basic.Request = csr
@@ -51,7 +38,7 @@ func createSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 		fmt.Printf("\nError while creating SSL Server Key %s", sslServerKeyName)
 		os.Exit(2)
 	}
-	fmt.Printf("\nSuccessfully created SSL Server Key %s", sslServerKeyName)
+	fmt.Printf("\nSuccessfully created SSL Server Key %s\n", sslServerKeyName)
 }
 
 func init() {
