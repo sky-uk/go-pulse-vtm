@@ -8,9 +8,9 @@ import (
 	"testing"
 )
 
-const testMonitorURI = "/api/tm/3.8/config/active/monitors"
+const testMonitorEndpoint = "/api/tm/3.8/config/active/monitors"
 
-var createMonitorAPI, updateMonitorAPI, readAllMonitorAPI, readMonitorAPI, deleteMonitorAPI *rest.BaseAPI
+var createMonitorAPI, updateMonitorAPI, getAllMonitorAPI, getMonitorAPI, deleteMonitorAPI *rest.BaseAPI
 var testMonitor Monitor
 var testMonitorName, marshallingTestExpectedJSON string
 var getAllUnmarshallingTestJSON, getUnmarshallingTestJSON []byte
@@ -35,9 +35,9 @@ func setupMonitorTest() {
 	createMonitorAPI = NewCreate(testMonitorName, testMonitor)
 	createMonitorAPI.SetResponseObject(&testMonitor)
 
-	readMonitorAPI = NewGet(testMonitorName)
+	getMonitorAPI = NewGet(testMonitorName)
 
-	readAllMonitorAPI = NewGetAll()
+	getAllMonitorAPI = NewGetAll()
 
 	updateMonitorAPI = NewUpdate(testMonitorName, testMonitor)
 	updateMonitorAPI.SetResponseObject(&testMonitor)
@@ -52,7 +52,7 @@ func TestNewCreateMethod(t *testing.T) {
 
 func TestNewCreateEndpoint(t *testing.T) {
 	setupMonitorTest()
-	assert.Equal(t, testMonitorURI+"/"+testMonitorName, createMonitorAPI.Endpoint())
+	assert.Equal(t, testMonitorEndpoint+"/"+testMonitorName, createMonitorAPI.Endpoint())
 }
 
 func TestNewCreateRequestMarshalling(t *testing.T) {
@@ -69,7 +69,7 @@ func TestNewUpdateMethod(t *testing.T) {
 
 func TestNewUpdateEndpoint(t *testing.T) {
 	setupMonitorTest()
-	assert.Equal(t, testMonitorURI+"/"+testMonitorName, updateMonitorAPI.Endpoint())
+	assert.Equal(t, testMonitorEndpoint+"/"+testMonitorName, updateMonitorAPI.Endpoint())
 }
 
 func TestNewUpdateRequestMarshalling(t *testing.T) {
@@ -81,18 +81,18 @@ func TestNewUpdateRequestMarshalling(t *testing.T) {
 
 func TestNewGetAllMethod(t *testing.T) {
 	setupMonitorTest()
-	assert.Equal(t, http.MethodGet, readAllMonitorAPI.Method())
+	assert.Equal(t, http.MethodGet, getAllMonitorAPI.Method())
 }
 
 func TestNewGetAllEndpoint(t *testing.T) {
 	setupMonitorTest()
-	assert.Equal(t, testMonitorURI, readAllMonitorAPI.Endpoint())
+	assert.Equal(t, testMonitorEndpoint, getAllMonitorAPI.Endpoint())
 }
 
 func TestNewGetAllUnmarshalling(t *testing.T) {
 	setupMonitorTest()
-	jsonErr := json.Unmarshal(getAllUnmarshallingTestJSON, readAllMonitorAPI.ResponseObject())
-	response := readAllMonitorAPI.ResponseObject().(*MonitorsList)
+	jsonErr := json.Unmarshal(getAllUnmarshallingTestJSON, getAllMonitorAPI.ResponseObject())
+	response := getAllMonitorAPI.ResponseObject().(*MonitorsList)
 
 	assert.Nil(t, jsonErr)
 	assert.Len(t, response.Children, 2)
@@ -104,18 +104,18 @@ func TestNewGetAllUnmarshalling(t *testing.T) {
 
 func TestNewGetMethod(t *testing.T) {
 	setupMonitorTest()
-	assert.Equal(t, http.MethodGet, readMonitorAPI.Method())
+	assert.Equal(t, http.MethodGet, getMonitorAPI.Method())
 }
 
 func TestNewGetEndpoint(t *testing.T) {
 	setupMonitorTest()
-	assert.Equal(t, testMonitorURI+"/"+testMonitorName, readMonitorAPI.Endpoint())
+	assert.Equal(t, testMonitorEndpoint+"/"+testMonitorName, getMonitorAPI.Endpoint())
 }
 
 func TestNewGetUnmarshalling(t *testing.T) {
 	setupMonitorTest()
-	jsonErr := json.Unmarshal(getUnmarshallingTestJSON, readMonitorAPI.ResponseObject())
-	response := readMonitorAPI.ResponseObject().(*Monitor)
+	jsonErr := json.Unmarshal(getUnmarshallingTestJSON, getMonitorAPI.ResponseObject())
+	response := getMonitorAPI.ResponseObject().(*Monitor)
 
 	assert.Nil(t, jsonErr)
 	assert.Equal(t, uint(12), response.Properties.Basic.Delay)
@@ -133,5 +133,5 @@ func TestNewDeleteMethod(t *testing.T) {
 
 func TestNewDeleteEndpoint(t *testing.T) {
 	setupMonitorTest()
-	assert.Equal(t, testMonitorURI+"/"+testMonitorName, deleteMonitorAPI.Endpoint())
+	assert.Equal(t, testMonitorEndpoint+"/"+testMonitorName, deleteMonitorAPI.Endpoint())
 }
