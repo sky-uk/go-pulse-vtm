@@ -92,7 +92,7 @@ func TestNewGetAllEndpoint(t *testing.T) {
 func TestNewGetAllUnmarshalling(t *testing.T) {
 	setupMonitorTest()
 	jsonErr := json.Unmarshal(getAllUnmarshallingTestJSON, getAllMonitorAPI.ResponseObject())
-	response := getAllMonitorAPI.ResponseObject().(*MonitorsList)
+	response := *getAllMonitorAPI.ResponseObject().(*MonitorsList)
 
 	assert.Nil(t, jsonErr)
 	assert.Len(t, response.Children, 2)
@@ -115,7 +115,7 @@ func TestNewGetEndpoint(t *testing.T) {
 func TestNewGetUnmarshalling(t *testing.T) {
 	setupMonitorTest()
 	jsonErr := json.Unmarshal(getUnmarshallingTestJSON, getMonitorAPI.ResponseObject())
-	response := getMonitorAPI.ResponseObject().(*Monitor)
+	response := *getMonitorAPI.ResponseObject().(*Monitor)
 
 	assert.Nil(t, jsonErr)
 	assert.Equal(t, uint(12), response.Properties.Basic.Delay)
