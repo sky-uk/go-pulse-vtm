@@ -25,9 +25,7 @@ func setupRuleTest() {
 	testAllRulesJSON = []byte(`{"children":[{"name":"ruleTestOne","href":"/api/tm/3.8/config/active/rules/ruleTestOne"},{"name":"ruleTestTwo","href":"/api/tm/3.8/config/active/rules/ruleTestTwo"}]}`)
 
 	getRuleAPI = NewGetRule(ruleName)
-
 	updateRuleAPI = NewUpdate(ruleName, trafficScript)
-
 	deleteRuleAPI = NewDelete(ruleName)
 }
 
@@ -55,7 +53,7 @@ func TestNewGetAllUnmarshalling(t *testing.T) {
 	setupRuleTest()
 	jsonError := json.Unmarshal(testAllRulesJSON, getAllRuleAPI.ResponseObject())
 
-	response := getAllRuleAPI.ResponseObject().(*Rules)
+	response := *getAllRuleAPI.ResponseObject().(*Rules)
 	assert.Nil(t, jsonError)
 	assert.Len(t, response.Children, 2)
 	assert.Equal(t, "ruleTestOne", response.Children[0].Name)
