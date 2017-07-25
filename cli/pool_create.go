@@ -21,6 +21,7 @@ func createPool(client *rest.Client, flagSet *flag.FlagSet) {
 	createPoolObject := new(pool.Pool)
 	poolNodeList := strings.Split(poolNodes, ",")
 
+	// The state, priority and weight are set the same for all nodes.
 	var nodesTable []pool.MemberNode
 	for _, node := range poolNodeList {
 		memberNode := new(pool.MemberNode)
@@ -32,8 +33,6 @@ func createPool(client *rest.Client, flagSet *flag.FlagSet) {
 		nodesTable = append(nodesTable, *memberNode)
 	}
 	createPoolObject.Properties.Basic.NodesTable = nodesTable
-
-	fmt.Printf("\nNodes table is %+v\n", createPoolObject.Properties.Basic.NodesTable)
 
 	createPoolAPI := pool.NewCreate(poolName, *createPoolObject)
 	err := client.Do(createPoolAPI)

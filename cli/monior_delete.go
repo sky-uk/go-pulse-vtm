@@ -19,7 +19,7 @@ func deleteMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 	deleteMonitorAPI := monitor.NewDelete(monitorName)
 	err := client.Do(deleteMonitorAPI)
 	if err != nil && deleteMonitorAPI.StatusCode() != http.StatusNotFound {
-		fmt.Printf("\nError creating monitor %s. Error: %v", monitorName, err)
+		fmt.Printf("\nError deleting monitor %s. Error: %v", monitorName, err)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully deleted monitor %s", monitorName)

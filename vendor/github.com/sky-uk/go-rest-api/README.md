@@ -20,10 +20,18 @@ import(
 ### Get a REST Client object
 
 ```
-    client := NewClient(url, user, password, ignoreSSL, debug, headers) 
+    client := rest.Client{
+        URL: url,       // mandatory
+        User: user, 
+        Password: password, 
+        IgnoreSSL: ignoreSSL, 
+        Debug: debug, 
+        Headers: headers,
+        Timeout: 30     // in seconds
+    } 
 
     // for a simple http client...
-    httpClient := NewClient(url, "", "", false, false, nil)
+    client := rest.Client{URL: url}
 
 ```
 
@@ -40,7 +48,7 @@ import(
     )
 
     // Perform the request...
-    err := httpClient.Do(api)
+    err := client.Do(api)
     if err != nil {
         // handle errors....
     }
@@ -64,8 +72,8 @@ import(
         nil,                    // (pointer to) error object
     )
 
-    //...perform request...
-
+    //...Perform request...
+    // Get response object...
     respObj := *api.ResponseObject().(*JSONFoo)
 ```
 
