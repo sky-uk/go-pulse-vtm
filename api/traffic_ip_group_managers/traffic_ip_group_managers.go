@@ -1,4 +1,4 @@
-package trafficIpGroups
+package trafficIpGroupManager
 
 import (
 	"github.com/sky-uk/go-brocade-vtm/api"
