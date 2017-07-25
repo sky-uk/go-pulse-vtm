@@ -1,4 +1,4 @@
-package trafficIpGroups
+package trafficIpGroupManager
 
 import (
 	"encoding/json"

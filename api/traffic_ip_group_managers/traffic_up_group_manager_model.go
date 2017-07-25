@@ -1,4 +1,4 @@
-package trafficIpGroups
+package trafficIpGroupManager
 
 // TrafficManagerChildren : A list of traffic manager children
 type TrafficManagerChildren struct {
