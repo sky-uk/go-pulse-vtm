@@ -12,28 +12,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
-
-// NewClient  Creates a new restClient object.
-func NewClient(
-	url string,
-	user string,
-	password string,
-	ignoreSSL bool,
-	debug bool,
-	headers map[string]string,
-) *Client {
-
-	restClient := new(Client)
-	restClient.URL = url
-	restClient.User = user
-	restClient.Password = password
-	restClient.IgnoreSSL = ignoreSSL
-	restClient.Debug = debug
-	restClient.Headers = headers
-
-	return restClient
-}
 
 // Client struct.
 type Client struct {
@@ -43,6 +23,7 @@ type Client struct {
 	IgnoreSSL bool
 	Debug     bool
 	Headers   map[string]string
+	Timeout   time.Duration // in seconds
 }
 
 func (restClient *Client) formatRequestPayload(api *BaseAPI) (io.Reader, error) {
@@ -112,7 +93,9 @@ func (restClient *Client) Do(api *BaseAPI) error {
 		return err
 	}
 
-	req.SetBasicAuth(restClient.User, restClient.Password)
+	if restClient.User != "" {
+		req.SetBasicAuth(restClient.User, restClient.Password)
+	}
 
 	for headerKey, headerValue := range restClient.Headers {
 		req.Header.Set(headerKey, headerValue)
@@ -121,7 +104,12 @@ func (restClient *Client) Do(api *BaseAPI) error {
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: restClient.IgnoreSSL},
 	}
-	httpClient := &http.Client{Transport: tr}
+
+	httpClient := &http.Client{
+		Transport: tr,
+		Timeout:   restClient.Timeout * time.Second,
+	}
+
 	res, err := httpClient.Do(req)
 	if err != nil {
 		log.Println("ERROR executing request: ", err)

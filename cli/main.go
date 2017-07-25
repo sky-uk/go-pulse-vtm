@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/sky-uk/go-rest-api"
 	"os"
+	"time"
 )
 
 // ExecFunc executes the function for cli.
@@ -23,6 +24,7 @@ var (
 	brocadeVTMServer string
 	brocadeVTMPort   int
 	debug            bool
+	timeout          time.Duration
 
 	/*
 	 * Authentication
@@ -49,6 +51,8 @@ func InitFlags() {
 	flag.StringVar(&brocadeVTMPassword, "password", os.Getenv("BROCADEVTM_PASSWORD"),
 		"Brocade vTM authentication password (Env: BROCADEVTM_PASSWORD)")
 	flag.BoolVar(&debug, "debug", false, "Debug output. Default:false")
+	flag.DurationVar(&timeout, "timeout", 300, "Client timeout value. Default: 300")
+
 }
 
 func usage() {
@@ -82,7 +86,7 @@ func main() {
 	headers := make(map[string]string)
 	headers["Content-Type"] = "application/json"
 
-	client := rest.NewClient(brocadeVTMServer, brocadeVTMUsername, brocadeVTMPassword, true, debug, headers)
+	client := rest.Client{brocadeVTMServer, brocadeVTMUsername, brocadeVTMPassword, true, debug, headers, timeout}
 
-	cmd.exec(client, flagSet)
+	cmd.exec(&client, flagSet)
 }
