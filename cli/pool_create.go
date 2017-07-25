@@ -10,33 +10,32 @@ import (
 )
 
 var poolName, poolNodes, poolNodesState string
-var createPoolObject pool.Pool
 var poolNodesPriority, poolNodesWeight int
 
 func createPool(client *rest.Client, flagSet *flag.FlagSet) {
-
-	//TODO Not working yet
-
 
 	if poolName == "" {
 		fmt.Printf("\nError -name argument required\n")
 		os.Exit(1)
 	}
+	createPoolObject := new(pool.Pool)
 	poolNodeList := strings.Split(poolNodes, ",")
-	nodesTable := make([]pool.MemberNode, len(poolNodeList))
 
-	for idx, node := range poolNodeList {
-		nodesTable[idx].Node = node
-		nodesTable[idx].State = poolNodesState
-		nodesTable[idx].Priority = poolNodesPriority
-		nodesTable[idx].Weight = poolNodesWeight
+	var nodesTable []pool.MemberNode
+	for _, node := range poolNodeList {
+		memberNode := new(pool.MemberNode)
+		memberNode.Node = node
+		memberNode.State = poolNodesState
+		memberNode.Weight = poolNodesWeight
+		memberNode.Priority = poolNodesPriority
+
+		nodesTable = append(nodesTable, *memberNode)
 	}
-
 	createPoolObject.Properties.Basic.NodesTable = nodesTable
 
 	fmt.Printf("\nNodes table is %+v\n", createPoolObject.Properties.Basic.NodesTable)
 
-	createPoolAPI := pool.NewCreate(poolName, createPoolObject)
+	createPoolAPI := pool.NewCreate(poolName, *createPoolObject)
 	err := client.Do(createPoolAPI)
 	if err != nil {
 		fmt.Printf("\nError creating pool %s. Error: %+v\n", poolName, err)
