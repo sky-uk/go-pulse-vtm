@@ -20,7 +20,7 @@ func NewGetAll() *rest.BaseAPI {
 	return trafficIPGroupGetAllAPI
 }
 
-// NewGetSingle : used to get a traffic IP group
+// NewGet : used to get a traffic IP group
 func NewGet(name string) *rest.BaseAPI {
 	trafficIPGroupGetAPI := rest.NewBaseAPI(http.MethodGet, trafficIPGroupEndpoint+"/"+name, nil, new(TrafficIPGroup), new(api.VTMError))
 	return trafficIPGroupGetAPI
