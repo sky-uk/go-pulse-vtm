@@ -1,5 +1,5 @@
 package trafficIpGroups
-
+/*
 import (
 	"encoding/json"
 	"github.com/stretchr/testify/assert"
@@ -42,3 +42,4 @@ func TestGetAllTrafficIPGroupsAPIGetResponse(t *testing.T) {
 	setupGetAll()
 	assert.IsType(t, getAllTrafficIPGroupsAPI.GetResponse(), TrafficIPGroupList{})
 }
+*/

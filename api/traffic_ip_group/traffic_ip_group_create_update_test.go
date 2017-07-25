@@ -1,5 +1,5 @@
 package trafficIpGroups
-
+/*
 import (
 	"encoding/json"
 	"github.com/stretchr/testify/assert"
@@ -70,3 +70,4 @@ func TestNewUpdateMarshalling(t *testing.T) {
 	assert.Equal(t, expectedJSON, string(jsonBytes))
 	assert.Equal(t, updateTrafficIPGroupAPI.GetResponse(), tipgTrafficIPGroup)
 }
+*/
