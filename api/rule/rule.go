@@ -14,8 +14,8 @@ func NewCreate(ruleName string, trafficScript []byte) *rest.BaseAPI {
 	return createRuleAPI
 }
 
-// NewGetRule : returns a rule
-func NewGetRule(ruleName string) *rest.BaseAPI {
+// NewGet : returns a rule
+func NewGet(ruleName string) *rest.BaseAPI {
 	getRuleAPI := rest.NewBaseAPI(http.MethodGet, ruleEndpoint+ruleName, nil, new(string), new(api.VTMError))
 	return getRuleAPI
 }

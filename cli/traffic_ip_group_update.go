@@ -55,8 +55,8 @@ func updateTrafficIPGroup(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	updateTrafficIPGroupFlags := flag.NewFlagSet("traffic-ip-group-update", flag.ExitOnError)
 	updateTrafficIPGroupFlags.StringVar(&updateTrafficIPGroupName, "name", "", "usage: -name traffic-ip-group-name")
-	updateTrafficIPGroupFlags.BoolVar(&updateTrafficIPGroupEnable, "enabled", false, "usage: -enabled to enable else false")
-	updateTrafficIPGroupFlags.BoolVar(&updateTrafficIPGroupHashSourcePort, "hash-source-port", false, "usage: -hash-source-port to enable else false")
+	updateTrafficIPGroupFlags.BoolVar(&updateTrafficIPGroupEnable, "enabled", false, "usage: -enabled")
+	updateTrafficIPGroupFlags.BoolVar(&updateTrafficIPGroupHashSourcePort, "hash-source-port", false, "usage: -hash-source-port")
 	updateTrafficIPGroupFlags.StringVar(&updateTrafficIPGroupListenIP, "listen-ip-address", "", "usage: -listen-ip-address xxx.yyy.zzz.vvv (only supports one IP)")
 	updateTrafficIPGroupFlags.StringVar(&updateTrafficIPGroupObject.Properties.Basic.Mode, "mode", "", "usage: -mode singlehosted|ec2elastic|ec2vpcelastic|ec2vpcprivate|multihosted|rhi")
 	updateTrafficIPGroupFlags.StringVar(&updateTrafficIPGroupObject.Properties.Basic.Multicast, "multicast-ip", "", "usage: -multicast xxx.yyy.zzz.vvv (must be a valid multicast IP)")

@@ -24,7 +24,7 @@ func setupRuleTest() {
 	getAllRuleAPI = NewGetAll()
 	testAllRulesJSON = []byte(`{"children":[{"name":"ruleTestOne","href":"/api/tm/3.8/config/active/rules/ruleTestOne"},{"name":"ruleTestTwo","href":"/api/tm/3.8/config/active/rules/ruleTestTwo"}]}`)
 
-	getRuleAPI = NewGetRule(ruleName)
+	getRuleAPI = NewGet(ruleName)
 	updateRuleAPI = NewUpdate(ruleName, trafficScript)
 	deleteRuleAPI = NewDelete(ruleName)
 }
@@ -62,32 +62,32 @@ func TestNewGetAllUnmarshalling(t *testing.T) {
 	assert.Equal(t, "/api/tm/3.8/config/active/rules/ruleTestTwo", response.Children[1].HRef)
 }
 
-func TestNewGetRuleMethod(t *testing.T) {
+func TestRuleNewGetMethod(t *testing.T) {
 	setupRuleTest()
 	assert.Equal(t, http.MethodGet, getRuleAPI.Method())
 }
 
-func TestNewGetRuleEndpoint(t *testing.T) {
+func TestRuleNewGetEndpoint(t *testing.T) {
 	setupRuleTest()
 	assert.Equal(t, testRuleEndpoint+ruleName, getRuleAPI.Endpoint())
 }
 
-func TestNewUpdateMethod(t *testing.T) {
+func TestRuleNewUpdateMethod(t *testing.T) {
 	setupRuleTest()
 	assert.Equal(t, http.MethodPut, updateRuleAPI.Method())
 }
 
-func TestNewUpdateEndpoint(t *testing.T) {
+func TestRuleNewUpdateEndpoint(t *testing.T) {
 	setupRuleTest()
 	assert.Equal(t, testRuleEndpoint+ruleName, updateRuleAPI.Endpoint())
 }
 
-func TestNewDeleteMethod(t *testing.T) {
+func TestRuleNewDeleteMethod(t *testing.T) {
 	setupRuleTest()
 	assert.Equal(t, http.MethodDelete, deleteRuleAPI.Method())
 }
 
-func TestNewDeleteEndpoint(t *testing.T) {
+func TestRuleNewDeleteEndpoint(t *testing.T) {
 	setupRuleTest()
 	assert.Equal(t, testRuleEndpoint+ruleName, deleteRuleAPI.Endpoint())
 }

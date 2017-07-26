@@ -13,7 +13,7 @@ func monitorGetAll(client *rest.Client, flagSet *flag.FlagSet) {
 	getAllMonitorsAPI := monitor.NewGetAll()
 	err := client.Do(getAllMonitorsAPI)
 	if err != nil {
-		fmt.Printf("\nError retreiving the list of monitors\n")
+		fmt.Printf("\nError retreiving the list of monitors. Error: %+v\n", err)
 		os.Exit(1)
 	}
 	monitorList := getAllMonitorsAPI.ResponseObject().(*monitor.MonitorsList)

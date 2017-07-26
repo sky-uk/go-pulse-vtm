@@ -43,6 +43,7 @@ func updateRule(client *rest.Client, flagSet *flag.FlagSet) {
 		fmt.Printf("\nError occurred while creating rule %s. Error: %+v\n", updateRuleName, err)
 		os.Exit(3)
 	}
+	fmt.Printf("\nSuccessfully updated rule %s\n", updateRuleName)
 }
 
 func init() {

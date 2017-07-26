@@ -55,8 +55,8 @@ func createTrafficIPGroup(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	createTrafficIPGroupFlags := flag.NewFlagSet("traffic-ip-group-create", flag.ExitOnError)
 	createTrafficIPGroupFlags.StringVar(&createTrafficIPGroupName, "name", "", "usage: -name traffic-ip-group-name")
-	createTrafficIPGroupFlags.BoolVar(&createTrafficIPGroupEnable, "enabled", false, "usage: -enabled to enable else false")
-	createTrafficIPGroupFlags.BoolVar(&createTrafficIPGroupHashSourcePort, "hash-source-port", false, "usage: -hash-source-port to enable else false")
+	createTrafficIPGroupFlags.BoolVar(&createTrafficIPGroupEnable, "enabled", false, "usage: -enabled")
+	createTrafficIPGroupFlags.BoolVar(&createTrafficIPGroupHashSourcePort, "hash-source-port", false, "usage: -hash-source-port")
 	createTrafficIPGroupFlags.StringVar(&createTrafficIPGroupListenIP, "listen-ip-address", "", "usage: -listen-ip-address xxx.yyy.zzz.vvv (only supports one IP)")
 	createTrafficIPGroupFlags.StringVar(&createTrafficIPGroupObject.Properties.Basic.Mode, "mode", "", "usage: -mode singlehosted|ec2elastic|ec2vpcelastic|ec2vpcprivate|multihosted|rhi")
 	createTrafficIPGroupFlags.StringVar(&createTrafficIPGroupObject.Properties.Basic.Multicast, "multicast-ip", "", "usage: -multicast xxx.yyy.zzz.vvv (must be a valid multicast IP)")

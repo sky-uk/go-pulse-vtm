@@ -24,8 +24,7 @@ func createMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 	createMonitorAPI := monitor.NewCreate(monitorName, createMonitorStruct)
 	err := client.Do(createMonitorAPI)
 	if err != nil {
-		fmt.Printf("\nError: %+v\n", string(createMonitorAPI.RawResponse()))
-		fmt.Printf("\nError creating monitor %s\n", monitorName)
+		fmt.Printf("\nError creating monitor %s. Error: %+v\n", monitorName, err)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully created monitor %s\n", monitorName)
@@ -35,11 +34,12 @@ func createMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	createMonitorFlags := flag.NewFlagSet("monitor-create", flag.ExitOnError)
 	createMonitorFlags.StringVar(&monitorName, "name", "", "usage: -name monitor-name")
+	createMonitorFlags.StringVar(&createMonitorStruct.Properties.Basic.Type, "type", "http", "usage: -type monitor-type")
 	createMonitorFlags.UintVar(&createMonitorStruct.Properties.Basic.Delay, "delay", 3, "usage: -delay 3")
 	createMonitorFlags.UintVar(&createMonitorStruct.Properties.Basic.Timeout, "timeout", 3, "usage: -timeout 3")
 	createMonitorFlags.UintVar(&createMonitorStruct.Properties.Basic.Failures, "failures", 3, "usage: -failures 3")
-	createMonitorFlags.BoolVar(&monitorVerbose, "verbose", false, "usage: -verbose to enable else false")
-	createMonitorFlags.BoolVar(&monitorUseSSL, "use-ssl", false, "usage: -use-ssl to enable else false")
+	createMonitorFlags.BoolVar(&monitorVerbose, "verbose", false, "usage: -verbose")
+	createMonitorFlags.BoolVar(&monitorUseSSL, "use-ssl", false, "usage: -use-ssl")
 	createMonitorFlags.StringVar(&createMonitorStruct.Properties.HTTP.HostHeader, "http-host-header", "", "usage: -http-host-header a-header")
 	createMonitorFlags.StringVar(&createMonitorStruct.Properties.HTTP.URIPath, "http-path", "/", "usage: -http-path /healthcheck")
 	createMonitorFlags.StringVar(&createMonitorStruct.Properties.HTTP.Authentication, "authentication", "", "usage: -authentication basic-auth-string")

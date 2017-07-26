@@ -21,7 +21,7 @@ func deleteSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 		fmt.Printf("\nError deleting SSL server key %s. Error: %+v", sslServerKeyName, err)
 		os.Exit(2)
 	}
-	fmt.Printf("\nSuccessfully delete SSL server key %s\n", sslServerKeyName)
+	fmt.Printf("\nSuccessfully deleted SSL server key %s\n", sslServerKeyName)
 }
 
 func init() {

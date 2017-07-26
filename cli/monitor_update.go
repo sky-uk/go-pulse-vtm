@@ -24,7 +24,7 @@ func updateMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 	err := client.Do(updateMonitorAPI)
 	if err != nil {
 		fmt.Printf("\nError: %+v\n", string(updateMonitorAPI.RawResponse()))
-		fmt.Printf("\nError updating monitor %s\n", updateMonitorName)
+		fmt.Printf("\nError updating monitor %sError: %+v\n", updateMonitorName, err)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully updated monitor %s\n", updateMonitorName)
@@ -33,11 +33,12 @@ func updateMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	updateMonitorFlags := flag.NewFlagSet("monitor-update", flag.ExitOnError)
 	updateMonitorFlags.StringVar(&updateMonitorName, "name", "", "usage: -name monitor-name")
+	updateMonitorFlags.StringVar(&updateMonitorStruct.Properties.Basic.Type, "type", "http", "usage: -type monitor-type")
 	updateMonitorFlags.UintVar(&updateMonitorStruct.Properties.Basic.Delay, "delay", 3, "usage: -delay 3")
 	updateMonitorFlags.UintVar(&updateMonitorStruct.Properties.Basic.Timeout, "timeout", 3, "usage: -timeout 3")
 	updateMonitorFlags.UintVar(&updateMonitorStruct.Properties.Basic.Failures, "failures", 3, "usage: -failures 3")
-	updateMonitorFlags.BoolVar(&updateVerbose, "verbose", false, "usage: -verbose to enable default is false")
-	updateMonitorFlags.BoolVar(&updateUseSSL, "use-ssl", false, "usage: -use-ssl to enable default is false")
+	updateMonitorFlags.BoolVar(&updateVerbose, "verbose", false, "usage: -verbose")
+	updateMonitorFlags.BoolVar(&updateUseSSL, "use-ssl", false, "usage: -use-ssl")
 	updateMonitorFlags.StringVar(&updateMonitorStruct.Properties.HTTP.HostHeader, "http-host-header", "", "usage: -http-host-header a-header")
 	updateMonitorFlags.StringVar(&updateMonitorStruct.Properties.HTTP.URIPath, "http-path", "/", "usage: -http-path /healthcheck")
 	updateMonitorFlags.StringVar(&updateMonitorStruct.Properties.HTTP.Authentication, "authentication", "", "usage: -authentication basic-auth-string")

@@ -44,6 +44,7 @@ func createRule(client *rest.Client, flagSet *flag.FlagSet) {
 		fmt.Printf("\nError occurred while creating rule %s. Error: %+v ..... and err is %v\n", ruleName, vtmError, err)
 		os.Exit(3)
 	}
+	fmt.Printf("\nSuccessfully created rule %s\n", ruleName)
 }
 
 func init() {
