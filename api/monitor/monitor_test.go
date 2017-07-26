@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-const testMonitorEndpoint = "/api/tm/3.8/config/active/monitors"
+const testMonitorEndpoint = "/api/tm/3.8/config/active/monitors/"
 
 var createMonitorAPI, updateMonitorAPI, getAllMonitorAPI, getMonitorAPI, deleteMonitorAPI *rest.BaseAPI
 var testMonitor Monitor
@@ -52,7 +52,7 @@ func TestNewCreateMethod(t *testing.T) {
 
 func TestNewCreateEndpoint(t *testing.T) {
 	setupMonitorTest()
-	assert.Equal(t, testMonitorEndpoint+"/"+testMonitorName, createMonitorAPI.Endpoint())
+	assert.Equal(t, testMonitorEndpoint+testMonitorName, createMonitorAPI.Endpoint())
 }
 
 func TestNewCreateRequestMarshalling(t *testing.T) {
@@ -69,7 +69,7 @@ func TestNewUpdateMethod(t *testing.T) {
 
 func TestNewUpdateEndpoint(t *testing.T) {
 	setupMonitorTest()
-	assert.Equal(t, testMonitorEndpoint+"/"+testMonitorName, updateMonitorAPI.Endpoint())
+	assert.Equal(t, testMonitorEndpoint+testMonitorName, updateMonitorAPI.Endpoint())
 }
 
 func TestNewUpdateRequestMarshalling(t *testing.T) {
@@ -109,7 +109,7 @@ func TestNewGetMethod(t *testing.T) {
 
 func TestNewGetEndpoint(t *testing.T) {
 	setupMonitorTest()
-	assert.Equal(t, testMonitorEndpoint+"/"+testMonitorName, getMonitorAPI.Endpoint())
+	assert.Equal(t, testMonitorEndpoint+testMonitorName, getMonitorAPI.Endpoint())
 }
 
 func TestNewGetUnmarshalling(t *testing.T) {
@@ -133,5 +133,5 @@ func TestNewDeleteMethod(t *testing.T) {
 
 func TestNewDeleteEndpoint(t *testing.T) {
 	setupMonitorTest()
-	assert.Equal(t, testMonitorEndpoint+"/"+testMonitorName, deleteMonitorAPI.Endpoint())
+	assert.Equal(t, testMonitorEndpoint+testMonitorName, deleteMonitorAPI.Endpoint())
 }

@@ -7,11 +7,11 @@ import (
 	"net/http"
 )
 
-const sslServerKeyEndpoint = "/api/tm/3.8/config/active/ssl/server_keys"
+const sslServerKeyEndpoint = "/api/tm/3.8/config/active/ssl/server_keys/"
 
 // NewCreate : Create new SSLServerKey
 func NewCreate(name string, key SSLServerKey) *rest.BaseAPI {
-	sslServerKeyCreateAPI := rest.NewBaseAPI(http.MethodPut, sslServerKeyEndpoint+"/"+name, key, new(SSLServerKey), new(api.VTMError))
+	sslServerKeyCreateAPI := rest.NewBaseAPI(http.MethodPut, sslServerKeyEndpoint+name, key, new(SSLServerKey), new(api.VTMError))
 	return sslServerKeyCreateAPI
 }
 
@@ -23,18 +23,18 @@ func NewGetAll() *rest.BaseAPI {
 
 // NewGet : returns the SSLServerKey details
 func NewGet(name string) *rest.BaseAPI {
-	SSLServerKeyGetAPI := rest.NewBaseAPI(http.MethodGet, sslServerKeyEndpoint+"/"+name, nil, new(SSLServerKey), new(api.VTMError))
+	SSLServerKeyGetAPI := rest.NewBaseAPI(http.MethodGet, sslServerKeyEndpoint+name, nil, new(SSLServerKey), new(api.VTMError))
 	return SSLServerKeyGetAPI
 }
 
 // NewUpdate : creates a new object of type UpdateMonitorAPI
 func NewUpdate(name string, sslServerKey SSLServerKey) *rest.BaseAPI {
-	sslServerKeyUpdateAPI := rest.NewBaseAPI(http.MethodPut, sslServerKeyEndpoint+"/"+name, sslServerKey, new(json.RawMessage), new(api.VTMError))
+	sslServerKeyUpdateAPI := rest.NewBaseAPI(http.MethodPut, sslServerKeyEndpoint+name, sslServerKey, new(json.RawMessage), new(api.VTMError))
 	return sslServerKeyUpdateAPI
 }
 
 // NewDelete : returns a new DeleteSSLServerKeyAPI object
 func NewDelete(name string) *rest.BaseAPI {
-	sslServerKeyDeleteAPI := rest.NewBaseAPI(http.MethodDelete, sslServerKeyEndpoint+"/"+name, nil, nil, new(api.VTMError))
+	sslServerKeyDeleteAPI := rest.NewBaseAPI(http.MethodDelete, sslServerKeyEndpoint+name, nil, nil, new(api.VTMError))
 	return sslServerKeyDeleteAPI
 }

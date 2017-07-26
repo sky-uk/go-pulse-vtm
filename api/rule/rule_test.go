@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-const testRuleEndpoint = "/api/tm/3.8/config/active/rules"
+const testRuleEndpoint = "/api/tm/3.8/config/active/rules/"
 
 var createRuleAPI, updateRuleAPI, getAllRuleAPI, getRuleAPI, deleteRuleAPI *rest.BaseAPI
 var ruleName = "testRule"
@@ -36,7 +36,7 @@ func TestNewCreateMethod(t *testing.T) {
 
 func TestNewCreateEndpoint(t *testing.T) {
 	setupRuleTest()
-	assert.Equal(t, testRuleEndpoint+"/"+ruleName, createRuleAPI.Endpoint())
+	assert.Equal(t, testRuleEndpoint+ruleName, createRuleAPI.Endpoint())
 }
 
 func TestNewGetAllMethod(t *testing.T) {
@@ -69,7 +69,7 @@ func TestNewGetRuleMethod(t *testing.T) {
 
 func TestNewGetRuleEndpoint(t *testing.T) {
 	setupRuleTest()
-	assert.Equal(t, testRuleEndpoint+"/"+ruleName, getRuleAPI.Endpoint())
+	assert.Equal(t, testRuleEndpoint+ruleName, getRuleAPI.Endpoint())
 }
 
 func TestNewUpdateMethod(t *testing.T) {
@@ -79,7 +79,7 @@ func TestNewUpdateMethod(t *testing.T) {
 
 func TestNewUpdateEndpoint(t *testing.T) {
 	setupRuleTest()
-	assert.Equal(t, testRuleEndpoint+"/"+ruleName, updateRuleAPI.Endpoint())
+	assert.Equal(t, testRuleEndpoint+ruleName, updateRuleAPI.Endpoint())
 }
 
 func TestNewDeleteMethod(t *testing.T) {
@@ -89,5 +89,5 @@ func TestNewDeleteMethod(t *testing.T) {
 
 func TestNewDeleteEndpoint(t *testing.T) {
 	setupRuleTest()
-	assert.Equal(t, testRuleEndpoint+"/"+ruleName, deleteRuleAPI.Endpoint())
+	assert.Equal(t, testRuleEndpoint+ruleName, deleteRuleAPI.Endpoint())
 }

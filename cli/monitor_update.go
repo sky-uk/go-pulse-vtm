@@ -42,5 +42,5 @@ func init() {
 	updateMonitorFlags.StringVar(&updateMonitorStruct.Properties.HTTP.URIPath, "http-path", "/", "usage: -http-path /healthcheck")
 	updateMonitorFlags.StringVar(&updateMonitorStruct.Properties.HTTP.Authentication, "authentication", "", "usage: -authentication basic-auth-string")
 	updateMonitorFlags.StringVar(&updateMonitorStruct.Properties.HTTP.BodyRegex, "http-body-regex", `^[234][0-9][0-9]$`, `usage: -http-body-regex [234][0-9][0-9]$`)
-	RegisterCliCommand("monitor-create", updateMonitorFlags, updateMonitor)
+	RegisterCliCommand("monitor-update", updateMonitorFlags, updateMonitor)
 }

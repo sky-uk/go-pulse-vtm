@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-const testTrafficIPGroupManagerEndpoint = "/api/tm/3.8/config/active/traffic_managers"
+const testTrafficIPGroupManagerEndpoint = "/api/tm/3.8/config/active/traffic_managers/"
 
 var getAllTrafficManagersAPI *rest.BaseAPI
 var testTrafficManagerGetAllJSON []byte

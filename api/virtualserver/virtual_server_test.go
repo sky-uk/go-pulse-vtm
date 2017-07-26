@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-const testVirtualServerEndpoint = "/api/tm/3.8/config/active/virtual_servers"
+const testVirtualServerEndpoint = "/api/tm/3.8/config/active/virtual_servers/"
 
 var createVirtualServerAPI, getAllVirtualServerAPI, getVirtualServerAPI, updateVirtualServerAPI, deleteVirtualServerAPI *rest.BaseAPI
 var testVirtualServerName string
@@ -54,7 +54,7 @@ func TestVirtualServerNewCreateMethod(t *testing.T) {
 
 func TestVirtualServerNewCreateEndpoint(t *testing.T) {
 	setupVirtualServerTest()
-	assert.Equal(t, testVirtualServerEndpoint+"/"+testVirtualServerName, createVirtualServerAPI.Endpoint())
+	assert.Equal(t, testVirtualServerEndpoint+testVirtualServerName, createVirtualServerAPI.Endpoint())
 }
 
 func TestVirtualServerNewCreateMarshal(t *testing.T) {
@@ -95,7 +95,7 @@ func TestVirtualServerNewGetMethod(t *testing.T) {
 
 func TestVirtualServerNewGetEndpoint(t *testing.T) {
 	setupVirtualServerTest()
-	assert.Equal(t, testVirtualServerEndpoint+"/"+testVirtualServerName, getVirtualServerAPI.Endpoint())
+	assert.Equal(t, testVirtualServerEndpoint+testVirtualServerName, getVirtualServerAPI.Endpoint())
 }
 
 func TestVirtualServerNewGetUnmarshal(t *testing.T) {
@@ -117,7 +117,7 @@ func TestVirtualServerNewUpdateMethod(t *testing.T) {
 
 func TestVirtualServerNewUpdateEndpoint(t *testing.T) {
 	setupVirtualServerTest()
-	assert.Equal(t, testVirtualServerEndpoint+"/"+testVirtualServerName, updateVirtualServerAPI.Endpoint())
+	assert.Equal(t, testVirtualServerEndpoint+testVirtualServerName, updateVirtualServerAPI.Endpoint())
 }
 
 func TestVirtualServerNewUpdateMarshal(t *testing.T) {
@@ -135,5 +135,5 @@ func TestVirtualServerNewDeleteMethod(t *testing.T) {
 
 func TestVirtualServerNewDeleteEndpoint(t *testing.T) {
 	setupVirtualServerTest()
-	assert.Equal(t, testVirtualServerEndpoint+"/"+testVirtualServerName, deleteVirtualServerAPI.Endpoint())
+	assert.Equal(t, testVirtualServerEndpoint+testVirtualServerName, deleteVirtualServerAPI.Endpoint())
 }

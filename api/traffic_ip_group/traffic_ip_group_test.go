@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-const trafficIPGroupTestEndpoint = "/api/tm/3.8/config/active/traffic_ip_groups"
+const trafficIPGroupTestEndpoint = "/api/tm/3.8/config/active/traffic_ip_groups/"
 
 var createTrafficIPGroupAPI, getAllTrafficIPGroupAPI, getTrafficIPGroupAPI, updateTrafficIPGroupAPI, deleteTrafficIPGroupAPI *rest.BaseAPI
 var trafficIPGroupTestName, expectedMarshallTestJSON string
@@ -47,7 +47,7 @@ func TestTrafficIPGroupCreateMethod(t *testing.T) {
 
 func TestTrafficIPGroupCreateEndpoint(t *testing.T) {
 	setupTrafficIPGroupTest()
-	assert.Equal(t, trafficIPGroupTestEndpoint+"/"+trafficIPGroupTestName, createTrafficIPGroupAPI.Endpoint())
+	assert.Equal(t, trafficIPGroupTestEndpoint+trafficIPGroupTestName, createTrafficIPGroupAPI.Endpoint())
 }
 
 func TestTrafficIPGroupCreateMarshalling(t *testing.T) {
@@ -88,7 +88,7 @@ func TestTrafficIPGroupGetMethod(t *testing.T) {
 
 func TestTrafficIPGroupGetEndpoint(t *testing.T) {
 	setupTrafficIPGroupTest()
-	assert.Equal(t, trafficIPGroupTestEndpoint+"/"+trafficIPGroupTestName, getTrafficIPGroupAPI.Endpoint())
+	assert.Equal(t, trafficIPGroupTestEndpoint+trafficIPGroupTestName, getTrafficIPGroupAPI.Endpoint())
 }
 
 func TestTrafficIPGroupGetUnmarshalling(t *testing.T) {
@@ -117,7 +117,7 @@ func TestTrafficIPGroupUpdateMethod(t *testing.T) {
 
 func TestTrafficIPGroupUpdateEndpoint(t *testing.T) {
 	setupTrafficIPGroupTest()
-	assert.Equal(t, trafficIPGroupTestEndpoint+"/"+trafficIPGroupTestName, updateTrafficIPGroupAPI.Endpoint())
+	assert.Equal(t, trafficIPGroupTestEndpoint+trafficIPGroupTestName, updateTrafficIPGroupAPI.Endpoint())
 }
 
 func TestTrafficIPGroupUpdateMarshalling(t *testing.T) {
@@ -135,5 +135,5 @@ func TestTrafficIPGroupDeleteMethod(t *testing.T) {
 
 func TestTrafficIPGroupDeleteEndpoint(t *testing.T) {
 	setupTrafficIPGroupTest()
-	assert.Equal(t, trafficIPGroupTestEndpoint+"/"+trafficIPGroupTestName, deleteTrafficIPGroupAPI.Endpoint())
+	assert.Equal(t, trafficIPGroupTestEndpoint+trafficIPGroupTestName, deleteTrafficIPGroupAPI.Endpoint())
 }

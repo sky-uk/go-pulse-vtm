@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-const testPoolEndpoint = "/api/tm/3.8/config/active/pools"
+const testPoolEndpoint = "/api/tm/3.8/config/active/pools/"
 
 var testPoolName, marshallingTestExpectedJSON string
 var createPoolAPI, getAllPoolsAPI, getPoolAPI, updatePoolAPI, deletePoolAPI *rest.BaseAPI
@@ -44,7 +44,7 @@ func TestNewCreateMethod(t *testing.T) {
 
 func TestNewCreateEndpoint(t *testing.T) {
 	setupPoolTest()
-	assert.Equal(t, testPoolEndpoint+"/"+testPoolName, createPoolAPI.Endpoint())
+	assert.Equal(t, testPoolEndpoint+testPoolName, createPoolAPI.Endpoint())
 }
 
 func TestNewCreateMarshalling(t *testing.T) {
@@ -84,7 +84,7 @@ func TestNewGetMethod(t *testing.T) {
 
 func TestNewGetEndpoint(t *testing.T) {
 	setupPoolTest()
-	assert.Equal(t, testPoolEndpoint+"/"+testPoolName, getPoolAPI.Endpoint())
+	assert.Equal(t, testPoolEndpoint+testPoolName, getPoolAPI.Endpoint())
 }
 
 func TestNewGetUnmarshalling(t *testing.T) {
@@ -109,7 +109,7 @@ func TestNewUpdateMethod(t *testing.T) {
 
 func TestNewUpdateEndpoint(t *testing.T) {
 	setupPoolTest()
-	assert.Equal(t, testPoolEndpoint+"/"+testPoolName, updatePoolAPI.Endpoint())
+	assert.Equal(t, testPoolEndpoint+testPoolName, updatePoolAPI.Endpoint())
 }
 
 func TestNewUpdateMarshalling(t *testing.T) {
@@ -126,5 +126,5 @@ func TestNewDeleteMethod(t *testing.T) {
 
 func TestNewDeleteEndpoint(t *testing.T) {
 	setupPoolTest()
-	assert.Equal(t, testPoolEndpoint+"/"+testPoolName, deletePoolAPI.Endpoint())
+	assert.Equal(t, testPoolEndpoint+testPoolName, deletePoolAPI.Endpoint())
 }
