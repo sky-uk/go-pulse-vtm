@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/sky-uk/go-brocade-vtm/api/traffic_ip_group"
-	"github.com/sky-uk/go-brocade-vtm/api/traffic_ip_group_managers"
+	"github.com/sky-uk/go-brocade-vtm/api/traffic_ip_group_manager"
 	"github.com/sky-uk/go-rest-api"
 	"os"
 )
