@@ -15,7 +15,7 @@ var monitorUseSSL, monitorVerbose bool
 func createMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 
 	if monitorName == "" {
-		fmt.Printf("\nError -name argument required")
+		fmt.Printf("\nError -name argument required\n")
 		os.Exit(1)
 	}
 
@@ -24,11 +24,11 @@ func createMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 	createMonitorAPI := monitor.NewCreate(monitorName, createMonitorStruct)
 	err := client.Do(createMonitorAPI)
 	if err != nil {
-		fmt.Printf("\nError: %+v", string(createMonitorAPI.RawResponse()))
-		fmt.Printf("\nError creating monitor %s", monitorName)
+		fmt.Printf("\nError: %+v\n", string(createMonitorAPI.RawResponse()))
+		fmt.Printf("\nError creating monitor %s\n", monitorName)
 		os.Exit(2)
 	}
-	fmt.Printf("\nSuccessfully created monitor %s", monitorName)
+	fmt.Printf("\nSuccessfully created monitor %s\n", monitorName)
 
 }
 

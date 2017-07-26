@@ -13,14 +13,14 @@ var showMonitorName string
 func showMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 
 	if showMonitorName == "" {
-		fmt.Printf("\nError: name argument required")
+		fmt.Printf("\nError: name argument required\n")
 		os.Exit(1)
 	}
 
 	readMonitorAPI := monitor.NewGet(showMonitorName)
 	err := client.Do(readMonitorAPI)
 	if err != nil {
-		fmt.Printf("\nError whilst retrieving monitor %s", showMonitorName)
+		fmt.Printf("\nError whilst retrieving monitor %s\n", showMonitorName)
 		os.Exit(2)
 	}
 	response := readMonitorAPI.ResponseObject().(*monitor.Monitor)

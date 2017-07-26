@@ -13,16 +13,16 @@ func deleteMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 
 	monitorName := flagSet.Lookup("name").Value.String()
 	if monitorName == "" {
-		fmt.Printf("\nError: -name argument required")
+		fmt.Printf("\nError: -name argument required\n")
 		os.Exit(1)
 	}
 	deleteMonitorAPI := monitor.NewDelete(monitorName)
 	err := client.Do(deleteMonitorAPI)
 	if err != nil && deleteMonitorAPI.StatusCode() != http.StatusNotFound {
-		fmt.Printf("\nError deleting monitor %s. Error: %v", monitorName, err)
+		fmt.Printf("\nError deleting monitor %s. Error: %v\n", monitorName, err)
 		os.Exit(2)
 	}
-	fmt.Printf("\nSuccessfully deleted monitor %s", monitorName)
+	fmt.Printf("\nSuccessfully deleted monitor %s\n", monitorName)
 
 }
 
