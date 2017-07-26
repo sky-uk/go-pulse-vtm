@@ -20,12 +20,13 @@ func showMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 	readMonitorAPI := monitor.NewGet(showMonitorName)
 	err := client.Do(readMonitorAPI)
 	if err != nil {
-		fmt.Printf("\nError whilst retrieving monitor %s\n", showMonitorName)
+		fmt.Printf("\nError whilst retrieving monitor %s. Error: %+v\n", showMonitorName, err)
 		os.Exit(2)
 	}
 	response := readMonitorAPI.ResponseObject().(*monitor.Monitor)
 	row := map[string]interface{}{}
 	row["Name"] = showMonitorName
+	row["Type"] = response.Properties.Basic.Type
 	row["Delay"] = response.Properties.Basic.Delay
 	row["Timeout"] = response.Properties.Basic.Timeout
 	row["Failures"] = response.Properties.Basic.Failures

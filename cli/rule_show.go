@@ -23,7 +23,7 @@ func showRule(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
-	readAPI := rule.NewGetRule(readRuleName)
+	readAPI := rule.NewGet(readRuleName)
 	err := client.Do(readAPI)
 	if err != nil {
 		fmt.Printf("\nError retrieving rule %s from API. Error %+v", readRuleName, err)
