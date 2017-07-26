@@ -15,7 +15,7 @@ var updateUseSSL, updateVerbose bool
 func updateMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 
 	if updateMonitorName == "" {
-		fmt.Printf("\nError -name argument required. Usage: -name monitor-name")
+		fmt.Printf("\nError -name argument required. Usage: -name monitor-name\n")
 		os.Exit(1)
 	}
 	updateMonitorStruct.Properties.Basic.UseSSL = &updateUseSSL
@@ -23,11 +23,11 @@ func updateMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 	updateMonitorAPI := monitor.NewUpdate(updateMonitorName, updateMonitorStruct)
 	err := client.Do(updateMonitorAPI)
 	if err != nil {
-		fmt.Printf("\nError: %+v", string(updateMonitorAPI.RawResponse()))
-		fmt.Printf("\nError updating monitor %s", updateMonitorName)
+		fmt.Printf("\nError: %+v\n", string(updateMonitorAPI.RawResponse()))
+		fmt.Printf("\nError updating monitor %s\n", updateMonitorName)
 		os.Exit(2)
 	}
-	fmt.Printf("\nSuccessfully updated monitor %s", updateMonitorName)
+	fmt.Printf("\nSuccessfully updated monitor %s\n", updateMonitorName)
 }
 
 func init() {
