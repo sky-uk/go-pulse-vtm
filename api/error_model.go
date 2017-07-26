@@ -9,5 +9,5 @@ type VTMError struct {
 type VTMErrorInfo struct {
 	ErrorID   string                 `json:"error_id"`
 	ErrorText string                 `json:"error_text"`
-	ErrorInfo map[string]interface{} `json:"error_info,omitempty`
+	ErrorInfo map[string]interface{} `json:"error_info,omitempty"`
 }
