@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-const trafficIPGroupManagerEndpoint = "/api/tm/3.8/config/active/traffic_managers"
+const trafficIPGroupManagerEndpoint = "/api/tm/3.8/config/active/traffic_managers/"
 
 // NewGetAll : Get a list of traffic managers
 func NewGetAll() *rest.BaseAPI {

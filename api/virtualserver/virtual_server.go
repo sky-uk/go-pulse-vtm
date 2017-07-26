@@ -6,11 +6,11 @@ import (
 	"net/http"
 )
 
-const virtualServerEndpoint = "/api/tm/3.8/config/active/virtual_servers"
+const virtualServerEndpoint = "/api/tm/3.8/config/active/virtual_servers/"
 
 // NewCreate : used to create a new virtual server
 func NewCreate(virtualServerName string, virtualServer VirtualServer) *rest.BaseAPI {
-	createVirtualServerAPI := rest.NewBaseAPI(http.MethodPut, virtualServerEndpoint+"/"+virtualServerName, virtualServer, new(VirtualServer), new(api.VTMError))
+	createVirtualServerAPI := rest.NewBaseAPI(http.MethodPut, virtualServerEndpoint+virtualServerName, virtualServer, new(VirtualServer), new(api.VTMError))
 	return createVirtualServerAPI
 }
 
@@ -22,18 +22,18 @@ func NewGetAll() *rest.BaseAPI {
 
 // NewGet - used to retrieve a single virtual server
 func NewGet(virtualServerName string) *rest.BaseAPI {
-	getVirtualServerAPI := rest.NewBaseAPI(http.MethodGet, virtualServerEndpoint+"/"+virtualServerName, nil, new(VirtualServer), new(api.VTMError))
+	getVirtualServerAPI := rest.NewBaseAPI(http.MethodGet, virtualServerEndpoint+virtualServerName, nil, new(VirtualServer), new(api.VTMError))
 	return getVirtualServerAPI
 }
 
 // NewUpdate : used to update a virtual server
 func NewUpdate(name string, virtualServer VirtualServer) *rest.BaseAPI {
-	updateVirtualServerAPI := rest.NewBaseAPI(http.MethodPut, virtualServerEndpoint+"/"+name, virtualServer, new(VirtualServer), new(api.VTMError))
+	updateVirtualServerAPI := rest.NewBaseAPI(http.MethodPut, virtualServerEndpoint+name, virtualServer, new(VirtualServer), new(api.VTMError))
 	return updateVirtualServerAPI
 }
 
 // NewDelete : used to delete a virtual server
 func NewDelete(name string) *rest.BaseAPI {
-	deleteVirtualServerAPI := rest.NewBaseAPI(http.MethodDelete, virtualServerEndpoint+"/"+name, nil, nil, new(api.VTMError))
+	deleteVirtualServerAPI := rest.NewBaseAPI(http.MethodDelete, virtualServerEndpoint+name, nil, nil, new(api.VTMError))
 	return deleteVirtualServerAPI
 }

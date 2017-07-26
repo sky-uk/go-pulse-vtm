@@ -6,17 +6,17 @@ import (
 	"net/http"
 )
 
-const monitorEndpoint = "/api/tm/3.8/config/active/monitors"
+const monitorEndpoint = "/api/tm/3.8/config/active/monitors/"
 
 // NewCreate : Create new monitor
 func NewCreate(name string, monitor Monitor) *rest.BaseAPI {
-	createMonitorAPI := rest.NewBaseAPI(http.MethodPut, monitorEndpoint+"/"+name, monitor, new(Monitor), new(api.VTMError))
+	createMonitorAPI := rest.NewBaseAPI(http.MethodPut, monitorEndpoint+name, monitor, new(Monitor), new(api.VTMError))
 	return createMonitorAPI
 }
 
 // NewDelete : returns a new DeleteMonitorAPI object
 func NewDelete(name string) *rest.BaseAPI {
-	deleteMonitorAPI := rest.NewBaseAPI(http.MethodDelete, monitorEndpoint+"/"+name, nil, nil, new(api.VTMError))
+	deleteMonitorAPI := rest.NewBaseAPI(http.MethodDelete, monitorEndpoint+name, nil, nil, new(api.VTMError))
 	return deleteMonitorAPI
 }
 
@@ -28,12 +28,12 @@ func NewGetAll() *rest.BaseAPI {
 
 // NewGet : returns the monitor details
 func NewGet(name string) *rest.BaseAPI {
-	getMonitorAPI := rest.NewBaseAPI(http.MethodGet, monitorEndpoint+"/"+name, nil, new(Monitor), new(api.VTMError))
+	getMonitorAPI := rest.NewBaseAPI(http.MethodGet, monitorEndpoint+name, nil, new(Monitor), new(api.VTMError))
 	return getMonitorAPI
 }
 
 // NewUpdate : creates a new object of type UpdateMonitorAPI
 func NewUpdate(name string, monitor Monitor) *rest.BaseAPI {
-	monitorUpdateAPI := rest.NewBaseAPI(http.MethodPut, monitorEndpoint+"/"+name, monitor, new(Monitor), new(api.VTMError))
+	monitorUpdateAPI := rest.NewBaseAPI(http.MethodPut, monitorEndpoint+name, monitor, new(Monitor), new(api.VTMError))
 	return monitorUpdateAPI
 }

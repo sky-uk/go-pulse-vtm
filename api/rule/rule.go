@@ -6,34 +6,34 @@ import (
 	"net/http"
 )
 
-const ruleURI = "/api/tm/3.8/config/active/rules"
+const ruleEndpoint = "/api/tm/3.8/config/active/rules/"
 
 // NewCreate : Create a new rule
 func NewCreate(ruleName string, trafficScript []byte) *rest.BaseAPI {
-	createRuleAPI := rest.NewBaseAPI(http.MethodPut, ruleURI+"/"+ruleName, trafficScript, nil, new(api.VTMError))
+	createRuleAPI := rest.NewBaseAPI(http.MethodPut, ruleEndpoint+ruleName, trafficScript, nil, new(api.VTMError))
 	return createRuleAPI
 }
 
 // NewGetRule : returns a rule
 func NewGetRule(ruleName string) *rest.BaseAPI {
-	getRuleAPI := rest.NewBaseAPI(http.MethodGet, ruleURI+"/"+ruleName, nil, new(string), new(api.VTMError))
+	getRuleAPI := rest.NewBaseAPI(http.MethodGet, ruleEndpoint+ruleName, nil, new(string), new(api.VTMError))
 	return getRuleAPI
 }
 
 // NewGetAll : returns a list of rules {
 func NewGetAll() *rest.BaseAPI {
-	this := rest.NewBaseAPI(http.MethodGet, ruleURI, nil, new(Rules), new(api.VTMError))
+	this := rest.NewBaseAPI(http.MethodGet, ruleEndpoint, nil, new(Rules), new(api.VTMError))
 	return this
 }
 
 // NewUpdate : Update a rule
 func NewUpdate(ruleName string, trafficScript []byte) *rest.BaseAPI {
-	updateRuleAPI := rest.NewBaseAPI(http.MethodPut, ruleURI+"/"+ruleName, trafficScript, nil, new(api.VTMError))
+	updateRuleAPI := rest.NewBaseAPI(http.MethodPut, ruleEndpoint+ruleName, trafficScript, nil, new(api.VTMError))
 	return updateRuleAPI
 }
 
 // NewDelete : used to delete a rule
 func NewDelete(ruleName string) *rest.BaseAPI {
-	this := rest.NewBaseAPI(http.MethodDelete, ruleURI+"/"+ruleName, nil, nil, new(api.VTMError))
+	this := rest.NewBaseAPI(http.MethodDelete, ruleEndpoint+ruleName, nil, nil, new(api.VTMError))
 	return this
 }

@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-const testSSlServerKeyEndpoint = "/api/tm/3.8/config/active/ssl/server_keys"
+const testSSlServerKeyEndpoint = "/api/tm/3.8/config/active/ssl/server_keys/"
 
 var createSSLServerKeyAPI, getAllSSLServerKeyAPI, getSSLServerKeyAPI, updateSSLServerKeyAPI, deleteSSLServerKeyAPI *rest.BaseAPI
 var testSSLServerKeyName, marshallingTestExpectedJSON string
@@ -44,7 +44,7 @@ func TestNewCreateMethod(t *testing.T) {
 
 func TestNewCreateEndpoint(t *testing.T) {
 	setupSSLServerKeyTest()
-	assert.Equal(t, testSSlServerKeyEndpoint+"/"+testSSLServerKeyName, createSSLServerKeyAPI.Endpoint())
+	assert.Equal(t, testSSlServerKeyEndpoint+testSSLServerKeyName, createSSLServerKeyAPI.Endpoint())
 }
 
 func TestNewCreateMarshalling(t *testing.T) {
@@ -85,7 +85,7 @@ func TestNewGetMethod(t *testing.T) {
 
 func TestNewGetEndpoint(t *testing.T) {
 	setupSSLServerKeyTest()
-	assert.Equal(t, testSSlServerKeyEndpoint+"/"+testSSLServerKeyName, getSSLServerKeyAPI.Endpoint())
+	assert.Equal(t, testSSlServerKeyEndpoint+testSSLServerKeyName, getSSLServerKeyAPI.Endpoint())
 }
 
 func TestNewGetUnmarshalling(t *testing.T) {
@@ -107,7 +107,7 @@ func TestNewUpdateMethod(t *testing.T) {
 
 func TestNewUpdateEndpoint(t *testing.T) {
 	setupSSLServerKeyTest()
-	assert.Equal(t, testSSlServerKeyEndpoint+"/"+testSSLServerKeyName, updateSSLServerKeyAPI.Endpoint())
+	assert.Equal(t, testSSlServerKeyEndpoint+testSSLServerKeyName, updateSSLServerKeyAPI.Endpoint())
 }
 
 func TestNewUpdateMarshalling(t *testing.T) {
@@ -125,5 +125,5 @@ func TestNewDeleteMethod(t *testing.T) {
 
 func TestNewDeleteEndpoint(t *testing.T) {
 	setupSSLServerKeyTest()
-	assert.Equal(t, testSSlServerKeyEndpoint+"/"+testSSLServerKeyName, deleteSSLServerKeyAPI.Endpoint())
+	assert.Equal(t, testSSlServerKeyEndpoint+testSSLServerKeyName, deleteSSLServerKeyAPI.Endpoint())
 }
