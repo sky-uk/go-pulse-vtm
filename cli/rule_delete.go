@@ -3,15 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/sky-uk/go-brocade-vtm"
 	"github.com/sky-uk/go-brocade-vtm/api/rule"
-	"net/http"
+	"github.com/sky-uk/go-rest-api"
 	"os"
 )
 
 var deleteRuleName string
 
-func deleteRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
+func deleteRule(client *rest.Client, flagSet *flag.FlagSet) {
 
 	if deleteRuleName == "" {
 		fmt.Printf("\nError: name argument is required. Usage: -name rule-name")
@@ -24,11 +23,7 @@ func deleteRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
 		fmt.Printf("\nError while deleting rule %s. Error: %+v", deleteRuleName, err)
 		os.Exit(2)
 	}
-	httpResponseCode := deleteRuleAPI.StatusCode()
-	if httpResponseCode != http.StatusNoContent {
-		fmt.Printf("\nError while deleting rule %s. Received invalid http response code %d", deleteRuleName, httpResponseCode)
-		os.Exit(3)
-	}
+
 	fmt.Printf("Successfully deleted rule %s\n", deleteRuleName)
 }
 

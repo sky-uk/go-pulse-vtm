@@ -3,17 +3,21 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/sky-uk/go-brocade-vtm"
 	"github.com/sky-uk/go-brocade-vtm/api/rule"
+	"github.com/sky-uk/go-rest-api"
 	"io/ioutil"
-	"net/http"
 	"os"
 )
 
 var updateRuleName string
 var updateTrafficScriptFile string
 
-func updateRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
+func updateRule(client *rest.Client, flagSet *flag.FlagSet) {
+
+	headers := make(map[string]string)
+	headers["Content-Type"] = "application/octet-stream"
+	headers["Content-Transfer-Encoding"] = "BINARY"
+	client.Headers = headers
 
 	if updateRuleName == "" {
 		fmt.Printf("\nName argument is required. Usage: -name vtm-rule-name\n")
@@ -33,22 +37,13 @@ func updateRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
 	}
 
 	updateRuleAPI := rule.NewCreate(updateRuleName, updateTrafficScriptFile)
-	headers := make(map[string]string)
-	headers["Content-Type"] = "application/octet-stream"
-	headers["Content-Transfer-Encoding"] = "text"
-	client.Headers = headers
+
 	err := client.Do(updateRuleAPI)
 	if err != nil {
 		fmt.Printf("\nError occurred while creating rule %s. Error: %+v\n", updateRuleName, err)
 		os.Exit(3)
 	}
-	httpResponseCode := updateRuleAPI.StatusCode()
-	if httpResponseCode == http.StatusCreated || httpResponseCode == http.StatusNoContent {
-		fmt.Printf("Successfully updated rule %s\n", updateRuleName)
-	} else {
-		fmt.Printf("\nError occurred while updating rule %s. Received invalid http response code %d\n", updateRuleName, httpResponseCode)
-		os.Exit(4)
-	}
+	fmt.Printf("\nSuccessfully updated rule %s\n", updateRuleName)
 }
 
 func init() {

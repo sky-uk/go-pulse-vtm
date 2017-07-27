@@ -3,17 +3,23 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/sky-uk/go-brocade-vtm"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/rule"
+	"github.com/sky-uk/go-rest-api"
 	"io/ioutil"
-	"net/http"
 	"os"
 )
 
 var ruleName string
 var trafficScriptFile string
 
-func createRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
+func createRule(client *rest.Client, flagSet *flag.FlagSet) {
+
+	headers := make(map[string]string)
+	headers["Content-Type"] = "application/octet-stream"
+	headers["Content-Transfer-Encoding"] = "BINARY"
+	client.Headers = headers
+	client.Debug = true
 
 	if ruleName == "" {
 		fmt.Printf("\nName argument is required. Usage: -name vtm-rule-name\n")
@@ -26,29 +32,19 @@ func createRule(client *brocadevtm.VTMClient, flagSet *flag.FlagSet) {
 	}
 
 	trafficScript, fileErr := ioutil.ReadFile(trafficScriptFile)
-
 	if fileErr != nil {
 		fmt.Printf("\nError reading file %s\n", trafficScriptFile)
 		os.Exit(2)
 	}
-
 	createRuleAPI := rule.NewCreate(ruleName, trafficScript)
-	headers := make(map[string]string)
-	headers["Content-Type"] = "application/octet-stream"
-	headers["Content-Transfer-Encoding"] = "text"
-	client.Headers = headers
+
 	err := client.Do(createRuleAPI)
 	if err != nil {
-		fmt.Printf("\nError occurred while creating rule %s. Error: %+v\n", ruleName, err)
+		vtmError := createRuleAPI.ErrorObject().(*api.VTMError)
+		fmt.Printf("\nError occurred while creating rule %s. Error: %+v ..... and err is %v\n", ruleName, vtmError, err)
 		os.Exit(3)
 	}
-	httpResponseCode := createRuleAPI.StatusCode()
-	if httpResponseCode == http.StatusCreated || httpResponseCode == http.StatusNoContent {
-		fmt.Printf("Successfully created new rule %s\n", ruleName)
-	} else {
-		fmt.Printf("\nError occurred while creating rule %s. Received invalid http response code %d\n", ruleName, httpResponseCode)
-		os.Exit(4)
-	}
+	fmt.Printf("\nSuccessfully created rule %s\n", ruleName)
 }
 
 func init() {
