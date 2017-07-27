@@ -31,16 +31,16 @@
 			"path": "github.com/sky-uk/go-rest-api",
 			"revision": "17b996374ad01ce0a04b31b037dcf3018cc07362",
 			"revisionTime": "2017-07-25T09:28:20Z",
-			"version": "master",
-			"versionExact": "master"
+			"version": "0.0.1",
+			"versionExact": "0.0.1"
 		},
 		{
 			"checksumSHA1": "ZToPR4iUY6bYctEGtubGb074s9Y=",
 			"path": "github.com/sky-uk/go-rest-api/contenttype",
 			"revision": "17b996374ad01ce0a04b31b037dcf3018cc07362",
 			"revisionTime": "2017-07-25T09:28:20Z",
-			"version": "master",
-			"versionExact": "master"
+			"version": "0.0.1",
+			"versionExact": "0.0.1"
 		},
 		{
 			"checksumSHA1": "JXUVA1jky8ZX8w09p2t5KLs97Nc=",
