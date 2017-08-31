@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/pool"
 	"github.com/sky-uk/go-rest-api"
 	"os"
@@ -21,6 +22,8 @@ func showPool(client *rest.Client, flagSet *flag.FlagSet) {
 	err := client.Do(readPoolAPI)
 	if err != nil {
 		fmt.Printf("\nError whilst retrieving pool %s\n", showMonitorName)
+		errObj := *readPoolAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(2)
 	}
 

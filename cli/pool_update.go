@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/pool"
 	"github.com/sky-uk/go-rest-api"
 	"os"
@@ -39,6 +40,8 @@ func updatePool(client *rest.Client, flagSet *flag.FlagSet) {
 	err := client.Do(updatePoolAPI)
 	if err != nil {
 		fmt.Printf("\nError updating pool %s. Error: %+v\n", updatePoolName, err)
+		errObj := *updatePoolAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully updated pool %s\n", updatePoolName)

@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/rule"
 	"github.com/sky-uk/go-rest-api"
 	"os"
@@ -21,6 +22,8 @@ func deleteRule(client *rest.Client, flagSet *flag.FlagSet) {
 	err := client.Do(deleteRuleAPI)
 	if err != nil {
 		fmt.Printf("\nError while deleting rule %s. Error: %+v", deleteRuleName, err)
+		errObj := *deleteRuleAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(2)
 	}
 

@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/monitor"
 	"github.com/sky-uk/go-rest-api"
 	"net/http"
@@ -20,6 +21,8 @@ func deleteMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 	err := client.Do(deleteMonitorAPI)
 	if err != nil && deleteMonitorAPI.StatusCode() != http.StatusNotFound {
 		fmt.Printf("\nError deleting monitor %s. Error: %v\n", monitorName, err)
+		errObj := *deleteMonitorAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully deleted monitor %s\n", monitorName)

@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/monitor"
 	"github.com/sky-uk/go-rest-api"
 	"os"
@@ -25,6 +26,8 @@ func createMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 	err := client.Do(createMonitorAPI)
 	if err != nil {
 		fmt.Printf("\nError creating monitor %s. Error: %+v\n", monitorName, err)
+		errObj := *createMonitorAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully created monitor %s\n", monitorName)

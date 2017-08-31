@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/ssl_server_key"
 	"github.com/sky-uk/go-rest-api"
 	"os"
@@ -22,7 +23,9 @@ func showSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 	sslServerKeyShowAPI := sslServerKey.NewGet(sslServerKeyName)
 	err := client.Do(sslServerKeyShowAPI)
 	if err != nil {
-		fmt.Printf("\nError retrieving SSL server key %s from API. Error %+v", sslServerKeyName, err)
+		fmt.Printf("\nError retrieving SSL server key %s from API. Error %+v\n", sslServerKeyName, err)
+		errObj := *sslServerKeyShowAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(2)
 	}
 	sslServerKeyObject = *sslServerKeyShowAPI.ResponseObject().(*sslServerKey.SSLServerKey)

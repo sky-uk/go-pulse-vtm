@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/ssl_server_key"
 	"github.com/sky-uk/go-rest-api"
 	"os"
@@ -36,6 +37,8 @@ func createSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 	err := client.Do(createSSLServerKeyAPI)
 	if err != nil {
 		fmt.Printf("\nError while creating SSL Server Key %s", sslServerKeyName)
+		errObj := *createSSLServerKeyAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully created SSL Server Key %s\n", sslServerKeyName)

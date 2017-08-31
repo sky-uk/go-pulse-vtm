@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/virtualserver"
 	"github.com/sky-uk/go-rest-api"
 	"os"
@@ -31,6 +32,8 @@ func updateVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 	err := client.Do(updateVirtualServerAPI)
 	if err != nil {
 		fmt.Printf("\nError whilst updating virtual server %s. Error: %+v\n", updateVirtualServerName, err)
+		errObj := *updateVirtualServerAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully updated virtual server %s\n", updateVirtualServerName)

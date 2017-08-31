@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/rule"
 	"github.com/sky-uk/go-rest-api"
 	"io/ioutil"
@@ -41,6 +42,8 @@ func updateRule(client *rest.Client, flagSet *flag.FlagSet) {
 	err := client.Do(updateRuleAPI)
 	if err != nil {
 		fmt.Printf("\nError occurred while creating rule %s. Error: %+v\n", updateRuleName, err)
+		errObj := *updateRuleAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(3)
 	}
 	fmt.Printf("\nSuccessfully updated rule %s\n", updateRuleName)
