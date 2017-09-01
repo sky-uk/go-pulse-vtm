@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/pool"
 	"github.com/sky-uk/go-rest-api"
 	"os"
@@ -38,6 +39,8 @@ func createPool(client *rest.Client, flagSet *flag.FlagSet) {
 	err := client.Do(createPoolAPI)
 	if err != nil {
 		fmt.Printf("\nError creating pool %s. Error: %+v\n", poolName, err)
+		errObj := *createPoolAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully created pool %s\n", poolName)

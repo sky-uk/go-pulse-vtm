@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/virtualserver"
 	"github.com/sky-uk/go-rest-api"
 	"os"
@@ -35,6 +36,8 @@ func createVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 	err := client.Do(createVirtualServerAPI)
 	if err != nil {
 		fmt.Printf("\nError whilst creating virtual server %s. Error: %+v\n", createVirtualServerName, err)
+		errObj := *createVirtualServerAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully created virtual server %s\n", createVirtualServerName)

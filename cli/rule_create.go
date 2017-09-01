@@ -40,8 +40,8 @@ func createRule(client *rest.Client, flagSet *flag.FlagSet) {
 
 	err := client.Do(createRuleAPI)
 	if err != nil {
-		vtmError := createRuleAPI.ErrorObject().(*api.VTMError)
-		fmt.Printf("\nError occurred while creating rule %s. Error: %+v ..... and err is %v\n", ruleName, vtmError, err)
+		errObj := *createRuleAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(3)
 	}
 	fmt.Printf("\nSuccessfully created rule %s\n", ruleName)

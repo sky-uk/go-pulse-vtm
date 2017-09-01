@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/pool"
 	"github.com/sky-uk/go-rest-api"
 	"net/http"
@@ -20,6 +21,8 @@ func deletePool(client *rest.Client, flagSet *flag.FlagSet) {
 	err := client.Do(deletePoolAPI)
 	if err != nil && deletePoolAPI.StatusCode() != http.StatusNotFound {
 		fmt.Printf("\nError deleting pool %s\n", poolName)
+		errObj := *deletePoolAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully deleted pool %s\n", poolName)

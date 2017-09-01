@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-brocade-vtm/api/rule"
 	"github.com/sky-uk/go-rest-api"
 	"os"
@@ -26,7 +27,9 @@ func showRule(client *rest.Client, flagSet *flag.FlagSet) {
 	readAPI := rule.NewGet(readRuleName)
 	err := client.Do(readAPI)
 	if err != nil {
-		fmt.Printf("\nError retrieving rule %s from API. Error %+v", readRuleName, err)
+		fmt.Printf("\nError retrieving rule %s from API. Error %+v\n", readRuleName, err)
+		errObj := *readAPI.ErrorObject().(*api.VTMError)
+		PrettyPrintErrorObj(errObj)
 		os.Exit(2)
 	}
 
