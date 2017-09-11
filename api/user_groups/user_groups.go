@@ -16,7 +16,7 @@ func NewGet(groupName string) *rest.BaseAPI  {
 
 // NewGetAll : used to retrieve a list of user group
 func NewGetAll() *rest.BaseAPI  {
-	getAllUserGroupAPI := rest.NewBaseAPI(http.MethodGet, userGroupsEndpoint, nil, new(UserGroupsList), new(api.VTMError))
+	getAllUserGroupAPI := rest.NewBaseAPI(http.MethodGet, userGroupsEndpoint, nil, new(UserGroupList), new(api.VTMError))
 	return getAllUserGroupAPI
 }
 
@@ -26,7 +26,7 @@ func NewPut(groupName string, userGroup UserGroup) *rest.BaseAPI {
 	return getAllUserGroupAPI
 }
 
-// NewPut : used to delete a user group
+// NewDelete : used to delete a user group
 func NewDelete(groupName string) *rest.BaseAPI  {
 	getAllUserGroupAPI := rest.NewBaseAPI(http.MethodGet, userGroupsEndpoint+groupName, nil, nil, new(api.VTMError))
 	return getAllUserGroupAPI

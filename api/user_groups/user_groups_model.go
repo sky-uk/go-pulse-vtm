@@ -24,8 +24,8 @@ type Permission struct {
 	AccessLevel string `json:"access_level"`
 }
 
-// UserGroupsList : List of UserGroups
-type UserGroupsList struct {
+// UserGroupList : List of UserGroups
+type UserGroupList struct {
 	Children []ChildUserGroup `json:"children"`
 }
 
