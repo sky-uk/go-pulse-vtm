@@ -1,21 +1,21 @@
 package usergroups
 
 import (
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/sky-uk/go-rest-api"
 	"net/http"
-	"github.com/sky-uk/go-brocade-vtm/api"
 )
 
 const userGroupsEndpoint = "/api/tm/3.8/config/active/user_groups/"
 
 // NewGet : used to retrieve a user group
-func NewGet(groupName string) *rest.BaseAPI  {
+func NewGet(groupName string) *rest.BaseAPI {
 	getUserGroupAPI := rest.NewBaseAPI(http.MethodGet, userGroupsEndpoint+groupName, nil, new(UserGroup), new(api.VTMError))
 	return getUserGroupAPI
 }
 
 // NewGetAll : used to retrieve a list of user group
-func NewGetAll() *rest.BaseAPI  {
+func NewGetAll() *rest.BaseAPI {
 	getAllUserGroupAPI := rest.NewBaseAPI(http.MethodGet, userGroupsEndpoint, nil, new(UserGroupList), new(api.VTMError))
 	return getAllUserGroupAPI
 }
@@ -27,7 +27,7 @@ func NewPut(groupName string, userGroup UserGroup) *rest.BaseAPI {
 }
 
 // NewDelete : used to delete a user group
-func NewDelete(groupName string) *rest.BaseAPI  {
+func NewDelete(groupName string) *rest.BaseAPI {
 	getAllUserGroupAPI := rest.NewBaseAPI(http.MethodGet, userGroupsEndpoint+groupName, nil, nil, new(api.VTMError))
 	return getAllUserGroupAPI
 }
