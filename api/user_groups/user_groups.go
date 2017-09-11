@@ -8,21 +8,25 @@ import (
 
 const userGroupsEndpoint = "/api/tm/3.8/config/active/user_groups/"
 
+// NewGet : used to retrieve a user group
 func NewGet(groupName string) *rest.BaseAPI  {
 	getUserGroupAPI := rest.NewBaseAPI(http.MethodGet, userGroupsEndpoint+groupName, nil, new(UserGroup), new(api.VTMError))
 	return getUserGroupAPI
 }
 
+// NewGetAll : used to retrieve a list of user group
 func NewGetAll() *rest.BaseAPI  {
 	getAllUserGroupAPI := rest.NewBaseAPI(http.MethodGet, userGroupsEndpoint, nil, new(UserGroupsList), new(api.VTMError))
 	return getAllUserGroupAPI
 }
 
+// NewPut : used to create or update a user group
 func NewPut(groupName string, userGroup UserGroup) *rest.BaseAPI {
 	getAllUserGroupAPI := rest.NewBaseAPI(http.MethodGet, userGroupsEndpoint+groupName, userGroup, new(UserGroup), new(api.VTMError))
 	return getAllUserGroupAPI
 }
 
+// NewPut : used to delete a user group
 func NewDelete(groupName string) *rest.BaseAPI  {
 	getAllUserGroupAPI := rest.NewBaseAPI(http.MethodGet, userGroupsEndpoint+groupName, nil, nil, new(api.VTMError))
 	return getAllUserGroupAPI
