@@ -93,11 +93,11 @@ func TestNewGetUnmarshalling(t *testing.T) {
 	response := *getPoolAPI.ResponseObject().(*Pool)
 
 	assert.Nil(t, jsonErr)
-	assert.Equal(t, 0, response.Properties.Basic.MaxConnectionAttempts)
-	assert.Equal(t, 50, response.Properties.Basic.MaxIdleConnectionsPerNode)
-	assert.Equal(t, 2, response.Properties.Basic.MaxTimeoutConnectionAttempts)
+	assert.Equal(t, uint(0), response.Properties.Basic.MaxConnectionAttempts)
+	assert.Equal(t, uint(50), response.Properties.Basic.MaxIdleConnectionsPerNode)
+	assert.Equal(t, uint(2), response.Properties.Basic.MaxTimeoutConnectionAttempts)
 	assert.Equal(t, "Ping", response.Properties.Basic.Monitors[0])
-	assert.Equal(t, 3, response.Properties.Basic.NodeConnectionAttempts)
+	assert.Equal(t, uint(3), response.Properties.Basic.NodeConnectionAttempts)
 	assert.Equal(t, "163.172.25.27:80", response.Properties.Basic.NodesTable[0].Node)
 	assert.Equal(t, "127.0.0.1:80", response.Properties.Basic.NodesTable[1].Node)
 }
