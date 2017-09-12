@@ -22,12 +22,12 @@ func NewGetAll() *rest.BaseAPI {
 
 // NewPut : used to create or update a user group
 func NewPut(groupName string, userGroup UserGroup) *rest.BaseAPI {
-	getAllUserGroupAPI := rest.NewBaseAPI(http.MethodGet, userGroupsEndpoint+groupName, userGroup, new(UserGroup), new(api.VTMError))
-	return getAllUserGroupAPI
+	putUserGroupAPI := rest.NewBaseAPI(http.MethodPut, userGroupsEndpoint+groupName, userGroup, new(UserGroup), new(api.VTMError))
+	return putUserGroupAPI
 }
 
 // NewDelete : used to delete a user group
 func NewDelete(groupName string) *rest.BaseAPI {
-	getAllUserGroupAPI := rest.NewBaseAPI(http.MethodGet, userGroupsEndpoint+groupName, nil, nil, new(api.VTMError))
-	return getAllUserGroupAPI
+	deleteUserGroupAPI := rest.NewBaseAPI(http.MethodDelete, userGroupsEndpoint+groupName, nil, nil, new(api.VTMError))
+	return deleteUserGroupAPI
 }
