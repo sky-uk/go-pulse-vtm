@@ -25,10 +25,15 @@ func setupMonitorTest() {
 		Timeout:  4,
 		Verbose:  &monitorVerbosity,
 	}
-	testMonitorProperties := Properties{Basic: testBasicMonitor, HTTP: testHTTPMonitor}
+	testRTSPMonitor := RTSP{
+		BodyRegex:   "",
+		URIPath:     "/",
+		StatusRegex: "^[234][0-9][0-9]$",
+	}
+	testMonitorProperties := Properties{Basic: testBasicMonitor, HTTP: testHTTPMonitor, RTSP: testRTSPMonitor}
 	testMonitor = Monitor{Properties: testMonitorProperties}
 
-	marshallingTestExpectedJSON = `{"properties":{"basic":{"delay":6,"failures":3,"type":"http","timeout":4,"verbose":true},"http":{"path":"/my-app/healthcheck"}}}`
+	marshallingTestExpectedJSON = `{"properties":{"basic":{"delay":6,"failures":3,"type":"http","timeout":4,"verbose":true},"http":{"path":"/my-app/healthcheck"},"rtsp":{"path":"/","status_regex":"^[234][0-9][0-9]$"}}}`
 	getAllUnmarshallingTestJSON = []byte(`{"children":[{"name":"MonitorOne","href":"/api/tm/3.8/config/active/monitors/MonitorOne"},{"name":"MonitorTwo","href":"/api/tm/3.8/config/active/monitors/MonitorTwo"}]}`)
 	getUnmarshallingTestJSON = []byte(`{"properties":{"basic":{"delay":12,"failures":2,"type":"http","timeout":7,"verbose":true},"http":{"path":"/my-other-app/healthcheck"},"rtsp":{},"script":{},"sip":{},"tcp":{},"udp":{}}}`)
 
