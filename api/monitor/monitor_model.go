@@ -11,9 +11,9 @@ type Properties struct {
 	HTTP   HTTP   `json:"http,omitempty"`
 	RTSP   RTSP   `json:"rtsp,omitempty"`
 	SCRIPT SCRIPT `json:"script,omitempty"`
-	SIP    SIP    `json:"script,omitempty"`
-	TCP    TCP    `json:"script,omitempty"`
-	UDP    UDP    `json:"script,omitempty"`
+	SIP    SIP    `json:"sip,omitempty"`
+	TCP    TCP    `json:"tcp,omitempty"`
+	UDP    UDP    `json:"udp,omitempty"`
 }
 
 // Basic : Basic monitor configration

@@ -18,6 +18,7 @@ var getAllUnmarshallingTestJSON, getUnmarshallingTestJSON []byte
 func setupMonitorTest() {
 	testHTTPMonitor := HTTP{URIPath: "/my-app/healthcheck"}
 	monitorVerbosity := true
+	monitorUDPAcceptAll := false
 	testBasicMonitor := Basic{
 		Delay:    6,
 		Failures: 3,
@@ -30,10 +31,28 @@ func setupMonitorTest() {
 		URIPath:     "/",
 		StatusRegex: "^[234][0-9][0-9]$",
 	}
-	testMonitorProperties := Properties{Basic: testBasicMonitor, HTTP: testHTTPMonitor, RTSP: testRTSPMonitor}
+	testSCRIPTMonitor := SCRIPT{
+		Arguments: "",
+		Program:   "",
+	}
+	testSIPMonitor := SIP{
+		BodyRegex:   "",
+		StatusRegex: "^[234][0-9][0-9]$",
+		Transport:   "udp",
+	}
+	testTCPMonitor := TCP{
+		CloseString:    "",
+		MaxResponseLen: 2048,
+		ResponseRegex:  ".+",
+		WriteString:    "",
+	}
+	testUDPMonitor := UDP{
+		AcceptAll: &monitorUDPAcceptAll,
+	}
+	testMonitorProperties := Properties{Basic: testBasicMonitor, HTTP: testHTTPMonitor, RTSP: testRTSPMonitor, SCRIPT: testSCRIPTMonitor, SIP: testSIPMonitor, TCP: testTCPMonitor, UDP: testUDPMonitor}
 	testMonitor = Monitor{Properties: testMonitorProperties}
 
-	marshallingTestExpectedJSON = `{"properties":{"basic":{"delay":6,"failures":3,"type":"http","timeout":4,"verbose":true},"http":{"path":"/my-app/healthcheck"},"rtsp":{"path":"/","status_regex":"^[234][0-9][0-9]$"}}}`
+	marshallingTestExpectedJSON = `{"properties":{"basic":{"delay":6,"failures":3,"type":"http","timeout":4,"verbose":true},"http":{"path":"/my-app/healthcheck"},"rtsp":{"path":"/","status_regex":"^[234][0-9][0-9]$"},"script":{},"sip":{"status_regex":"^[234][0-9][0-9]$","transport":"udp"},"tcp":{"max_response_len":2048,"response_regex":".+"},"udp":{"accept_all":false}}}`
 	getAllUnmarshallingTestJSON = []byte(`{"children":[{"name":"MonitorOne","href":"/api/tm/3.8/config/active/monitors/MonitorOne"},{"name":"MonitorTwo","href":"/api/tm/3.8/config/active/monitors/MonitorTwo"}]}`)
 	getUnmarshallingTestJSON = []byte(`{"properties":{"basic":{"delay":12,"failures":2,"type":"http","timeout":7,"verbose":true},"http":{"path":"/my-other-app/healthcheck"},"rtsp":{},"script":{},"sip":{},"tcp":{},"udp":{}}}`)
 
