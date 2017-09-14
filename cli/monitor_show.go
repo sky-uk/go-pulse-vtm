@@ -39,6 +39,19 @@ func showMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 	row["HTTP-Path"] = response.Properties.HTTP.URIPath
 	row["HTTP-Authentication"] = response.Properties.HTTP.Authentication
 	row["HTTP-Body-Regex"] = response.Properties.HTTP.BodyRegex
+	row["RTSP-Body-Regex"] = response.Properties.RTSP.BodyRegex
+	row["RTSP-Path"] = response.Properties.RTSP.URIPath
+	row["RTSP-Status-regex"] = response.Properties.RTSP.StatusRegex
+	row["SCRIPT-Arguments"] = response.Properties.SCRIPT.Arguments
+	row["SCRIPT-Program"] = response.Properties.SCRIPT.Program
+	row["SIP-Body-Regex"] = response.Properties.SIP.BodyRegex
+	row["SIP-Status-Regex"] = response.Properties.SIP.StatusRegex
+	row["SIP-Transport"] = response.Properties.SIP.Transport
+	row["TCP-Close-String"] = response.Properties.TCP.CloseString
+	row["TCP-Max-Response-Len"] = response.Properties.TCP.MaxResponseLen
+	row["TCP-Response-Regex"] = response.Properties.TCP.ResponseRegex
+	row["TCP-Write-String"] = response.Properties.TCP.WriteString
+	row["UDP-Accept-All"] = response.Properties.UDP.AcceptAll
 	PrettyPrintSingle(row)
 }
 
