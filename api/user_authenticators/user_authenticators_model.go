@@ -10,7 +10,7 @@ type Properties struct {
 	Basic      Basic      `json:"basic"`
 	LDAP       LDAP       `json:"ldap"`
 	Radius     Radius     `json:"radius"`
-	TACACSPlus TACACSPlus `json:"tacacs_plus":`
+	TACACSPlus TACACSPlus `json:"tacacs_plus"`
 }
 
 // Basic : Properties contains the Basic UserAuthenticator configuration
