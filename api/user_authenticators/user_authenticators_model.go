@@ -40,8 +40,8 @@ type LDAP struct {
 // Radius : Data structure representing the Radius access control system
 type Radius struct {
 	FallbackGroup  string `json:"fallback_group,omitempty"`
-	GroupAttribute string `json:"group_attribute"`
-	GroupVendor    string `json:"group_vendor"`
+	GroupAttribute uint   `json:"group_attribute"`
+	GroupVendor    uint   `json:"group_vendor"`
 	NasIdentifier  string `json:"nas_identifier,omitempty"`
 	NasIPAddress   string `json:"nas_ip_address,omitempty"`
 	Port           uint   `json:"port"`
