@@ -48,8 +48,15 @@ type RTSP struct {
 
 // SCRIPT : SCRIPT monitor set up
 type SCRIPT struct {
-	Arguments string `json:"arguments,omitempty"`
-	Program   string `json:"program,omitempty"`
+	Arguments []ArgumentIssue `json:"arguments,omitempty"`
+	Program   string          `json:"program,omitempty"`
+}
+
+// ArgumentIssue : argyments broken down
+type ArgumentIssue struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Value       string `json:"value"`
 }
 
 // SIP : SIP monitor set up

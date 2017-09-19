@@ -15,9 +15,13 @@ var testMonitor Monitor
 var testMonitorName, marshallingTestExpectedJSON string
 var getAllUnmarshallingTestJSON, getUnmarshallingTestJSON []byte
 
+//var SetArguments map[string]string
+
 func setupMonitorTest() {
 	testHTTPMonitor := HTTP{URIPath: "/my-app/healthcheck"}
 	monitorVerbosity := true
+	argument1 := NewArgumentIssue("test1", "paas test1", "dns.pl")
+	argument2 := NewArgumentIssue("test2", "paas test2", "snmp.pl")
 	monitorUDPAcceptAll := false
 	testBasicMonitor := Basic{
 		Delay:    6,
@@ -32,7 +36,7 @@ func setupMonitorTest() {
 		StatusRegex: "^[234][0-9][0-9]$",
 	}
 	testSCRIPTMonitor := SCRIPT{
-		Arguments: "",
+		Arguments: []ArgumentIssue{argument1, argument2},
 		Program:   "",
 	}
 	testSIPMonitor := SIP{
@@ -52,7 +56,7 @@ func setupMonitorTest() {
 	testMonitorProperties := Properties{Basic: testBasicMonitor, HTTP: testHTTPMonitor, RTSP: testRTSPMonitor, SCRIPT: testSCRIPTMonitor, SIP: testSIPMonitor, TCP: testTCPMonitor, UDP: testUDPMonitor}
 	testMonitor = Monitor{Properties: testMonitorProperties}
 
-	marshallingTestExpectedJSON = `{"properties":{"basic":{"delay":6,"failures":3,"type":"http","timeout":4,"verbose":true},"http":{"path":"/my-app/healthcheck"},"rtsp":{"path":"/","status_regex":"^[234][0-9][0-9]$"},"script":{},"sip":{"status_regex":"^[234][0-9][0-9]$","transport":"udp"},"tcp":{"max_response_len":2048,"response_regex":".+"},"udp":{"accept_all":false}}}`
+	marshallingTestExpectedJSON = `{"properties":{"basic":{"delay":6,"failures":3,"type":"http","timeout":4,"verbose":true},"http":{"path":"/my-app/healthcheck"},"rtsp":{"path":"/","status_regex":"^[234][0-9][0-9]$"},"script":{"arguments":[{"name":"test1","description":"paas test1","value":"dns.pl"},{"name":"test2","description":"paas test2","value":"snmp.pl"}]},"sip":{"status_regex":"^[234][0-9][0-9]$","transport":"udp"},"tcp":{"max_response_len":2048,"response_regex":".+"},"udp":{"accept_all":false}}}`
 	getAllUnmarshallingTestJSON = []byte(`{"children":[{"name":"MonitorOne","href":"/api/tm/3.8/config/active/monitors/MonitorOne"},{"name":"MonitorTwo","href":"/api/tm/3.8/config/active/monitors/MonitorTwo"}]}`)
 	getUnmarshallingTestJSON = []byte(`{"properties":{"basic":{"delay":12,"failures":2,"type":"http","timeout":7,"verbose":true},"http":{"path":"/my-other-app/healthcheck"},"rtsp":{},"script":{},"sip":{},"tcp":{},"udp":{}}}`)
 
