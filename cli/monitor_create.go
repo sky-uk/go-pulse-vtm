@@ -13,6 +13,8 @@ var monitorName string
 var createMonitorStruct monitor.Monitor
 var monitorUseSSL, monitorVerbose bool
 
+//var arguments map[string]string
+
 func createMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 
 	if monitorName == "" {
@@ -22,6 +24,8 @@ func createMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 
 	createMonitorStruct.Properties.Basic.UseSSL = &monitorUseSSL
 	createMonitorStruct.Properties.Basic.Verbose = &monitorVerbose
+	//createMonitorStruct.Properties.SCRIPT.Arguments = arguments
+	//createMonitorStruct.Properties.SCRIPT.Arguments = strings.Split(arguments, ",")
 	createMonitorAPI := monitor.NewCreate(monitorName, createMonitorStruct)
 	err := client.Do(createMonitorAPI)
 	if err != nil {
@@ -50,7 +54,7 @@ func init() {
 	createMonitorFlags.StringVar(&createMonitorStruct.Properties.RTSP.BodyRegex, "rtsp-body-regex", "", `usage: -rtsp-body-regex ""`)
 	createMonitorFlags.StringVar(&createMonitorStruct.Properties.RTSP.URIPath, "rtsp-path", "/", `usage: -rstp-path /`)
 	createMonitorFlags.StringVar(&createMonitorStruct.Properties.RTSP.StatusRegex, "rtsp-status-regex", `^[234][0-9][0-9]$`, `usage: -rtsp-status-regex ^[234][0-9][0-9]$`)
-	createMonitorFlags.StringVar(&createMonitorStruct.Properties.SCRIPT.Arguments, "script-arguments", "", `usage: -script-arguments ""`)
+	//createMonitorFlags.StringVar(&createMonitorStruct.Properties.SCRIPT.Arguments, "script-arguments", "", `usage: -script-arguments ""`)
 	createMonitorFlags.StringVar(&createMonitorStruct.Properties.SCRIPT.Program, "script-program", "", `usage: -script-program ""`)
 	createMonitorFlags.StringVar(&createMonitorStruct.Properties.SIP.BodyRegex, "sip-body-regex", "", `usage: -sip-body-regex ""`)
 	createMonitorFlags.StringVar(&createMonitorStruct.Properties.SIP.StatusRegex, "sip-status-regex", `^[234][0-9][0-9]$`, `usage: -sip-status-regex ^[234][0-9][0-9]$`)
