@@ -24,7 +24,7 @@ func setupPoolTest() {
 	createPoolAPI = NewCreate(testPoolName, testPool)
 	createPoolAPI.SetResponseObject(&testPool)
 
-	marshallingTestExpectedJSON = `{"properties":{"basic":{"monitors":["ping"],"node_drain_to_delete_timeout":0,"nodes_table":[{"node":"127.0.0.1:80","priority":1,"state":"active","weight":1},{"node":"127.0.0.1:81","priority":1,"state":"active","weight":1}]},"connection":{},"http":{},"load_balancing":{},"node":{},"ssl":{},"tcp":{}}}`
+	marshallingTestExpectedJSON = `{"properties":{"basic":{"monitors":["ping"],"node_drain_to_delete_timeout":0,"nodes_table":[{"node":"127.0.0.1:80","priority":1,"state":"active","weight":1,"source_ip":""},{"node":"127.0.0.1:81","priority":1,"state":"active","weight":1,"source_ip":""}]},"auto_scaling":{"transparent":0,"enabled":false,"external":false,"hysteresis":0,"last_node_idle_time":0,"max_nodes":0,"min_nodes":0,"port":0,"refractory":0,"response_time":0,"scale_down_level":0,"scale_up_level":0},"connection":{},"dns_autoscale":{"enabled":false,"hostnames":null,"port":0},"ftp":{"support_rfc_2428":false},"http":{},"kerberos_protocol_transition":{},"load_balancing":{},"node":{},"ssl":{"strict_verify":false},"tcp":{},"udp":{"response_timeout":0}}}`
 
 	getAllPoolsAPI = NewGetAll()
 	getAllUnmarshallingTestJSON = []byte(`{"children":[{"name":"pool_test_1","href":"/api/tm/3.8/config/active/pools/pool_test_1"},{"name":"pool_test_2","href":"/api/tm/3.8/config/active/pools/pool_test_2"}]}`)
