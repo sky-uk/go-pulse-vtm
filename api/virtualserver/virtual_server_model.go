@@ -168,7 +168,7 @@ type HTTP2 struct {
 type KerberosProtocolTransition struct {
 	Enabled   bool   `json:"enabled"`
 	Principal string `json:"principal,omitempty"`
-	Target    string `target,omitempty`
+	Target    string `json:"target,omitempty"`
 }
 
 // Log configuration section
