@@ -43,7 +43,7 @@ type Basic struct {
 
 // AutoScaling - AutoScaling settings
 type AutoScaling struct {
-	AddNodeDelayTime uint     `json:"transparent,omitempty"`
+	AddNodeDelayTime uint     `json:"transparent"`
 	CloudCredentials string   `json:"cloud_credentials,omitempty"`
 	Cluster          string   `json:"cluster,omitempty"`
 	DataCenter       string   `json:"data_center,omitempty"`
@@ -53,7 +53,7 @@ type AutoScaling struct {
 	ExtraArgs        string   `json:"extraargs,omitempty"`
 	Hysteresis       uint     `json:"hysteresis"`
 	ImageID          string   `json:"imageid,omitempty"`
-	IPsToUse         string   `json:"ips_to_use"`
+	IPsToUse         string   `json:"ips_to_use,omitempty"`
 	LastNodeIdleTime uint     `json:"last_node_idle_time"`
 	MaxNodes         uint     `json:"max_nodes"`
 	MinNodes         uint     `json:"min_nodes"`
@@ -116,7 +116,7 @@ type Node struct {
 
 // SMTP - SMTP settings
 type SMTP struct {
-	SendSTARTTLS bool `json:"send_starttls,omitempty"`
+	SendSTARTTLS bool `json:"send_starttls"`
 }
 
 // Ssl - SSL related settings
@@ -134,7 +134,7 @@ type Ssl struct {
 	SSLSupportSSL3      string   `json:"ssl_support_ssl3,omitempty"`
 	SSLSupportTLS1      string   `json:"ssl_support_tls1,omitempty"`
 	SSLSupportTLS2      string   `json:"ssl_support_tls2,omitempty"`
-	StrictVerify        bool     `json:"strict_verify,omitempty"`
+	StrictVerify        bool     `json:"strict_verify"`
 }
 
 // TCP - tcp setting
@@ -146,7 +146,7 @@ type TCP struct {
 type UDP struct {
 	AcceptFrom      string `json:"accept_from,omitempty"`
 	AcceptFromMask  string `json:"accept_from_mask,omitempty"`
-	ResponseTimeout uint   `json:"response_timeout,omitempty"`
+	ResponseTimeout uint   `json:"response_timeout"`
 }
 
 // MemberNode - Pool membership details / node /state / weight

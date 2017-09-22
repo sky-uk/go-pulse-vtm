@@ -176,8 +176,8 @@ type Log struct {
 	AlwaysFlush               bool   `json:"always_flush"`
 	ClientConnectionFailures  bool   `json:"client_connection_failures"`
 	Enabled                   bool   `json:"enabled"`
-	Filename                  string `json:"filename"`
-	Format                    string `json:"format"`
+	Filename                  string `json:"filename,omitempty"`
+	Format                    string `json:"format,omitempty"`
 	SaveAll                   bool   `json:"save_all"`
 	ServerConnectionFailures  bool   `json:"server_connection_failures"`
 	SessionPersistenceVerbose bool   `json:"session_persistence_verbose"`
@@ -205,10 +205,10 @@ type RTSP struct {
 
 // SIP configuration section
 type SIP struct {
-	DangerousRequests      string `json:"dangerous_requests"`
+	DangerousRequests      string `json:"dangerous_requests,omitempty"`
 	FollowRoute            bool   `json:"follow_route"`
 	MaxConnectionMem       uint   `json:"max_connection_mem"`
-	Mode                   string `json:"mode"`
+	Mode                   string `json:"mode,omitempty"`
 	RewriteURI             bool   `json:"rewrite_uri"`
 	StreamingPortRangeHigh uint   `json:"streaming_port_range_high"`
 	StreamingPortRangeLow  uint   `json:"streaming_port_range_low"`
@@ -247,7 +247,7 @@ type Ssl struct {
 	SslSupportTLS1            string       `json:"ssl_support_tls1,omitempty"`
 	SslSupportTLS1_1          string       `json:"ssl_support_tls1_1,omitempty"`
 	SslSupportTLS1_2          string       `json:"ssl_support_tls1_2,omitempty"`
-	TrustMagic                bool         `json:"trust_magic,"`
+	TrustMagic                bool         `json:"trust_magic"`
 }
 
 // SysLog configuration section
