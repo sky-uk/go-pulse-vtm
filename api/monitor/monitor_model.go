@@ -28,6 +28,9 @@ type Basic struct {
 	Machine  string `json:"machine,omitempty"`
 	Note     string `json:"note,omitempty"`
 	Scope    string `json:"scope,omitempty"`
+	CanEditSSL bool `json:"back_off"`
+	CanUseSSL bool  `json:"can_edit_ssl"`
+	EditableKeys []string `json:"editable_keys,omitempty"`
 }
 
 // HTTP : HTTP monitor set up

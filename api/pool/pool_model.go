@@ -21,6 +21,7 @@ type Properties struct {
 type Basic struct {
 	BandwidthClass               string       `json:"bandwidth_class,omitempty"`
 	FailurePool                  string       `json:"failure_pool,omitempty"`
+	LARDSize		     uint         `json:"lard_size,omitempty"`
 	MaxConnectionAttempts        uint         `json:"max_connection_attempts,omitempty"`
 	MaxIdleConnectionsPerNode    uint         `json:"max_idle_connections_pernode,omitempty"`
 	MaxTimeoutConnectionAttempts uint         `json:"max_timed_out_connection_attempts,omitempty"`
@@ -34,6 +35,10 @@ type Basic struct {
 	PassiveMonitoring            *bool        `json:"passive_monitoring,omitempty"`
 	PersistenceClass             string       `json:"persistence_class,omitempty"`
 	Transparent                  *bool        `json:"transparent,omitempty"`
+}
+
+type AutoScaling struct {
+	AddNodeDelayTime	    uint	   `json:"transparent,omitempty"`
 }
 
 // Connection - Connection setting
