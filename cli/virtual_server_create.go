@@ -28,9 +28,9 @@ func createVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 		listenIPAddresses[0] = createVirtualServerListenTrafficGroup
 		createVirtualServerObject.Properties.Basic.ListenOnTrafficIps = listenIPAddresses
 	}
-	createVirtualServerObject.Properties.Basic.Enabled = &createVirtualServerEnabled
-	createVirtualServerObject.Properties.Connection.Keepalive = &createVirtualServerKeepalive
-	createVirtualServerObject.Properties.Basic.ListenOnAny = &createVirtualServerListenAny
+	createVirtualServerObject.Properties.Basic.Enabled = createVirtualServerEnabled
+	createVirtualServerObject.Properties.Connection.Keepalive = createVirtualServerKeepalive
+	createVirtualServerObject.Properties.Basic.ListenOnAny = createVirtualServerListenAny
 
 	createVirtualServerAPI := virtualserver.NewCreate(createVirtualServerName, createVirtualServerObject)
 	err := client.Do(createVirtualServerAPI)
