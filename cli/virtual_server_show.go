@@ -31,12 +31,12 @@ func showVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 	row := map[string]interface{}{}
 	row["Name"] = showVirtualServerName
 	row["Listen-Traffic-IP-Group"] = response.Properties.Basic.ListenOnTrafficIps
-	row["Listen-on-any"] = *response.Properties.Basic.ListenOnAny
+	row["Listen-on-any"] = response.Properties.Basic.ListenOnAny
 	row["Port"] = response.Properties.Basic.Port
 	row["Pool"] = response.Properties.Basic.Pool
 	row["Protocol"] = response.Properties.Basic.Protocol
-	row["Enabled"] = *response.Properties.Basic.Enabled
-	row["Keepalive"] = *response.Properties.Connection.Keepalive
+	row["Enabled"] = response.Properties.Basic.Enabled
+	row["Keepalive"] = response.Properties.Connection.Keepalive
 	row["KeepAlive-Timeout"] = response.Properties.Connection.KeepaliveTimeout
 	row["Connection-Timeout"] = response.Properties.Connection.Timeout
 	PrettyPrintSingle(row)
