@@ -24,9 +24,9 @@ func updateVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 		listenIPAddresses[0] = updateVirtualServerListenTrafficGroup
 		updateVirtualServerObject.Properties.Basic.ListenOnTrafficIps = listenIPAddresses
 	}
-	updateVirtualServerObject.Properties.Basic.Enabled = &updateVirtualServerEnabled
-	updateVirtualServerObject.Properties.Connection.Keepalive = &updateVirtualServerKeepalive
-	updateVirtualServerObject.Properties.Basic.ListenOnAny = &updateVirtualServerListenAny
+	updateVirtualServerObject.Properties.Basic.Enabled = updateVirtualServerEnabled
+	updateVirtualServerObject.Properties.Connection.Keepalive = updateVirtualServerKeepalive
+	updateVirtualServerObject.Properties.Basic.ListenOnAny = updateVirtualServerListenAny
 
 	updateVirtualServerAPI := virtualserver.NewUpdate(updateVirtualServerName, updateVirtualServerObject)
 	err := client.Do(updateVirtualServerAPI)

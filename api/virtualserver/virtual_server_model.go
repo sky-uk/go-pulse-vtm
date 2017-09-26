@@ -33,43 +33,41 @@ type Properties struct {
 
 // Basic : Basic virtual server configration
 type Basic struct {
-	AddClusterIP             *bool    `json:"add_cluster_ip,omitempty"`        // true
-	AddXForwarded            *bool    `json:"add_x_forwarded_for,omitempty"`   // false
-	AddXForwardedProto       *bool    `json:"add_x_forwarded_proto,omitempty"` // false
+	AddClusterIP             bool     `json:"add_cluster_ip"`
+	AddXForwarded            bool     `json:"add_x_forwarded_for"`
+	AddXForwardedProto       bool     `json:"add_x_forwarded_proto"`
 	AutoUpgradeProtocols     []string `json:"auto_upgrade_protocols,omitempty"`
 	AutoDetectUpgradeHeaders bool     `json:"autodetect_upgrade_headers"`
-	BandwidthClass           string   `json:"bandwidth_class,omitempty"` // ""
-	CloseWithRst             *bool    `json:"close_with_rst,omitempty"`  // false
-	CompletionRules          []string `json:"completionrules,omitempty"` // []
-	ConnectTimeout           uint     `json:"connect_timeout"`           // 10
-	Enabled                  *bool    `json:"enabled,omitempty"`
-	FtpForceServerSecure     *bool    `json:"ftp_force_server_secure,omitempty"` // true
-	GlbServices              []string `json:"glb_services,omitempty"`            // []
-	ListenOnAny              *bool    `json:"listen_on_any,omitempty"`           // false
-	ListenOnHosts            []string `json:"listen_on_hosts,omitempty"`         // []
-	ListenOnTrafficIps       []string `json:"listen_on_traffic_ips,omitempty"`   // []
+	BandwidthClass           string   `json:"bandwidth_class,omitempty"`
+	CloseWithRst             bool     `json:"close_with_rst"`
+	CompletionRules          []string `json:"completionrules,omitempty"`
+	ConnectTimeout           uint     `json:"connect_timeout"`
+	Enabled                  bool     `json:"enabled"`
+	FtpForceServerSecure     bool     `json:"ftp_force_server_secure"`
+	GlbServices              []string `json:"glb_services,omitempty"`
+	ListenOnAny              bool     `json:"listen_on_any"`
+	ListenOnHosts            []string `json:"listen_on_hosts,omitempty"`
+	ListenOnTrafficIps       []string `json:"listen_on_traffic_ips,omitempty"`
 	MSS                      uint     `json:"mss"`
-	Note                     string   `json:"note,omitempty"` // ""
+	Note                     string   `json:"note,omitempty"`
 	Pool                     string   `json:"pool,omitempty"`
-	Port                     uint     `json:"port,omitempty"`
-	ProtectionClass          string   `json:"protection_class,omitempty"` // ""
-	Protocol                 string   `json:"protocol,omitempty"`         // "http"
-	RequestRules             []string `json:"request_rules,omitempty"`    // []
-	ResponseRules            []string `json:"response_rules,omitempty"`   // []
-	SlmClass                 string   `json:"slm_class,omitempty"`        // ""
-	SoNagle                  *bool    `json:"so_nagle,omitempty"`         // false,
-	// SslClientCertHeaders : enum can accept these strings("all", "none"
-	// (default), "none"
-	SslClientCertHeaders string `json:"ssl_client_cert_headers,omitempty"` // "none"
-	SslDecrypt           *bool  `json:"ssl_decrypt,omitempty"`             // false
-	SslHonorFallbackScsv string `json:"ssl_honor_fallback_scsv,omitempty"` // "use_default"
-	Transparent          *bool  `json:"transparent,omitempty"`             // false
+	Port                     uint     `json:"port"`
+	ProtectionClass          string   `json:"protection_class,omitempty"`
+	Protocol                 string   `json:"protocol,omitempty"`
+	RequestRules             []string `json:"request_rules,omitempty"`
+	ResponseRules            []string `json:"response_rules,omitempty"`
+	SlmClass                 string   `json:"slm_class,omitempty"`
+	SoNagle                  bool     `json:"so_nagle"`
+	SslClientCertHeaders     string   `json:"ssl_client_cert_headers,omitempty"`
+	SslDecrypt               bool     `json:"ssl_decrypt"`
+	SslHonorFallbackScsv     string   `json:"ssl_honor_fallback_scsv,omitempty"`
+	Transparent              bool     `json:"transparent"`
 }
 
 // Aptimizer : whether virtual server should aptimize web content
 type Aptimizer struct {
-	Enabled *bool              `json:"enabled,omitempty"` // false
-	Profile []AptimizerProfile `json:"profile,omitempty"` // [], NOTE: actually more complex
+	Enabled bool               `json:"enabled"`
+	Profile []AptimizerProfile `json:"profile,omitempty"`
 }
 
 // AptimizerProfile : Aptimizer profiles and the application scopes that apply to them.
@@ -80,60 +78,57 @@ type AptimizerProfile struct {
 
 // Connection : connection parameters
 type Connection struct {
-	Keepalive              *bool  `json:"keepalive,omitempty"`                // false
-	KeepaliveTimeout       uint   `json:"keepalive_timeout,omitempty"`        // 10
-	MaxClientBuffer        uint   `json:"max_client_buffer,omitempty"`        // 65536
-	MaxServerBuffer        uint   `json:"max_server_buffer,omitempty"`        // 65536
-	MaxTransactionDuration uint   `json:"max_transaction_duration,omitempty"` // none
-	ServerFirstBanner      string `json:"server_first_banner,omitempty"`      // none
-	Timeout                uint   `json:"timeout,omitempty"`                  // 300
+	Keepalive              bool   `json:"keepalive"`
+	KeepaliveTimeout       uint   `json:"keepalive_timeout"`
+	MaxClientBuffer        uint   `json:"max_client_buffer"`
+	MaxServerBuffer        uint   `json:"max_server_buffer"`
+	MaxTransactionDuration uint   `json:"max_transaction_duration"`
+	ServerFirstBanner      string `json:"server_first_banner,omitempty"`
+	Timeout                uint   `json:"timeout"`
 }
 
 // ConnectionErrors : error file params
 type ConnectionErrors struct {
-	ErrorFile string `json:"error_file,omitempty"` // "Default"
+	ErrorFile string `json:"error_file,omitempty"`
 }
 
 // Cookie : how cookies are handled
 type Cookie struct {
-	Domain      string `json:"domain,omitempty"`       // "no_rewrite"
-	NewDomain   string `json:"new_domain,omitempty"`   // ""
-	PathRegex   string `json:"path_regex,omitempty"`   // ""
-	PathReplace string `json:"path_replace,omitempty"` // ""
-	Secure      string `json:"secure,omitempty"`       // "no_modify"
+	Domain      string `json:"domain,omitempty"`
+	NewDomain   string `json:"new_domain,omitempty"`
+	PathRegex   string `json:"path_regex,omitempty"`
+	PathReplace string `json:"path_replace,omitempty"`
+	Secure      string `json:"secure,omitempty"`
 }
 
 // DNS configuration section
 type DNS struct {
 	EDNSClientSubnet bool     `json:"edns_client_subnet"`
-	EdnsUdpsize      uint     `json:"edns_udpsize,omitempty"` // 4096
-	MaxUdpsize       uint     `json:"max_udpsize,omitempty"`  // 4096
-	RrsetOrder       string   `json:"rrset_order,omitempty"`  // "fixed"
-	Verbose          *bool    `json:"verbose,omitempty"`      // false
-	Zones            []string `json:"zones,omitempty"`        // []
+	EdnsUdpsize      uint     `json:"edns_udpsize"`
+	MaxUdpsize       uint     `json:"max_udpsize"`
+	RrsetOrder       string   `json:"rrset_order,omitempty"`
+	Verbose          bool     `json:"verbose"`
+	Zones            []string `json:"zones,omitempty"`
 }
 
 // Ftp configuration section
 type Ftp struct {
-	DataSourcePort    uint  `json:"data_source_port,omitempty"`    // 0
-	ForceClientSecure *bool `json:"force_client_secure,omitempty"` // true
-	PortRangeHigh     uint  `json:"port_range_high,omitempty"`     // 0
-	PortRangeLow      uint  `json:"port_range_low,omitempty"`      // 0
-	SslData           *bool `json:"ssl_data,omitempty"`            // true
+	DataSourcePort    uint `json:"data_source_port"`
+	ForceClientSecure bool `json:"force_client_secure"`
+	PortRangeHigh     uint `json:"port_range_high"`
+	PortRangeLow      uint `json:"port_range_low"`
+	SslData           bool `json:"ssl_data"`
 }
 
 // Gzip configuration section
 type Gzip struct {
-	CompressLevel uint     `json:"compress_level,omitempty"` // 1
-	Enabled       *bool    `json:"enabled,omitempty"`        // false
-	EtagRewrite   string   `json:"etag_rewrite,omitempty"`   // "wrap"
-	IncludeMime   []string `json:"include_mime,omitempty"`   // [
-	// "text/html"
-	// "text/plain"
-	// ]
-	MaxSize uint  `json:"max_size,omitempty"` // 10000000
-	MinSize uint  `json:"min_size,omitempty"` // 1000
-	NoSize  *bool `json:"no_size,omitempty"`  // true
+	CompressLevel uint     `json:"compress_level"`
+	Enabled       bool     `json:"enabled"`
+	EtagRewrite   string   `json:"etag_rewrite"`
+	IncludeMime   []string `json:"include_mime"`
+	MaxSize       uint     `json:"max_size"`
+	MinSize       uint     `json:"min_size"`
+	NoSize        bool     `json:"no_size"`
 }
 
 // HTTP configuration section
@@ -228,7 +223,7 @@ type Ssl struct {
 	ClientCertCAS             []string     `json:"client_cert_cas,omitempty"`
 	EllipticCurves            []string     `json:"elliptic_curves,omitempty"`
 	IssuedCertsNeverExpire    []string     `json:"issued_certs_never_expire,omitempty"`
-	OCSPEnable                *bool        `json:"ocsp_enable,omitempty"`
+	OCSPEnable                bool         `json:"ocsp_enable"`
 	OCSPIssuers               []OCSPIssuer `json:"ocsp_issuers,omitempty"`
 	OSCPMaxResponseAge        uint         `json:"oscp_max_response_age"`
 	OSCPStapling              bool         `json:"oscp_stapling"`
@@ -238,7 +233,7 @@ type Ssl struct {
 	RequestClientCert         string       `json:"request_client_cert,omitempty"`
 	SendCloseAlerts           bool         `json:"send_close_alerts"`
 	ServerCertAltCertificates []string     `json:"server_cert_alt_certificates,omitempty"`
-	ServerCertDefault         string       `json:"server_cert_default,omitempty"` // ""
+	ServerCertDefault         string       `json:"server_cert_default,omitempty"`
 	ServerCertHostMap         []CertItem   `json:"server_cert_host_mapping,omitempty"`
 	SignatureAlgorithms       string       `json:"signature_algorithms,omitempty"`
 	SSLCiphers                string       `json:"ssl_ciphers,omitempty"`
@@ -283,7 +278,7 @@ type WebCache struct {
 // OCSPIssuer configuration serction
 type OCSPIssuer struct {
 	Issuer        string `json:"issuer,omitempty"`
-	AIA           *bool  `json:"aia,omitempty"`
+	AIA           bool   `json:"aia"`
 	Nonce         string `json:"nonce,omitempty"`
 	Required      string `json:"required,omitempty"`
 	ResponderCert string `json:"responder_cert,omitempty"`
