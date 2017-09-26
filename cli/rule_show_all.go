@@ -10,6 +10,10 @@ import (
 
 func showAllRules(client *rest.Client, flagSet *flag.FlagSet) {
 
+	if apiVersion != "" {
+		rule.RuleEndpoint = "/api/tm/" + apiVersion + "/config/active/rules/"
+	}
+
 	ruleShowAllAPI := rule.NewGetAll()
 	err := client.Do(ruleShowAllAPI)
 	if err != nil {
@@ -33,5 +37,6 @@ func showAllRules(client *rest.Client, flagSet *flag.FlagSet) {
 
 func init() {
 	showAllRulesFlags := flag.NewFlagSet("rule-show-all", flag.ExitOnError)
+	showAllRulesFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("rule-show-all", showAllRulesFlags, showAllRules)
 }

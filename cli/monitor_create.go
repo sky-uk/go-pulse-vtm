@@ -22,6 +22,10 @@ func createMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
+	if apiVersion != "" {
+		monitor.MonitorEndpoint = "/api/tm/" + apiVersion + "/config/active/monitors/"
+	}
+
 	createMonitorStruct.Properties.Basic.UseSSL = &monitorUseSSL
 	createMonitorStruct.Properties.Basic.Verbose = &monitorVerbose
 	//createMonitorStruct.Properties.SCRIPT.Arguments = arguments
@@ -63,5 +67,6 @@ func init() {
 	createMonitorFlags.StringVar(&createMonitorStruct.Properties.TCP.WriteString, "tcp-write-string", "", `usage: -tcp-write-string ""`)
 	createMonitorFlags.UintVar(&createMonitorStruct.Properties.TCP.MaxResponseLen, "tcp-max-response-len", 2048, `usage: -tcp-max-response-len 2048`)
 	createMonitorFlags.StringVar(&createMonitorStruct.Properties.TCP.ResponseRegex, "tcp-response-regex", ".+", `usage: -tcp-response-regex ".+"`)
+	createMonitorFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("monitor-create", createMonitorFlags, createMonitor)
 }

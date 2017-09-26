@@ -18,6 +18,10 @@ func deleteRule(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
+	if apiVersion != "" {
+		rule.RuleEndpoint = "/api/tm/" + apiVersion + "/config/active/rules/"
+	}
+
 	deleteRuleAPI := rule.NewDelete(deleteRuleName)
 	err := client.Do(deleteRuleAPI)
 	if err != nil {
@@ -33,5 +37,6 @@ func deleteRule(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	deleteRuleFlags := flag.NewFlagSet("rule-delete", flag.ExitOnError)
 	deleteRuleFlags.StringVar(&deleteRuleName, "name", "", "usage: -name rule-name")
+	deleteRuleFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("rule-delete", deleteRuleFlags, deleteRule)
 }

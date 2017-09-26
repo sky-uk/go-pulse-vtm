@@ -10,6 +10,10 @@ import (
 
 func showAllPools(client *rest.Client, flagSet *flag.FlagSet) {
 
+	if apiVersion != "" {
+		pool.PoolEndpoint = "/api/tm/" + apiVersion + "/config/active/pools/"
+	}
+
 	getAllPoolsAPI := pool.NewGetAll()
 	err := client.Do(getAllPoolsAPI)
 	if err != nil {
@@ -32,5 +36,6 @@ func showAllPools(client *rest.Client, flagSet *flag.FlagSet) {
 
 func init() {
 	showAllPoolFlags := flag.NewFlagSet("pool-show-all", flag.ExitOnError)
+	showAllPoolFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("pool-show-all", showAllPoolFlags, showAllPools)
 }

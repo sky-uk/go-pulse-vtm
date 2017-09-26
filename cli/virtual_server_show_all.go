@@ -10,6 +10,10 @@ import (
 
 func showAllVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 
+	if apiVersion != "" {
+		virtualserver.VirtualServerEndpoint = "/api/tm/" + apiVersion + "/config/active/virtual_servers/"
+	}
+
 	getAllVirtualServerAPI := virtualserver.NewGetAll()
 	err := client.Do(getAllVirtualServerAPI)
 	if err != nil {
@@ -31,5 +35,6 @@ func showAllVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 
 func init() {
 	showAllVirtualServerFlags := flag.NewFlagSet("virtual-server-show-all", flag.ExitOnError)
+	showAllVirtualServerFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("virtual-server-show-all", showAllVirtualServerFlags, showAllVirtualServer)
 }

@@ -19,6 +19,11 @@ func createPool(client *rest.Client, flagSet *flag.FlagSet) {
 		fmt.Printf("\nError -name argument required\n")
 		os.Exit(1)
 	}
+
+	if apiVersion != "" {
+		pool.PoolEndpoint = "/api/tm/" + apiVersion + "/config/active/pools/"
+	}
+
 	createPoolObject := new(pool.Pool)
 	poolNodeList := strings.Split(poolNodes, ",")
 
@@ -53,5 +58,6 @@ func init() {
 	createPoolFlags.StringVar(&poolNodesState, "state", "active", "usage: -state active (all nodes)")
 	createPoolFlags.IntVar(&poolNodesPriority, "priority", 10, "usage: -priority 10 (all nodes)")
 	createPoolFlags.IntVar(&poolNodesWeight, "weight", 1, "usage: -weight 1 (all nodes")
+	createPoolFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("pool-create", createPoolFlags, createPool)
 }

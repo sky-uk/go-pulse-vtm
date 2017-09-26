@@ -20,6 +20,10 @@ func showSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
+	if apiVersion != "" {
+		sslServerKey.SSLServerKeyEndpoint = "/api/tm/" + apiVersion + "/config/active/server_keys/"
+	}
+
 	sslServerKeyShowAPI := sslServerKey.NewGet(sslServerKeyName)
 	err := client.Do(sslServerKeyShowAPI)
 	if err != nil {
@@ -41,5 +45,6 @@ func showSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	sslServerKeyShowFlags := flag.NewFlagSet("ssh-server-key-show", flag.ExitOnError)
 	sslServerKeyShowFlags.String("name", "", "usage: -name ssl-server-key-name")
+	sslServerKeyShowFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("ssh-server-key-show", sslServerKeyShowFlags, showSSLServerKey)
 }

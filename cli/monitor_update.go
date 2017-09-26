@@ -19,6 +19,11 @@ func updateMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 		fmt.Printf("\nError -name argument required. Usage: -name monitor-name\n")
 		os.Exit(1)
 	}
+
+	if apiVersion != "" {
+		monitor.MonitorEndpoint = "/api/tm/" + apiVersion + "/config/active/monitors/"
+	}
+
 	updateMonitorStruct.Properties.Basic.UseSSL = &updateUseSSL
 	updateMonitorStruct.Properties.Basic.Verbose = &updateVerbose
 	updateMonitorAPI := monitor.NewUpdate(updateMonitorName, updateMonitorStruct)
@@ -45,5 +50,6 @@ func init() {
 	updateMonitorFlags.StringVar(&updateMonitorStruct.Properties.HTTP.URIPath, "http-path", "/", "usage: -http-path /healthcheck")
 	updateMonitorFlags.StringVar(&updateMonitorStruct.Properties.HTTP.Authentication, "authentication", "", "usage: -authentication basic-auth-string")
 	updateMonitorFlags.StringVar(&updateMonitorStruct.Properties.HTTP.BodyRegex, "http-body-regex", `^[234][0-9][0-9]$`, `usage: -http-body-regex [234][0-9][0-9]$`)
+	updateMonitorFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("monitor-update", updateMonitorFlags, updateMonitor)
 }

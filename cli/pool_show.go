@@ -18,6 +18,10 @@ func showPool(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
+	if apiVersion != "" {
+		pool.PoolEndpoint = "/api/tm/" + apiVersion + "/config/active/pools/"
+	}
+
 	readPoolAPI := pool.NewGet(showPoolName)
 	err := client.Do(readPoolAPI)
 	if err != nil {
@@ -45,5 +49,6 @@ func showPool(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	showPoolFlags := flag.NewFlagSet("pool-show", flag.ExitOnError)
 	showPoolFlags.StringVar(&showPoolName, "name", "", "usage: -name pool-name")
+	showPoolFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("pool-show", showPoolFlags, showPool)
 }

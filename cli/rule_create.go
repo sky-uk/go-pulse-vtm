@@ -31,6 +31,10 @@ func createRule(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
+	if apiVersion != "" {
+		rule.RuleEndpoint = "/api/tm/" + apiVersion + "/config/active/rules/"
+	}
+
 	trafficScript, fileErr := ioutil.ReadFile(trafficScriptFile)
 	if fileErr != nil {
 		fmt.Printf("\nError reading file %s\n", trafficScriptFile)
@@ -51,5 +55,6 @@ func init() {
 	createRuleFlags := flag.NewFlagSet("rule-create", flag.ExitOnError)
 	createRuleFlags.StringVar(&ruleName, "name", "", "usage: -name vtm-rule-name")
 	createRuleFlags.StringVar(&trafficScriptFile, "script", "", "usage: -script location-of-traffic-script-file")
+	createRuleFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("rule-create", createRuleFlags, createRule)
 }

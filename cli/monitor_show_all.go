@@ -10,6 +10,10 @@ import (
 
 func monitorGetAll(client *rest.Client, flagSet *flag.FlagSet) {
 
+	if apiVersion != "" {
+		monitor.MonitorEndpoint = "/api/tm/" + apiVersion + "/config/active/monitors/"
+	}
+
 	getAllMonitorsAPI := monitor.NewGetAll()
 	err := client.Do(getAllMonitorsAPI)
 	if err != nil {
@@ -31,5 +35,6 @@ func monitorGetAll(client *rest.Client, flagSet *flag.FlagSet) {
 
 func init() {
 	getAllMonitorFlags := flag.NewFlagSet("monitor-show-all", flag.ExitOnError)
+	getAllMonitorFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("monitor-show-all", getAllMonitorFlags, monitorGetAll)
 }

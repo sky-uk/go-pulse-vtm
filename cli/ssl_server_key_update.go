@@ -17,6 +17,11 @@ func updateSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 		fmt.Printf("\nError name argument required\n")
 		os.Exit(1)
 	}
+
+	if apiVersion != "" {
+		sslServerKey.SSLServerKeyEndpoint = "/api/tm/" + apiVersion + "/config/active/server_keys/"
+	}
+
 	sslServerKeyObject.Properties.Basic.Note = flagSet.Lookup("note").Value.String()
 	privateKey := retrieveSSLKeyFile(flagSet.Lookup("private-key-file").Value.String())
 	certificate := retrieveSSLKeyFile(flagSet.Lookup("certificate-file").Value.String())
@@ -50,5 +55,6 @@ func init() {
 	updateSSLServerKeyFlags.String("private-key-file", "", "usage: -private-key-file /path/to/key")
 	updateSSLServerKeyFlags.String("certificate-file", "", "usage: -certificate-file /path/to/certificate")
 	updateSSLServerKeyFlags.String("csr-file", "", "usage: -csr-file /path/to/csr")
+	updateSSLServerKeyFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("ssl-server-key-update", updateSSLServerKeyFlags, updateSSLServerKey)
 }

@@ -10,6 +10,10 @@ import (
 
 func showAllSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 
+	if apiVersion != "" {
+		sslServerKey.SSLServerKeyEndpoint = "/api/tm/" + apiVersion + "/config/active/server_keys/"
+	}
+
 	sslServerKeyShowAllAPI := sslServerKey.NewGetAll()
 	err := client.Do(sslServerKeyShowAllAPI)
 	if err != nil {
@@ -32,5 +36,6 @@ func showAllSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 
 func init() {
 	showAllSSLServerKeyFlags := flag.NewFlagSet("ssl-server-key-show-all", flag.ExitOnError)
+	showAllSSLServerKeyFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("ssl-server-key-show-all", showAllSSLServerKeyFlags, showAllSSLServerKey)
 }

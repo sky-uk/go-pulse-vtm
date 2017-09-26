@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+var apiVersion string
+
 // ExecFunc executes the function for cli.
 type ExecFunc func(client *rest.Client, flagSet *flag.FlagSet)
 

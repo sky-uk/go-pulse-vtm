@@ -24,6 +24,10 @@ func showRule(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
+	if apiVersion != "" {
+		rule.RuleEndpoint = "/api/tm/" + apiVersion + "/config/active/rules/"
+	}
+
 	readAPI := rule.NewGet(readRuleName)
 	err := client.Do(readAPI)
 	if err != nil {
@@ -45,5 +49,6 @@ func showRule(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	readRuleFlags := flag.NewFlagSet("rule-show", flag.ExitOnError)
 	readRuleFlags.StringVar(&readRuleName, "name", "", "usage: -name rule-name")
+	readRuleFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("rule-show", readRuleFlags, showRule)
 }
