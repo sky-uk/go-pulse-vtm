@@ -1,6 +1,6 @@
 package glb
 
-// Location data structure
+// GLB : data structure
 type GLB struct {
 	Properties Properties `json:"properties"`
 }
