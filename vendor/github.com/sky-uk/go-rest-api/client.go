@@ -72,6 +72,9 @@ func (restClient *Client) formatRequestPayload(api *BaseAPI) (io.Reader, error) 
 func (restClient *Client) Do(api *BaseAPI) error {
 
 	requestURL := fmt.Sprintf("%s%s", restClient.URL, api.Endpoint())
+	if restClient.Debug {
+		log.Printf("Going to perform request:[%s] %s\n", api.Method(), requestURL)
+	}
 
 	if restClient.Headers == nil {
 		restClient.Headers = make(map[string]string)
@@ -102,7 +105,10 @@ func (restClient *Client) Do(api *BaseAPI) error {
 	}
 
 	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: restClient.IgnoreSSL},
+		TLSClientConfig:   &tls.Config{InsecureSkipVerify: restClient.IgnoreSSL},
+		MaxIdleConns:      10,
+		IdleConnTimeout:   30 * time.Second,
+		DisableKeepAlives: true,
 	}
 
 	httpClient := &http.Client{
@@ -112,7 +118,7 @@ func (restClient *Client) Do(api *BaseAPI) error {
 
 	res, err := httpClient.Do(req)
 	if err != nil {
-		log.Println("ERROR executing request: ", err)
+		log.Println("Error executing request: ", err)
 		return err
 	}
 	defer res.Body.Close()
@@ -129,11 +135,15 @@ func (restClient *Client) handleResponse(apiObj *BaseAPI, res *http.Response) er
 	}
 
 	if len(bodyText) > 0 {
+		if restClient.Debug {
+			log.Println("\nBodyText:\n", string(bodyText))
+		}
 		apiObj.SetRawResponse(bodyText)
 
 		contentType := contenttype.GetType(res.Header.Get("Content-Type"))
-
-		fmt.Printf("------> content: <%s>\n", contentType)
+		if restClient.Debug {
+			log.Printf("Response content type: %s\n", contentType)
+		}
 
 		switch contentType {
 		case "json":
