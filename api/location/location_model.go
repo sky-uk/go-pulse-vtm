@@ -13,8 +13,8 @@ type Properties struct {
 // Basic : Basic location
 type Basic struct {
 	ID        uint    `json:"id,omitempty"`
-	Latitude  float32 `json:"latitude,omitempty"`
-	Longitude float32 `json:"longitude,omitempty"`
+	Latitude  float64 `json:"latitude,omitempty"`
+	Longitude float64 `json:"longitude,omitempty"`
 	Note      string  `json:"note,omitepty"`
 	Type      string  `json:"type,omitempty"`
 }
