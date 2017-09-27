@@ -32,6 +32,10 @@ func createVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 	createVirtualServerObject.Properties.Connection.Keepalive = createVirtualServerKeepalive
 	createVirtualServerObject.Properties.Basic.ListenOnAny = createVirtualServerListenAny
 
+	if apiVersion != "" {
+		virtualserver.VirtualServerEndpoint = "/api/tm/" + apiVersion + "/config/active/virtual_servers/"
+	}
+
 	createVirtualServerAPI := virtualserver.NewCreate(createVirtualServerName, createVirtualServerObject)
 	err := client.Do(createVirtualServerAPI)
 	if err != nil {
@@ -55,5 +59,6 @@ func init() {
 	createVirtualServerFlags.UintVar(&createVirtualServerObject.Properties.Basic.Port, "port", 80, "usage: -port xx")
 	createVirtualServerFlags.UintVar(&createVirtualServerObject.Properties.Connection.KeepaliveTimeout, "keepalive-timeout", 10, "usage: -keepalive-timeout xx")
 	createVirtualServerFlags.UintVar(&createVirtualServerObject.Properties.Connection.Timeout, "connection-timeout", 40, "usage: -connection-timeout xx")
+	createVirtualServerFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("virtual-server-create", createVirtualServerFlags, createVirtualServer)
 }

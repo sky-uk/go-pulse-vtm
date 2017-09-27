@@ -17,6 +17,10 @@ func showTrafficIPGroup(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
+	if apiVersion != "" {
+		trafficIpGroups.TrafficIPGroupEndpoint = "/api/tm/" + apiVersion + "/config/active/traffic_ip_groups/"
+	}
+
 	getTrafficIPGroupAPI := trafficIpGroups.NewGet(trafficIPGroupName)
 	err := client.Do(getTrafficIPGroupAPI)
 	if err != nil {
@@ -39,5 +43,6 @@ func showTrafficIPGroup(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	showTrafficIPGroupFlags := flag.NewFlagSet("traffic-ip-group-show", flag.ExitOnError)
 	showTrafficIPGroupFlags.String("name", "", "usage: -name traffic-ip-group-name")
+	showTrafficIPGroupFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("traffic-ip-group-show", showTrafficIPGroupFlags, showTrafficIPGroup)
 }

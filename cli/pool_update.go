@@ -20,6 +20,10 @@ func updatePool(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
+	if apiVersion != "" {
+		pool.PoolEndpoint = "/api/tm/" + apiVersion + "/config/active/pools/"
+	}
+
 	updatePoolObject := new(pool.Pool)
 	poolNodeList := strings.Split(updatePoolNodes, ",")
 
@@ -54,5 +58,6 @@ func init() {
 	updatePoolFlags.StringVar(&updatePoolNodeState, "state", "active", "usage: -state active (all nodes)")
 	updatePoolFlags.IntVar(&updatePoolNodePriority, "priority", 10, "usage: -priority 10 (all nodes)")
 	updatePoolFlags.IntVar(&updatePoolNodeWeight, "weight", 1, "usage: -weight 1 (all nodes")
+	updatePoolFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("pool-update", updatePoolFlags, updatePool)
 }

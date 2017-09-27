@@ -16,6 +16,11 @@ func deleteSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 		fmt.Printf("\nError: -name argument required")
 		os.Exit(1)
 	}
+
+	if apiVersion != "" {
+		sslServerKey.SSLServerKeyEndpoint = "/api/tm/" + apiVersion + "/config/active/server_keys/"
+	}
+
 	deleteSSLServerKeyAPI := sslServerKey.NewDelete(sslServerKeyName)
 	err := client.Do(deleteSSLServerKeyAPI)
 	if err != nil {
@@ -30,5 +35,6 @@ func deleteSSLServerKey(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	deleteSSLServerKeyFlags := flag.NewFlagSet("ssl-server-key-delete", flag.ExitOnError)
 	deleteSSLServerKeyFlags.String("name", "", "usage: -name ssl-server-key-name")
+	deleteSSLServerKeyFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("ssl-server-key-delete", deleteSSLServerKeyFlags, deleteSSLServerKey)
 }

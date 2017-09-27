@@ -18,6 +18,10 @@ func showMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
+	if apiVersion != "" {
+		monitor.MonitorEndpoint = "/api/tm/" + apiVersion + "/config/active/monitors/"
+	}
+
 	readMonitorAPI := monitor.NewGet(showMonitorName)
 	err := client.Do(readMonitorAPI)
 	if err != nil {
@@ -58,5 +62,6 @@ func showMonitor(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	showMonitorFlags := flag.NewFlagSet("monitor-show", flag.ExitOnError)
 	showMonitorFlags.StringVar(&showMonitorName, "name", "", "usage: -name monitor-name")
+	showMonitorFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("monitor-show", showMonitorFlags, showMonitor)
 }

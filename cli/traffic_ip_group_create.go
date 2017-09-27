@@ -23,6 +23,10 @@ func createTrafficIPGroup(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
+	if apiVersion != "" {
+		trafficIpGroups.TrafficIPGroupEndpoint = "/api/tm/" + apiVersion + "/config/active/traffic_ip_groups/"
+	}
+
 	getAllTrafficManagersAPI := trafficIpGroupManager.NewGetAll()
 	err := client.Do(getAllTrafficManagersAPI)
 	if err != nil {
@@ -60,5 +64,6 @@ func init() {
 	createTrafficIPGroupFlags.StringVar(&createTrafficIPGroupListenIP, "listen-ip-address", "", "usage: -listen-ip-address xxx.yyy.zzz.vvv (only supports one IP)")
 	createTrafficIPGroupFlags.StringVar(&createTrafficIPGroupObject.Properties.Basic.Mode, "mode", "", "usage: -mode singlehosted|ec2elastic|ec2vpcelastic|ec2vpcprivate|multihosted|rhi")
 	createTrafficIPGroupFlags.StringVar(&createTrafficIPGroupObject.Properties.Basic.Multicast, "multicast-ip", "", "usage: -multicast xxx.yyy.zzz.vvv (must be a valid multicast IP)")
+	createTrafficIPGroupFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("traffic-ip-group-create", createTrafficIPGroupFlags, createTrafficIPGroup)
 }

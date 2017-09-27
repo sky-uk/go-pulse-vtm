@@ -17,6 +17,11 @@ func deletePool(client *rest.Client, flagSet *flag.FlagSet) {
 		fmt.Printf("\nError: -name argument required\n")
 		os.Exit(1)
 	}
+
+	if apiVersion != "" {
+		pool.PoolEndpoint = "/api/tm/" + apiVersion + "/config/active/pools/"
+	}
+
 	deletePoolAPI := pool.NewDelete(poolName)
 	err := client.Do(deletePoolAPI)
 	if err != nil && deletePoolAPI.StatusCode() != http.StatusNotFound {
@@ -31,5 +36,6 @@ func deletePool(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	deletePoolFlags := flag.NewFlagSet("pool-delete", flag.ExitOnError)
 	deletePoolFlags.String("name", "", "usage: -name pool-name")
+	deletePoolFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("pool-delete", deletePoolFlags, deletePool)
 }

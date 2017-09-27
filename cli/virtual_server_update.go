@@ -19,6 +19,11 @@ func updateVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 		fmt.Printf("\nError name argument required\n")
 		os.Exit(1)
 	}
+
+	if apiVersion != "" {
+		virtualserver.VirtualServerEndpoint = "/api/tm/" + apiVersion + "/config/active/virtual_servers/"
+	}
+
 	if updateVirtualServerListenTrafficGroup != "" {
 		listenIPAddresses := make([]string, 1)
 		listenIPAddresses[0] = updateVirtualServerListenTrafficGroup
@@ -51,5 +56,6 @@ func init() {
 	updateVirtualServerFlags.UintVar(&updateVirtualServerObject.Properties.Basic.Port, "port", 80, "usage: -port xx")
 	updateVirtualServerFlags.UintVar(&updateVirtualServerObject.Properties.Connection.KeepaliveTimeout, "keepalive-timeout", 10, "usage: -keepalive-timeout xx")
 	updateVirtualServerFlags.UintVar(&updateVirtualServerObject.Properties.Connection.Timeout, "connection-timeout", 40, "usage: -connection-timeout xx")
+	updateVirtualServerFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("virtual-server-update", updateVirtualServerFlags, updateVirtualServer)
 }

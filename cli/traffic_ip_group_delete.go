@@ -16,6 +16,10 @@ func deleteTrafficIPGroup(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
+	if apiVersion != "" {
+		trafficIpGroups.TrafficIPGroupEndpoint = "/api/tm/" + apiVersion + "/config/active/traffic_ip_groups/"
+	}
+
 	deleteTrafficIPGroupAPI := trafficIpGroups.NewDelete(trafficIPGroupName)
 	err := client.Do(deleteTrafficIPGroupAPI)
 	if err != nil {
@@ -28,5 +32,6 @@ func deleteTrafficIPGroup(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	deleteTrafficIPGroupFlags := flag.NewFlagSet("traffic-ip-group-delete", flag.ExitOnError)
 	deleteTrafficIPGroupFlags.String("name", "", "usage: -name traffic-ip-group-name")
+	deleteTrafficIPGroupFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("traffic-ip-group-delete", deleteTrafficIPGroupFlags, deleteTrafficIPGroup)
 }

@@ -18,6 +18,10 @@ func showVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
+	if apiVersion != "" {
+		virtualserver.VirtualServerEndpoint = "/api/tm/" + apiVersion + "/config/active/virtual_servers/"
+	}
+
 	readVirtualServerAPI := virtualserver.NewGet(showVirtualServerName)
 	err := client.Do(readVirtualServerAPI)
 	if err != nil {
@@ -45,5 +49,6 @@ func showVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	showVirtualServerFlags := flag.NewFlagSet("virtual-server-show", flag.ExitOnError)
 	showVirtualServerFlags.StringVar(&showVirtualServerName, "name", "", "usage: -name virtual-server-name")
+	showVirtualServerFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("virtual-server-show", showVirtualServerFlags, showVirtualServer)
 }

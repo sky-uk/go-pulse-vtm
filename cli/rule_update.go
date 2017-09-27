@@ -37,6 +37,10 @@ func updateRule(client *rest.Client, flagSet *flag.FlagSet) {
 		os.Exit(2)
 	}
 
+	if apiVersion != "" {
+		rule.RuleEndpoint = "/api/tm/" + apiVersion + "/config/active/rules/"
+	}
+
 	updateRuleAPI := rule.NewCreate(updateRuleName, updateTrafficScriptFile)
 
 	err := client.Do(updateRuleAPI)
@@ -53,5 +57,6 @@ func init() {
 	updateRuleFlags := flag.NewFlagSet("rule-update", flag.ExitOnError)
 	updateRuleFlags.StringVar(&updateRuleName, "name", "", "usage: -name vtm-rule-name")
 	updateRuleFlags.StringVar(&updateTrafficScriptFile, "script", "", "usage: -script location-of-traffic-script-file")
+	updateRuleFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("rule-update", updateRuleFlags, updateRule)
 }

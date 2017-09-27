@@ -17,6 +17,11 @@ func deleteVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 		fmt.Printf("\nError: name argument required\n")
 		os.Exit(1)
 	}
+
+	if apiVersion != "" {
+		virtualserver.VirtualServerEndpoint = "/api/tm/" + apiVersion + "/config/active/virtual_servers/"
+	}
+
 	deleteVirtualServerAPI := virtualserver.NewDelete(deleteVirtualServerName)
 	err := client.Do(deleteVirtualServerAPI)
 	if err != nil {
@@ -31,5 +36,6 @@ func deleteVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 func init() {
 	deleteVirtualServerFlags := flag.NewFlagSet("virtual-server-delete", flag.ExitOnError)
 	deleteVirtualServerFlags.StringVar(&deleteVirtualServerName, "name", "", "usage: -name virtual-server-name")
+	deleteVirtualServerFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("virtual-server-delete", deleteVirtualServerFlags, deleteVirtualServer)
 }
