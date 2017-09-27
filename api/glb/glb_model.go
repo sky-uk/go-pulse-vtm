@@ -52,3 +52,14 @@ type Log struct {
 	Filename string `json:"filename,omitempty"`
 	Format   string `json:"format,omitempty"`
 }
+
+// GlobalLoadBalancers : List of GLBs
+type GlobalLoadBalancers struct {
+	Children []ChildLocation `json:"children"`
+}
+
+// ChildLocation : location name and href
+type ChildLocation struct {
+	Name string `json:"name"`
+	Href string `json:"href"`
+}
