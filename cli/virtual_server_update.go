@@ -30,7 +30,7 @@ func updateVirtualServer(client *rest.Client, flagSet *flag.FlagSet) {
 		updateVirtualServerObject.Properties.Basic.ListenOnTrafficIps = listenIPAddresses
 	}
 	updateVirtualServerObject.Properties.Basic.Enabled = updateVirtualServerEnabled
-	updateVirtualServerObject.Properties.Connection.Keepalive = updateVirtualServerKeepalive
+	updateVirtualServerObject.Properties.Connection.Keepalive = &updateVirtualServerKeepalive
 	updateVirtualServerObject.Properties.Basic.ListenOnAny = updateVirtualServerListenAny
 
 	updateVirtualServerAPI := virtualserver.NewUpdate(updateVirtualServerName, updateVirtualServerObject)
@@ -54,8 +54,8 @@ func init() {
 	updateVirtualServerFlags.BoolVar(&updateVirtualServerEnabled, "enabled", false, "usage: -enabled")
 	updateVirtualServerFlags.BoolVar(&updateVirtualServerKeepalive, "keepalive", false, "usage: -keepalive")
 	updateVirtualServerFlags.UintVar(&updateVirtualServerObject.Properties.Basic.Port, "port", 80, "usage: -port xx")
-	updateVirtualServerFlags.UintVar(&updateVirtualServerObject.Properties.Connection.KeepaliveTimeout, "keepalive-timeout", 10, "usage: -keepalive-timeout xx")
-	updateVirtualServerFlags.UintVar(&updateVirtualServerObject.Properties.Connection.Timeout, "connection-timeout", 40, "usage: -connection-timeout xx")
+	updateVirtualServerFlags.UintVar(updateVirtualServerObject.Properties.Connection.KeepaliveTimeout, "keepalive-timeout", 10, "usage: -keepalive-timeout xx")
+	updateVirtualServerFlags.UintVar(updateVirtualServerObject.Properties.Connection.Timeout, "connection-timeout", 40, "usage: -connection-timeout xx")
 	updateVirtualServerFlags.StringVar(&apiVersion, "apiversion", "", "usage: -apiversion 3.8")
 	RegisterCliCommand("virtual-server-update", updateVirtualServerFlags, updateVirtualServer)
 }
