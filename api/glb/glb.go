@@ -16,7 +16,7 @@ func NewCreate(glbName string, glb GLB) *rest.BaseAPI {
 
 // NewGetAll : used to retrieve a list of GLBs and their HRef
 func NewGetAll() *rest.BaseAPI {
-	getAllGLBAPI := rest.NewBaseAPI(http.MethodGet, glbEndpoint, nil, new(GLB), new(api.VTMError))
+	getAllGLBAPI := rest.NewBaseAPI(http.MethodGet, glbEndpoint, nil, new(GlobalLoadBalancers), new(api.VTMError))
 	return getAllGLBAPI
 }
 
