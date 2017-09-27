@@ -33,40 +33,40 @@ type Properties struct {
 
 // Basic : Basic virtual server configration
 type Basic struct {
-	AddClusterIP             *bool     `json:"add_cluster_ip,omitempty"`
-	AddXForwarded            *bool     `json:"add_x_forwarded_for,omitempty"`
-	AddXForwardedProto       *bool     `json:"add_x_forwarded_proto,omitempty"`
+	AddClusterIP             bool     `json:"add_cluster_ip"`
+	AddXForwarded            bool     `json:"add_x_forwarded_for"`
+	AddXForwardedProto       bool     `json:"add_x_forwarded_proto"`
 	AutoUpgradeProtocols     []string `json:"auto_upgrade_protocols,omitempty"`
-	AutoDetectUpgradeHeaders *bool     `json:"autodetect_upgrade_headers,omitempty"`
+	AutoDetectUpgradeHeaders bool     `json:"autodetect_upgrade_headers"`
 	BandwidthClass           string   `json:"bandwidth_class,omitempty"`
-	CloseWithRst             *bool     `json:"close_with_rst,omitempty"`
+	CloseWithRst             bool     `json:"close_with_rst"`
 	CompletionRules          []string `json:"completionrules,omitempty"`
-	ConnectTimeout           *uint     `json:"connect_timeout,omitempty"`
-	Enabled                  *bool     `json:"enabled,omitempty"`
-	FtpForceServerSecure     *bool     `json:"ftp_force_server_secure,omitempty"`
+	ConnectTimeout           uint     `json:"connect_timeout"`
+	Enabled                  bool     `json:"enabled"`
+	FtpForceServerSecure     bool     `json:"ftp_force_server_secure,omitempty"`
 	GlbServices              []string `json:"glb_services,omitempty"`
-	ListenOnAny              *bool     `json:"listen_on_any,omitempty"`
+	ListenOnAny              bool     `json:"listen_on_any"`
 	ListenOnHosts            []string `json:"listen_on_hosts,omitempty"`
 	ListenOnTrafficIps       []string `json:"listen_on_traffic_ips,omitempty"`
-	MSS                      *uint     `json:"mss,omitempty"`
+	MSS                      uint     `json:"mss"`
 	Note                     string   `json:"note,omitempty"`
 	Pool                     string   `json:"pool,omitempty"`
-	Port                     *uint     `json:"port,omitempty"`
+	Port                     uint     `json:"port"`
 	ProtectionClass          string   `json:"protection_class,omitempty"`
 	Protocol                 string   `json:"protocol,omitempty"`
 	RequestRules             []string `json:"request_rules,omitempty"`
 	ResponseRules            []string `json:"response_rules,omitempty"`
 	SlmClass                 string   `json:"slm_class,omitempty"`
-	SoNagle                  *bool     `json:"so_nagle,omitempty"`
+	SoNagle                  bool     `json:"so_nagle"`
 	SslClientCertHeaders     string   `json:"ssl_client_cert_headers,omitempty"`
-	SslDecrypt               *bool     `json:"ssl_decrypt,omitempty"`
+	SslDecrypt               bool     `json:"ssl_decrypt"`
 	SslHonorFallbackScsv     string   `json:"ssl_honor_fallback_scsv,omitempty"`
-	Transparent              *bool     `json:"transparent,omitempty"`
+	Transparent              bool     `json:"transparent"`
 }
 
 // Aptimizer : whether virtual server should aptimize web content
 type Aptimizer struct {
-	Enabled *bool               `json:"enabled,omitempty"`
+	Enabled *bool              `json:"enabled,omitempty"`
 	Profile []AptimizerProfile `json:"profile,omitempty"`
 }
 
@@ -78,13 +78,13 @@ type AptimizerProfile struct {
 
 // Connection : connection parameters
 type Connection struct {
-	Keepalive              *bool   `json:"keepalive,omitempty"`
-	KeepaliveTimeout       *uint   `json:"keepalive_timeout,omitempty"`
-	MaxClientBuffer        *uint   `json:"max_client_buffer,omitempty"`
-	MaxServerBuffer        *uint   `json:"max_server_buffer,omitempty"`
-	MaxTransactionDuration *uint   `json:"max_transaction_duration,omitempty"`
+	Keepalive              *bool  `json:"keepalive,omitempty"`
+	KeepaliveTimeout       *uint  `json:"keepalive_timeout,omitempty"`
+	MaxClientBuffer        *uint  `json:"max_client_buffer,omitempty"`
+	MaxServerBuffer        *uint  `json:"max_server_buffer,omitempty"`
+	MaxTransactionDuration *uint  `json:"max_transaction_duration,omitempty"`
 	ServerFirstBanner      string `json:"server_first_banner,omitempty"`
-	Timeout                *uint   `json:"timeout,omitempty"`
+	Timeout                *uint  `json:"timeout,omitempty"`
 }
 
 // ConnectionErrors : error file params
@@ -103,11 +103,11 @@ type Cookie struct {
 
 // DNS configuration section
 type DNS struct {
-	EDNSClientSubnet *bool     `json:"edns_client_subnet,omitempty"`
-	EdnsUdpsize      *uint     `json:"edns_udpsize,omitempty"`
-	MaxUdpsize       *uint     `json:"max_udpsize,omitempty"`
+	EDNSClientSubnet *bool    `json:"edns_client_subnet,omitempty"`
+	EdnsUdpsize      *uint    `json:"edns_udpsize,omitempty"`
+	MaxUdpsize       *uint    `json:"max_udpsize,omitempty"`
 	RrsetOrder       string   `json:"rrset_order,omitempty"`
-	Verbose          *bool     `json:"verbose,omitempty"`
+	Verbose          *bool    `json:"verbose,omitempty"`
 	Zones            []string `json:"zones,omitempty"`
 }
 
@@ -122,13 +122,13 @@ type Ftp struct {
 
 // Gzip configuration section
 type Gzip struct {
-	CompressLevel *uint     `json:"compress_level,omitempty"`
-	Enabled       *bool     `json:"enabled,omitempty"`
+	CompressLevel *uint    `json:"compress_level,omitempty"`
+	Enabled       *bool    `json:"enabled,omitempty"`
 	EtagRewrite   string   `json:"etag_rewrite,omitempty"`
 	IncludeMime   []string `json:"include_mime,omitempty"`
-	MaxSize       *uint     `json:"max_size,omitempty"`
-	MinSize       *uint     `json:"min_size,omitempty"`
-	NoSize        *bool     `json:"no_size,omitempty"`
+	MaxSize       *uint    `json:"max_size,omitempty"`
+	MinSize       *uint    `json:"min_size,omitempty"`
+	NoSize        *bool    `json:"no_size,omitempty"`
 }
 
 // HTTP configuration section
@@ -138,45 +138,45 @@ type HTTP struct {
 	LocationReplace         string `json:"location_replace,omitempty"`
 	LocationRewrite         string `json:"location_rewrite,omitempty"`
 	MIMEDefault             string `json:"mime_default,omitempty"`
-	MIMEDetect              *bool   `json:"mime_detect,omitempty"`
+	MIMEDetect              *bool  `json:"mime_detect,omitempty"`
 }
 
 // HTTP2 configuration section
 type HTTP2 struct {
-	ConnectTimeout         *uint     `json:"connect_timeout,omitempty"`
-	DataFrameSize          *uint     `json:"data_frame_size,omitempty"`
-	Enabled                *bool     `json:"enabled,omitempty"`
-	HeaderTableSize        *uint     `json:"header_table_size,omitempty"`
+	ConnectTimeout         *uint    `json:"connect_timeout,omitempty"`
+	DataFrameSize          *uint    `json:"data_frame_size,omitempty"`
+	Enabled                *bool    `json:"enabled,omitempty"`
+	HeaderTableSize        *uint    `json:"header_table_size,omitempty"`
 	HeadersIndexBlacklist  []string `json:"headers_index_blacklist,omitempty"`
-	HeadersIndexDefault    *bool     `json:"headers_index_default,omitempty"`
+	HeadersIndexDefault    *bool    `json:"headers_index_default,omitempty"`
 	HeadersIndexWhitelist  []string `json:"headers_index_whitelist,omitempty"`
-	IdleTimeoutNoStreams   *uint     `json:"idle_timeout_no_streams,omitempty"`
-	IdleTimeoutOpenStreams *uint     `json:"idle_timeout_open_streams,omitempty"`
-	MaxConcurrentStreams   *uint     `json:"max_concurrent_streams,omitempty"`
-	MaxFrameSize           *uint     `json:"max_frame_size,omitempty"`
-	MaxHeaderPadding       *uint     `json:"max_header_padding,omitempty"`
-	MergeCookieHeaders     *bool     `json:"merge_cookie_headers,omitempty"`
-	StreamWindowSize       *uint     `json:"stream_window_size,omitempty"`
+	IdleTimeoutNoStreams   *uint    `json:"idle_timeout_no_streams,omitempty"`
+	IdleTimeoutOpenStreams *uint    `json:"idle_timeout_open_streams,omitempty"`
+	MaxConcurrentStreams   *uint    `json:"max_concurrent_streams,omitempty"`
+	MaxFrameSize           *uint    `json:"max_frame_size,omitempty"`
+	MaxHeaderPadding       *uint    `json:"max_header_padding,omitempty"`
+	MergeCookieHeaders     *bool    `json:"merge_cookie_headers,omitempty"`
+	StreamWindowSize       *uint    `json:"stream_window_size,omitempty"`
 }
 
 // KerberosProtocolTransition configuration section
 type KerberosProtocolTransition struct {
-	Enabled   *bool   `json:"enabled,omitempty"`
+	Enabled   *bool  `json:"enabled,omitempty"`
 	Principal string `json:"principal,omitempty"`
 	Target    string `json:"target,omitempty"`
 }
 
 // Log configuration section
 type Log struct {
-	AlwaysFlush               *bool   `json:"always_flush,omitempty"`
-	ClientConnectionFailures  *bool   `json:"client_connection_failures,omitempty"`
-	Enabled                   *bool   `json:"enabled,omitempty"`
+	AlwaysFlush               *bool  `json:"always_flush,omitempty"`
+	ClientConnectionFailures  *bool  `json:"client_connection_failures,omitempty"`
+	Enabled                   *bool  `json:"enabled,omitempty"`
 	Filename                  string `json:"filename,omitempty"`
 	Format                    string `json:"format,omitempty"`
-	SaveAll                   *bool   `json:"save_all,omitempty"`
-	ServerConnectionFailures  *bool   `json:"server_connection_failures,omitempty"`
-	SessionPersistenceVerbose *bool   `json:"session_persistence_verbose,omitempty"`
-	SSLFailures               *bool   `json:"ssl_failures,omitempty"`
+	SaveAll                   *bool  `json:"save_all,omitempty"`
+	ServerConnectionFailures  *bool  `json:"server_connection_failures,omitempty"`
+	SessionPersistenceVerbose *bool  `json:"session_persistence_verbose,omitempty"`
+	SSLFailures               *bool  `json:"ssl_failures,omitempty"`
 }
 
 // RecentConnections configuration section
@@ -201,15 +201,15 @@ type RTSP struct {
 // SIP configuration section
 type SIP struct {
 	DangerousRequests      string `json:"dangerous_requests,omitempty"`
-	FollowRoute            *bool   `json:"follow_route,omitempty"`
-	MaxConnectionMem       *uint   `json:"max_connection_mem,omitempty"`
+	FollowRoute            *bool  `json:"follow_route,omitempty"`
+	MaxConnectionMem       *uint  `json:"max_connection_mem,omitempty"`
 	Mode                   string `json:"mode,omitempty"`
-	RewriteURI             *bool   `json:"rewrite_uri,omitempty"`
-	StreamingPortRangeHigh *uint   `json:"streaming_port_range_high,omitempty"`
-	StreamingPortRangeLow  *uint   `json:"streaming_port_range_low,omitempty"`
-	StreamingTimeout       *uint   `json:"streaming_timeout,omitempty"`
-	TimeoutMessages        *bool   `json:"timeout_messages,omitempty"`
-	TransactionTimeout     *uint   `json:"transaction_timeout,omitempty"`
+	RewriteURI             *bool  `json:"rewrite_uri,omitempty"`
+	StreamingPortRangeHigh *uint  `json:"streaming_port_range_high,omitempty"`
+	StreamingPortRangeLow  *uint  `json:"streaming_port_range_low,omitempty"`
+	StreamingTimeout       *uint  `json:"streaming_timeout,omitempty"`
+	TimeoutMessages        *bool  `json:"timeout_messages,omitempty"`
+	TransactionTimeout     *uint  `json:"transaction_timeout,omitempty"`
 }
 
 // SMTP configuration section
@@ -219,19 +219,19 @@ type SMTP struct {
 
 // Ssl configuration section
 type Ssl struct {
-	AddHTTPHeaders            *bool         `json:"add_http_headers,omitempty"`
+	AddHTTPHeaders            *bool        `json:"add_http_headers,omitempty"`
 	ClientCertCAS             []string     `json:"client_cert_cas,omitempty"`
 	EllipticCurves            []string     `json:"elliptic_curves,omitempty"`
 	IssuedCertsNeverExpire    []string     `json:"issued_certs_never_expire,omitempty"`
-	OCSPEnable                *bool         `json:"ocsp_enable,omitempty"`
+	OCSPEnable                *bool        `json:"ocsp_enable,omitempty"`
 	OCSPIssuers               []OCSPIssuer `json:"ocsp_issuers,omitempty"`
-	OCSPMaxResponseAge        *uint         `json:"ocsp_max_response_age,omitempty"`
-	OCSPStapling              *bool         `json:"ocsp_stapling,omitempty"`
-	OCSPTimeTolerance         *uint         `json:"ocsp_time_tolerance,omitempty"`
-	OCSPTimeout               *uint         `json:"ocsp_timeout,omitempty"`
-	PreferSSLv3               *bool         `json:"prefer_sslv3,omitempty"`
+	OCSPMaxResponseAge        *uint        `json:"ocsp_max_response_age,omitempty"`
+	OCSPStapling              *bool        `json:"ocsp_stapling,omitempty"`
+	OCSPTimeTolerance         *uint        `json:"ocsp_time_tolerance,omitempty"`
+	OCSPTimeout               *uint        `json:"ocsp_timeout,omitempty"`
+	PreferSSLv3               *bool        `json:"prefer_sslv3,omitempty"`
 	RequestClientCert         string       `json:"request_client_cert,omitempty"`
-	SendCloseAlerts           *bool         `json:"send_close_alerts,omitempty"`
+	SendCloseAlerts           *bool        `json:"send_close_alerts,omitempty"`
 	ServerCertAltCertificates []string     `json:"server_cert_alt_certificates,omitempty"`
 	ServerCertDefault         string       `json:"server_cert_default,omitempty"`
 	ServerCertHostMap         []CertItem   `json:"server_cert_host_mapping,omitempty"`
@@ -242,15 +242,15 @@ type Ssl struct {
 	SslSupportTLS1            string       `json:"ssl_support_tls1,omitempty"`
 	SslSupportTLS1_1          string       `json:"ssl_support_tls1_1,omitempty"`
 	SslSupportTLS1_2          string       `json:"ssl_support_tls1_2,omitempty"`
-	TrustMagic                *bool         `json:"trust_magic,omitempty"`
+	TrustMagic                *bool        `json:"trust_magic,omitempty"`
 }
 
 // SysLog configuration section
 type SysLog struct {
-	Enabled     *bool   `json:"enabled,omitempty"`
+	Enabled     *bool  `json:"enabled,omitempty"`
 	Format      string `json:"format,omitempty"`
 	IPEndpoint  string `json:"ip_endpoint,omitempty"`
-	MsgLenLimit *uint   `json:"msg_len_limit,omitempty"`
+	MsgLenLimit *uint  `json:"msg_len_limit,omitempty"`
 }
 
 // TCP configuration section
@@ -269,16 +269,16 @@ type UDP struct {
 // WebCache configuration section
 type WebCache struct {
 	ControlOut    string `json:"control_out,omitempty"`
-	Enabled       *bool   `json:"enabled,omitempty"`
-	ErrorPageTime *uint   `json:"error_page_time,omitempty"`
-	MaxTime       *uint   `json:"max_time,omitempty"`
-	RefreshTime   *uint   `json:"refresh_time,omitempty"`
+	Enabled       *bool  `json:"enabled,omitempty"`
+	ErrorPageTime *uint  `json:"error_page_time,omitempty"`
+	MaxTime       *uint  `json:"max_time,omitempty"`
+	RefreshTime   *uint  `json:"refresh_time,omitempty"`
 }
 
 // OCSPIssuer configuration serction
 type OCSPIssuer struct {
 	Issuer        string `json:"issuer,omitempty"`
-	AIA           *bool   `json:"aia,omitempty"`
+	AIA           *bool  `json:"aia,omitempty"`
 	Nonce         string `json:"nonce,omitempty"`
 	Required      string `json:"required,omitempty"`
 	ResponderCert string `json:"responder_cert,omitempty"`

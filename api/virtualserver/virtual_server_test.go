@@ -18,18 +18,16 @@ var testVirtualServerGetAllUnmarshallJSON, testVirtualServerGetUnmarshalJSON []b
 
 func setupVirtualServerTest() {
 	testVirtualServerName = "test-virtual-server"
-	enabled := false
-	var port uint = 80
 	testVirtualServerBasic := Basic{
-		Enabled:  &enabled,
+		Enabled:  false,
 		Pool:     "test-pool",
-		Port:     &port,
+		Port:     80,
 		Protocol: "http",
 	}
 	testVirtualServerProperties := Properties{Basic: testVirtualServerBasic}
 	testVirtualServerObject = VirtualServer{Properties: testVirtualServerProperties}
 
-	testVirtualServerMarshalExpectedJSON = `{"properties":{"basic":{"enabled":false,"pool":"test-pool","port":80,"protocol":"http"},"aptimizer":{},"connection":{},"connection_errors":{},"cookie":{},"dns":{},"ftp":{},"gzip":{},"http":{},"http2":{},"kerberos_protocol_transition":{},"log":{},"recent_connections":{},"request_tracing":{},"rtsp":{},"sip":{},"smtp":{},"ssl":{},"syslog":{},"tcp":{},"udp":{},"web_cache":{}}}`
+	testVirtualServerMarshalExpectedJSON = `{"properties":{"basic":{"add_cluster_ip":false,"add_x_forwarded_for":false,"add_x_forwarded_proto":false,"autodetect_upgrade_headers":false,"close_with_rst":false,"connect_timeout":0,"enabled":false,"listen_on_any":false,"mss":0,"pool":"test-pool","port":80,"protocol":"http","so_nagle":false,"ssl_decrypt":false,"transparent":false},"aptimizer":{},"connection":{},"connection_errors":{},"cookie":{},"dns":{},"ftp":{},"gzip":{},"http":{},"http2":{},"kerberos_protocol_transition":{},"log":{},"recent_connections":{},"request_tracing":{},"rtsp":{},"sip":{},"smtp":{},"ssl":{},"syslog":{},"tcp":{},"udp":{},"web_cache":{}}}`
 
 	testVirtualServerGetAllUnmarshallJSON = []byte(`{"children":[{"name":"PaaSExampleHTTPvirtualserver","href":"/api/tm/3.8/config/active/virtual_servers/PaaSExampleHTTPvirtualserver"},{"name":"PaaSExampleHTTPvirtualserver1","href":"/api/tm/3.8/config/active/virtual_servers/PaaSExampleHTTPvirtualserver1"},{"name":"virtual_server_1","href":"/api/tm/3.8/config/active/virtual_servers/virtual_server_1"},{"name":"virtual_server_2","href":"/api/tm/3.8/config/active/virtual_servers/virtual_server_2"},{"name":"virtual_server_3","href":"/api/tm/3.8/config/active/virtual_servers/virtual_server_3"}]}`)
 
@@ -103,12 +101,10 @@ func TestVirtualServerNewGetUnmarshal(t *testing.T) {
 	setupVirtualServerTest()
 	jsonErr := json.Unmarshal(testVirtualServerGetUnmarshalJSON, getVirtualServerAPI.ResponseObject())
 	response := *getVirtualServerAPI.ResponseObject().(*VirtualServer)
-	expectedEnabled := false
-	var expectedPort uint = 80
 	assert.Nil(t, jsonErr)
-	assert.Equal(t, &expectedEnabled, response.Properties.Basic.Enabled)
+	assert.Equal(t, false, response.Properties.Basic.Enabled)
 	assert.Equal(t, "pool_test", response.Properties.Basic.Pool)
-	assert.Equal(t, &expectedPort, response.Properties.Basic.Port)
+	assert.Equal(t, uint(80), response.Properties.Basic.Port)
 	assert.Equal(t, "http", response.Properties.Basic.Protocol)
 }
 
