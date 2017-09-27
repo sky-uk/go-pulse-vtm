@@ -25,7 +25,7 @@ type Properties struct {
 	SIP                        SIP                        `json:"sip,omitempty"`
 	SMTP                       SMTP                       `json:"smtp,omitempty"`
 	Ssl                        Ssl                        `json:"ssl,omitempty"`
-	SysLog                     SysLog                     `json:"sys_log,omitempty"`
+	SysLog                     SysLog                     `json:"syslog,omitempty"`
 	TCP                        TCP                        `json:"tcp,omitempty"`
 	UDP                        UDP                        `json:"udp,omitempty"`
 	WebCache                   WebCache                   `json:"web_cache,omitempty"`
@@ -125,7 +125,7 @@ type Gzip struct {
 	CompressLevel uint     `json:"compress_level"`
 	Enabled       bool     `json:"enabled"`
 	EtagRewrite   string   `json:"etag_rewrite"`
-	IncludeMime   []string `json:"include_mime"`
+	IncludeMime   []string `json:"include_mime,omitempty"`
 	MaxSize       uint     `json:"max_size"`
 	MinSize       uint     `json:"min_size"`
 	NoSize        bool     `json:"no_size"`
@@ -225,10 +225,10 @@ type Ssl struct {
 	IssuedCertsNeverExpire    []string     `json:"issued_certs_never_expire,omitempty"`
 	OCSPEnable                bool         `json:"ocsp_enable"`
 	OCSPIssuers               []OCSPIssuer `json:"ocsp_issuers,omitempty"`
-	OSCPMaxResponseAge        uint         `json:"oscp_max_response_age"`
-	OSCPStapling              bool         `json:"oscp_stapling"`
-	OSCPTimeTolerance         uint         `json:"oscp_time_tolerance"`
-	OSCPTimeout               uint         `json:"oscp_timeout"`
+	OCSPMaxResponseAge        uint         `json:"ocsp_max_response_age"`
+	OCSPStapling              bool         `json:"ocsp_stapling"`
+	OCSPTimeTolerance         uint         `json:"ocsp_time_tolerance"`
+	OCSPTimeout               uint         `json:"ocsp_timeout"`
 	PreferSSLv3               bool         `json:"prefer_sslv3"`
 	RequestClientCert         string       `json:"request_client_cert,omitempty"`
 	SendCloseAlerts           bool         `json:"send_close_alerts"`
