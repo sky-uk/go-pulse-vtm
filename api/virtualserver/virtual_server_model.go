@@ -43,7 +43,7 @@ type Basic struct {
 	CompletionRules          []string `json:"completionrules,omitempty"`
 	ConnectTimeout           uint     `json:"connect_timeout"`
 	Enabled                  bool     `json:"enabled"`
-	FtpForceServerSecure     bool     `json:"ftp_force_server_secure,omitempty"`
+	FtpForceServerSecure     bool     `json:"ftp_force_server_secure"`
 	GlbServices              []string `json:"glb_services,omitempty"`
 	ListenOnAny              bool     `json:"listen_on_any"`
 	ListenOnHosts            []string `json:"listen_on_hosts,omitempty"`
