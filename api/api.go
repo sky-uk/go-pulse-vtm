@@ -33,6 +33,60 @@ type Client struct {
 	currentServer     string
 }
 
+// WorkWithStatus - sets basis information/statistics path...
+func (client *Client) WorkWithStatus() {
+	client.RootPath = apiPrefix + "/" + client.currentVersion + "/status"
+	log.Println("Current Path: ", client.RootPath)
+}
+
+// GetStatistics - returns all statistics...
+func (client Client) GetStatistics(node string) (map[string]interface{}, error) {
+	client.WorkWithStatus()
+    path := client.RootPath + "/" + node + "/statistics"
+	all := make(map[string]interface{})
+	api := rest.NewBaseAPI(
+		http.MethodGet,
+		path,
+		nil,
+		&all,
+		new(VTMError),
+	)
+    err := client.request(api)
+    return all, err
+}
+
+// GetState - get a node state
+func (client Client) GetState(node string) (map[string]interface{}, error) {
+	client.WorkWithStatus()
+    path := client.RootPath + "/" + node + "/state"
+	state := make(map[string]interface{})
+	api := rest.NewBaseAPI(
+		http.MethodGet,
+		path,
+		nil,
+		&state,
+		new(VTMError),
+	)
+    err := client.request(api)
+    return state, err
+}
+
+// GetInformation - returns all information...
+func (client Client) GetInformation(node string) (map[string]interface{}, error) {
+	client.WorkWithStatus()
+    path := client.RootPath + "/" + node + "/information"
+	all := make(map[string]interface{})
+	api := rest.NewBaseAPI(
+		http.MethodGet,
+		path,
+		nil,
+		&all,
+		new(VTMError),
+	)
+    err := client.request(api)
+    return all, err
+}
+
 // WorkWithConfigurationResources - set current path to work with
 // configuration resources
 func (client *Client) WorkWithConfigurationResources() {
@@ -61,15 +115,15 @@ func Connect(params Params) (*Client, error) {
 	}
 
 	supportedVersionsMap := make(map[string]interface{})
-	var errStr VTMError
+	//var errStr VTMError
 	api := rest.NewBaseAPI(
 		http.MethodGet,
 		apiPrefix,
 		nil,
 		&supportedVersionsMap,
-		&errStr,
+		new(VTMError),
 	)
-	err := client.restClient.Do(api)
+	err := client.request(api)
 	if err != nil {
 		log.Println(err)
 		return nil, err
@@ -96,7 +150,6 @@ func Connect(params Params) (*Client, error) {
 func (client Client) GetAllResourceTypes() ([]map[string]interface{}, error) {
 	path := client.RootPath
 	res := make(map[string]interface{}, 0)
-	var tmErr *VTMError
 
 	log.Println("Going to get all resource types, using PATH:\n", path)
 	api := rest.NewBaseAPI(
@@ -104,16 +157,12 @@ func (client Client) GetAllResourceTypes() ([]map[string]interface{}, error) {
 		path,
 		nil,
 		&res,
-		tmErr,
+		new(VTMError),
 	)
-	err := client.restClient.Do(api)
+	err := client.request(api)
 	if err != nil {
 		log.Println(err)
 		return nil, err
-	}
-	if tmErr != nil {
-		log.Println("Error setting a resource: ", tmErr.ErrorText)
-		return nil, fmt.Errorf(tmErr.ErrorText)
 	}
 	resTypes := make([]map[string]interface{}, 0)
 	for _, item := range res["children"].([]interface{}) {
@@ -122,12 +171,23 @@ func (client Client) GetAllResourceTypes() ([]map[string]interface{}, error) {
 	return resTypes, nil
 }
 
+func (client Client) request(api *rest.BaseAPI) error {
+	err := client.restClient.Do(api)
+	if err != nil {
+		return err
+	}
+	tmErr := api.ErrorObject().(*VTMError)
+	if tmErr.ErrorText != "" {
+		err = fmt.Errorf(tmErr.ErrorText)
+	}
+	return err
+}
+
 // TraverseTree - retrieves a resource and eventually keep doing it
 // for each nested resource
 // Fill up the passed slice of resources, returns the first error it
 // eventually bumps into
 func (client Client) TraverseTree(url string, resources map[string]interface{}) error {
-	var tmErr *VTMError
 	res := make(map[string]interface{})
 
 	if url == "" {
@@ -140,18 +200,13 @@ func (client Client) TraverseTree(url string, resources map[string]interface{}) 
 		url,
 		nil,
 		&res,
-		tmErr,
+		new(VTMError),
 	)
-	err := client.restClient.Do(api)
+	err := client.request(api)
 	if err != nil {
 		log.Println(err)
 		return err
 	}
-	if tmErr != nil {
-		log.Println("Error getting path: ", tmErr.ErrorText)
-		return fmt.Errorf(tmErr.ErrorText)
-	}
-
 	if children, exists := res["children"]; exists {
 		log.Println("Going deeper...")
 		for _, item := range children.([]interface{}) {
@@ -177,7 +232,6 @@ func (client Client) TraverseTree(url string, resources map[string]interface{}) 
 func (client Client) GetAllResources(resType string) ([]map[string]interface{}, error) {
 	path := client.RootPath + "/" + resType
 	res := make(map[string]interface{})
-	var tmErr *VTMError
 
 	log.Println("Going to get all resources, using PATH: ", path)
 	api := rest.NewBaseAPI(
@@ -185,16 +239,12 @@ func (client Client) GetAllResources(resType string) ([]map[string]interface{}, 
 		path,
 		nil,
 		&res,
-		tmErr,
+		new(VTMError),
 	)
-	err := client.restClient.Do(api)
+	err := client.request(api)
 	if err != nil {
 		log.Println(err)
 		return nil, err
-	}
-	if tmErr != nil {
-		log.Println("Error setting a resource: ", tmErr.ErrorText)
-		return nil, fmt.Errorf(tmErr.ErrorText)
 	}
 	resources := make([]map[string]interface{}, 0)
 	if list, exists := res["children"].([]interface{}); exists {
@@ -211,7 +261,6 @@ func (client Client) GetAllResources(resType string) ([]map[string]interface{}, 
 func (client Client) GetByName(resType, resName string) (map[string]interface{}, error) {
 	path := client.RootPath + "/" + resType + "/" + resName
 	res := make(map[string]interface{})
-	var tmErr *VTMError
 
 	log.Println("Going to get a resource, using PATH: ", path)
 	api := rest.NewBaseAPI(
@@ -219,16 +268,12 @@ func (client Client) GetByName(resType, resName string) (map[string]interface{},
 		path,
 		nil,
 		&res,
-		tmErr,
+		new(VTMError),
 	)
-	err := client.restClient.Do(api)
+	err := client.request(api)
 	if err != nil {
 		log.Println(err)
 		return nil, err
-	}
-	if tmErr != nil {
-		log.Println("Error getting a resource: ", tmErr.ErrorText)
-		return nil, fmt.Errorf(tmErr.ErrorText)
 	}
 	return res, nil
 }
@@ -236,7 +281,6 @@ func (client Client) GetByName(resType, resName string) (map[string]interface{},
 // GetByURL - gets a resource profile given its type and URL
 func (client Client) GetByURL(resURL string) (map[string]interface{}, error) {
 	res := make(map[string]interface{})
-	var tmErr *VTMError
 
 	log.Println("Going to get a resource, using PATH: ", resURL)
 	api := rest.NewBaseAPI(
@@ -244,31 +288,26 @@ func (client Client) GetByURL(resURL string) (map[string]interface{}, error) {
 		resURL,
 		nil,
 		&res,
-		tmErr,
+		new(VTMError),
 	)
-	err := client.restClient.Do(api)
+	err := client.request(api)
 	if err != nil {
 		log.Println(err)
 		return nil, err
 	}
-	if tmErr != nil {
-		log.Println("Error setting a resource: ", tmErr.ErrorText)
-		return nil, fmt.Errorf(tmErr.ErrorText)
-	}
 	return res, nil
 }
 
-// SetResource - Sets a resource
+// Set - Sets a resource
 // This works only in Configuration environment (statistics/information resources can't be set)
 // A new resources gets created if not existent or an existent resource gets updated
 // The restClient.StatusCode is set properly to http.StatusCreated or http.StatusOK accordingly
 // Returns the created/updated object or an error
 func (client Client) Set(resType, name string, profile interface{}) (map[string]interface{}, error) {
-	var tmErr *VTMError
 	res := make(map[string]interface{})
 
-    // you can only set configuration resources...
-    client.WorkWithConfigurationResources()
+	// you can only set configuration resources...
+	client.WorkWithConfigurationResources()
 
 	path := client.RootPath + "/" + resType + "/" + name
 	api := rest.NewBaseAPI(
@@ -276,17 +315,30 @@ func (client Client) Set(resType, name string, profile interface{}) (map[string]
 		path,
 		profile,
 		&res,
-		tmErr,
+		new(VTMError),
 	)
-	err := client.restClient.Do(api)
+	err := client.request(api)
 	if err != nil {
 		log.Println(err)
 		return nil, err
 	}
-	if tmErr != nil {
-		log.Println("Error setting a resource: ", tmErr.ErrorText)
-		return nil, fmt.Errorf(tmErr.ErrorText)
-	}
-
 	return res, nil
+}
+
+// Delete - deletes a resource
+func (client Client) Delete(resType, name string) error {
+
+	// you can only set configuration resources...
+	client.WorkWithConfigurationResources()
+	path := client.RootPath + "/" + resType + "/" + name
+	api := rest.NewBaseAPI(http.MethodDelete, path, nil, nil, new(VTMError))
+	err := client.request(api)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	if api.StatusCode() != http.StatusNoContent {
+		return fmt.Errorf("Error deleting resource %s, status: %d", name, api.StatusCode())
+	}
+	return nil
 }
