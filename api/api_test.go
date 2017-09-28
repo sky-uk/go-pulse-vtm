@@ -121,7 +121,8 @@ func TestSetAndDelete(t *testing.T) {
 	err = json.Unmarshal(template, &profile)
 
 	log.Println("Going to create virtual server: ", name)
-	newRes, err := client.Set("virtual_servers", name, profile)
+    newRes := make(map[string]interface{})
+	err = client.Set("virtual_servers", name, profile, &newRes)
 	if err != nil {
 		t.Fatal("Error creating a resource:", err)
 	}
@@ -133,7 +134,8 @@ func TestSetAndDelete(t *testing.T) {
 	log.Println("Going to update virtual server: ", name)
 	template = getJSONUpdatedProfile()
 	err = json.Unmarshal(template, &profile)
-	updatedRes, err := client.Set("virtual_servers", name, profile)
+    updatedRes := make(map[string]interface{})
+	err = client.Set("virtual_servers", name, profile, &updatedRes)
 	if err != nil {
 		t.Fatal("Error updating a resource", err)
 	}

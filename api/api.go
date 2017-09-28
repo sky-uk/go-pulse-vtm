@@ -303,8 +303,7 @@ func (client Client) GetByURL(resURL string) (map[string]interface{}, error) {
 // A new resources gets created if not existent or an existent resource gets updated
 // The restClient.StatusCode is set properly to http.StatusCreated or http.StatusOK accordingly
 // Returns the created/updated object or an error
-func (client Client) Set(resType, name string, profile interface{}) (map[string]interface{}, error) {
-	res := make(map[string]interface{})
+func (client Client) Set(resType, name string, profile interface{}, out interface{}) error {
 
 	// you can only set configuration resources...
 	client.WorkWithConfigurationResources()
@@ -314,15 +313,10 @@ func (client Client) Set(resType, name string, profile interface{}) (map[string]
 		http.MethodPut,
 		path,
 		profile,
-		&res,
+		out,
 		new(VTMError),
 	)
-	err := client.request(api)
-	if err != nil {
-		log.Println(err)
-		return nil, err
-	}
-	return res, nil
+	return client.request(api)
 }
 
 // Delete - deletes a resource
