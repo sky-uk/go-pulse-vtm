@@ -258,44 +258,29 @@ func (client Client) GetAllResources(resType string) ([]map[string]interface{}, 
 }
 
 // GetByName - gets a resource profile given its type and name
-func (client Client) GetByName(resType, resName string) (map[string]interface{}, error) {
+func (client Client) GetByName(resType, resName string, out interface{}) error {
+	client.WorkWithConfigurationResources()
 	path := client.RootPath + "/" + resType + "/" + resName
-	res := make(map[string]interface{})
-
-	log.Println("Going to get a resource, using PATH: ", path)
 	api := rest.NewBaseAPI(
 		http.MethodGet,
 		path,
 		nil,
-		&res,
+		out,
 		new(VTMError),
 	)
-	err := client.request(api)
-	if err != nil {
-		log.Println(err)
-		return nil, err
-	}
-	return res, nil
+	return client.request(api)
 }
 
 // GetByURL - gets a resource profile given its type and URL
-func (client Client) GetByURL(resURL string) (map[string]interface{}, error) {
-	res := make(map[string]interface{})
-
-	log.Println("Going to get a resource, using PATH: ", resURL)
+func (client Client) GetByURL(resURL string, out interface{}) error {
 	api := rest.NewBaseAPI(
 		http.MethodGet,
 		resURL,
 		nil,
-		&res,
+		out,
 		new(VTMError),
 	)
-	err := client.request(api)
-	if err != nil {
-		log.Println(err)
-		return nil, err
-	}
-	return res, nil
+	return client.request(api)
 }
 
 // Set - Sets a resource

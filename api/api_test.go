@@ -92,7 +92,8 @@ func TestGet(t *testing.T) {
 
 	for _, obj := range objs {
 		//Get a resource by name
-		objByName, err := client.GetByName("virtual_servers", obj["name"].(string))
+		objByName := make(map[string]interface{})
+		err := client.GetByName("virtual_servers", obj["name"].(string), &objByName)
 		if err != nil {
 			t.Fatal("Error getting object by name: ", obj["name"].(string))
 		}
@@ -100,7 +101,8 @@ func TestGet(t *testing.T) {
 		log.Printf("Retrieved resource:\n%+v\n", objByName)
 
 		// ...or get it by URL
-		objByURL, err := client.GetByURL(obj["href"].(string))
+		objByURL := make(map[string]interface{})
+		err = client.GetByURL(obj["href"].(string), &objByURL)
 		if err != nil {
 			t.Fatal("Error getting object by URL: ", obj["href"].(string))
 		}
@@ -121,7 +123,7 @@ func TestSetAndDelete(t *testing.T) {
 	err = json.Unmarshal(template, &profile)
 
 	log.Println("Going to create virtual server: ", name)
-    newRes := make(map[string]interface{})
+	newRes := make(map[string]interface{})
 	err = client.Set("virtual_servers", name, profile, &newRes)
 	if err != nil {
 		t.Fatal("Error creating a resource:", err)
@@ -134,7 +136,7 @@ func TestSetAndDelete(t *testing.T) {
 	log.Println("Going to update virtual server: ", name)
 	template = getJSONUpdatedProfile()
 	err = json.Unmarshal(template, &profile)
-    updatedRes := make(map[string]interface{})
+	updatedRes := make(map[string]interface{})
 	err = client.Set("virtual_servers", name, profile, &updatedRes)
 	if err != nil {
 		t.Fatal("Error updating a resource", err)
