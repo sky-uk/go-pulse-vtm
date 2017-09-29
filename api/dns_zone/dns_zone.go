@@ -11,13 +11,13 @@ const DNSZoneEndpoint = "/api/tm/3.8/config/active/dns_server/zones/"
 
 // NewCreate : Create a new DNS zone
 func NewCreate(dnsZoneName string, dnsZone DNSZone) *rest.BaseAPI {
-	createDNSZoneAPI := rest.NewBaseAPI(http.MethodPut, DNSZoneEndpoint+dnsZoneName, dnsZone, nil, new(api.VTMError))
+	createDNSZoneAPI := rest.NewBaseAPI(http.MethodPut, DNSZoneEndpoint+dnsZoneName, dnsZone, new(DNSZone), new(api.VTMError))
 	return createDNSZoneAPI
 }
 
 // NewGet : returns a DNS zone
 func NewGet(dnsZoneName string) *rest.BaseAPI {
-	getDNSZoneAPI := rest.NewBaseAPI(http.MethodGet, DNSZoneEndpoint+dnsZoneName, nil, new(string), new(api.VTMError))
+	getDNSZoneAPI := rest.NewBaseAPI(http.MethodGet, DNSZoneEndpoint+dnsZoneName, nil, new(DNSZone), new(api.VTMError))
 	return getDNSZoneAPI
 }
 
@@ -29,7 +29,7 @@ func NewGetAll() *rest.BaseAPI {
 
 // NewUpdate : Update a DNS zone
 func NewUpdate(dnsZoneName string, dnsZone DNSZone) *rest.BaseAPI {
-	updateDNSZoneNameAPI := rest.NewBaseAPI(http.MethodPut, DNSZoneEndpoint+dnsZoneName, dnsZone, nil, new(api.VTMError))
+	updateDNSZoneNameAPI := rest.NewBaseAPI(http.MethodPut, DNSZoneEndpoint+dnsZoneName, dnsZone, new(DNSZone), new(api.VTMError))
 	return updateDNSZoneNameAPI
 }
 
