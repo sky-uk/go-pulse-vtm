@@ -148,6 +148,10 @@ func Connect(params Params) (*Client, error) {
 
 // GetAllResourceTypes - returns the list of all types of configuration resources
 func (client Client) GetAllResourceTypes() ([]map[string]interface{}, error) {
+
+	// work with an environment
+	client.WorkWithConfigurationResources()
+
 	path := client.RootPath
 	res := make(map[string]interface{}, 0)
 

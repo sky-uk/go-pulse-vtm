@@ -2,47 +2,15 @@ package api
 
 import (
 	"encoding/json"
-	"errors"
 	"github.com/stretchr/testify/assert"
 	"log"
 	"math/rand"
-	"os"
 	"strconv"
 	"testing"
 )
 
-func getClient() (*Client, error) {
-
-	server, ok := os.LookupEnv("BROCADEVTM_SERVER")
-	if ok == false || server == "" {
-		return nil, errors.New("BROCADEVTM_SERVER env var not set")
-	}
-
-	username, ok := os.LookupEnv("BROCADEVTM_USERNAME")
-	if ok == false {
-		return nil, errors.New("BROCADEVTM_USERNAME env var not set")
-	}
-
-	password, ok := os.LookupEnv("BROCADEVTM_PASSWORD")
-	if ok == false {
-		return nil, errors.New("BROCADEVTM_PASSWORD env var not set")
-	}
-
-	params := Params{
-		//APIVersion: "3.8",
-		Server:    server,
-		Username:  username,
-		Password:  password,
-		IgnoreSSL: true,
-		Debug:     true,
-	}
-
-	return Connect(params)
-
-}
-
 func TestConnect(t *testing.T) {
-	client, err := getClient()
+	client, err := GetClient()
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}
@@ -51,7 +19,7 @@ func TestConnect(t *testing.T) {
 
 func TestTraverseAllConfigurationResources(t *testing.T) {
 	// get a client
-	client, err := getClient()
+	client, err := GetClient()
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}
@@ -72,9 +40,18 @@ func TestTraverseAllConfigurationResources(t *testing.T) {
 	}
 }
 
+func TestGetAllResourceTypes(t *testing.T) {
+	client, err := GetClient()
+	if err != nil {
+		t.Fatal("Error getting a client:", err)
+	}
+
+    res, err := client.GetAllResourceTypes()
+    log.Println("Found resources:\n", res)
+}
+
 func TestGet(t *testing.T) {
-	// get a client
-	client, err := getClient()
+	client, err := GetClient()
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}
@@ -112,7 +89,7 @@ func TestGet(t *testing.T) {
 
 func TestSetAndDelete(t *testing.T) {
 	// get a client
-	client, err := getClient()
+	client, err := GetClient()
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}
@@ -154,8 +131,8 @@ func TestSetAndDelete(t *testing.T) {
 }
 
 func TestTraverseStatus(t *testing.T) {
-    // get a client
-	client, err := getClient()
+	// get a client
+	client, err := GetClient()
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}
@@ -173,7 +150,7 @@ func TestTraverseStatus(t *testing.T) {
 
 func TestGetStatistics(t *testing.T) {
 	// get a client
-	client, err := getClient()
+	client, err := GetClient()
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}
@@ -189,7 +166,7 @@ func TestGetStatistics(t *testing.T) {
 
 func TestGetInformation(t *testing.T) {
 	// get a client
-	client, err := getClient()
+	client, err := GetClient()
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}
@@ -203,9 +180,9 @@ func TestGetInformation(t *testing.T) {
 	}
 }
 
-func TestState(t *testing.T) {
+func TestGetState(t *testing.T) {
 	// get a client
-	client, err := getClient()
+	client, err := GetClient()
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}

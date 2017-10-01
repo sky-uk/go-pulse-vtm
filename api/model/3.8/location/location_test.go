@@ -1,51 +1,18 @@
 package location
 
 import (
-	//"encoding/json"
-	"errors"
 	"github.com/sky-uk/go-brocade-vtm/api"
 	"github.com/stretchr/testify/assert"
 	"log"
 	"math/rand"
-	"os"
 	"strconv"
 	"testing"
 )
 
-func getClient() (*api.Client, error) {
-
-	server, ok := os.LookupEnv("BROCADEVTM_SERVER")
-	if ok == false || server == "" {
-		return nil, errors.New("BROCADEVTM_SERVER env var not set")
-	}
-
-	username, ok := os.LookupEnv("BROCADEVTM_USERNAME")
-	if ok == false {
-		return nil, errors.New("BROCADEVTM_USERNAME env var not set")
-	}
-
-	password, ok := os.LookupEnv("BROCADEVTM_PASSWORD")
-	if ok == false {
-		return nil, errors.New("BROCADEVTM_PASSWORD env var not set")
-	}
-
-	params := api.Params{
-		//APIVersion: "3.8",
-		Server:    server,
-		Username:  username,
-		Password:  password,
-		IgnoreSSL: true,
-		Debug:     true,
-	}
-
-	return api.Connect(params)
-
-}
-
 var name = "glb_" + strconv.Itoa(rand.Int())
 
 func TestSetLocation(t *testing.T) {
-	client, err := getClient()
+	client, err := api.GetClient()
 	if err != nil {
 		t.Fatal("Connection error: ", err)
 	}
@@ -68,7 +35,7 @@ func TestSetLocation(t *testing.T) {
 }
 
 func TestGetLocation(t *testing.T) {
-	client, err := getClient()
+	client, err := api.GetClient()
 	if err != nil {
 		t.Fatal("Connection error: ", err)
 	}
@@ -83,15 +50,14 @@ func TestGetLocation(t *testing.T) {
 }
 
 func TestDeleteLocation(t *testing.T) {
-	client, err := getClient()
+	client, err := api.GetClient()
 	if err != nil {
 		t.Fatal("Connection error: ", err)
 	}
-    err = client.Delete("locations", name)
+	err = client.Delete("locations", name)
 	if err != nil {
-		log.Println(err)
+		t.Fatal("Error deleting a resource: ", err)
 	} else {
 		log.Printf("Resource %s deleted", name)
 	}
-
 }
