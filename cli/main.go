@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/sky-uk/go-rest-api"
+	"github.com/sky-uk/go-brocade-vtm/api"
 	"os"
 	"time"
 )
@@ -11,7 +11,7 @@ import (
 var apiVersion string
 
 // ExecFunc executes the function for cli.
-type ExecFunc func(client *rest.Client, flagSet *flag.FlagSet)
+type ExecFunc func(client *api.Client, flagSet *flag.FlagSet)
 
 // Command struct - defines a cli command with flags and exec
 type Command struct {
@@ -20,19 +20,12 @@ type Command struct {
 }
 
 var (
-	/*
-	 * InfoBlox API server
-	 */
-	brocadeVTMServer string
-	brocadeVTMPort   int
-	debug            bool
-	timeout          time.Duration
-
-	/*
-	 * Authentication
-	 */
+	brocadeVTMServer   string
+	debug              bool
+	timeout            time.Duration
 	brocadeVTMUsername string
 	brocadeVTMPassword string
+	brocadeAPIVersion  string
 
 	commandMap = make(map[string]Command, 0)
 )
@@ -44,16 +37,16 @@ func RegisterCliCommand(name string, flagSet *flag.FlagSet, exec ExecFunc) {
 
 // InitFlags - initiall cli flags.
 func InitFlags() {
-	flag.StringVar(&brocadeVTMServer, "server", "https://"+os.Getenv("BROCADEVTM_SERVER"),
+	flag.StringVar(&brocadeVTMServer, "server", os.Getenv("BROCADEVTM_SERVER"),
 		"Brocade vTM API server hostname or address. (Env: BROCADEVTM_SERVER)")
-	flag.IntVar(&brocadeVTMPort, "port", 443,
-		"Brocade vTM API server port. Default:443")
 	flag.StringVar(&brocadeVTMUsername, "username", os.Getenv("BROCADEVTM_USERNAME"),
 		"Brocade vTM authentication username (Env: BROCADEVTM_USERNAME)")
 	flag.StringVar(&brocadeVTMPassword, "password", os.Getenv("BROCADEVTM_PASSWORD"),
 		"Brocade vTM authentication password (Env: BROCADEVTM_PASSWORD)")
+	flag.StringVar(&brocadeAPIVersion, "api_version", "3.8",
+		"Brocade vTM REST API version")
 	flag.BoolVar(&debug, "debug", false, "Debug output. Default:false")
-	flag.DurationVar(&timeout, "timeout", 300, "Client timeout value. Default: 300")
+	flag.DurationVar(&timeout, "timeout", 0, "Client timeout value. Default: 0")
 
 }
 
@@ -83,12 +76,27 @@ func main() {
 	}
 
 	flagSet := cmd.flagSet
-	flagSet.Parse(flag.Args()[1:])
+	if flag.NArg() > 1 {
+		flagSet.Parse(flag.Args()[1:])
+	}
 
 	headers := make(map[string]string)
 	headers["Content-Type"] = "application/json"
 
-	client := rest.Client{brocadeVTMServer, brocadeVTMUsername, brocadeVTMPassword, true, debug, headers, timeout}
+	params := api.Params{
+		APIVersion: brocadeAPIVersion,
+		Server:     brocadeVTMServer,
+		Username:   brocadeVTMUsername,
+		Password:   brocadeVTMPassword,
+		IgnoreSSL:  true,
+		Debug:      true,
+	}
 
-	cmd.exec(&client, flagSet)
+	client, err := api.Connect(params)
+	if err != nil {
+		fmt.Println("Error connecting to the BrocadevTM server")
+		os.Exit(1)
+	}
+
+	cmd.exec(client, flagSet)
 }

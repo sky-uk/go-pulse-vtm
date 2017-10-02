@@ -24,12 +24,12 @@ func GetClient() (*Client, error) {
 	}
 
 	params := Params{
-		//APIVersion: "3.8",
-		Server:    server,
-		Username:  username,
-		Password:  password,
-		IgnoreSSL: true,
-		Debug:     true,
+		APIVersion: "3.8",
+		Server:     server,
+		Username:   username,
+		Password:   password,
+		IgnoreSSL:  true,
+		Debug:      true,
 	}
 
 	return Connect(params)

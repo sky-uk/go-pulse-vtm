@@ -48,8 +48,8 @@ type AutoScaling struct {
 	Cluster          string   `json:"cluster,omitempty"`
 	DataCenter       string   `json:"data_center,omitempty"`
 	DataStore        string   `json:"data_store,omitempty"`
-	Enabled          *bool     `json:"enabled,omitempty"`
-	External         *bool     `json:"external,omitempty"`
+	Enabled          *bool    `json:"enabled,omitempty"`
+	External         *bool    `json:"external,omitempty"`
 	ExtraArgs        string   `json:"extraargs,omitempty"`
 	Hysteresis       uint     `json:"hysteresis"`
 	ImageID          string   `json:"imageid,omitempty"`
@@ -79,7 +79,7 @@ type Connection struct {
 
 // DNSAutoScale - DNSAutoScale settings
 type DNSAutoScale struct {
-	Enabled   *bool     `json:"enabled,omitempty"`
+	Enabled   *bool    `json:"enabled,omitempty"`
 	Hostnames []string `json:"hostnames,omitempty"`
 	Port      uint     `json:"port,omitempty"`
 }
@@ -134,7 +134,7 @@ type Ssl struct {
 	SSLSupportSSL3      string   `json:"ssl_support_ssl3,omitempty"`
 	SSLSupportTLS1      string   `json:"ssl_support_tls1,omitempty"`
 	SSLSupportTLS2      string   `json:"ssl_support_tls2,omitempty"`
-	StrictVerify        *bool     `json:"strict_verify,omitempty"`
+	StrictVerify        *bool    `json:"strict_verify,omitempty"`
 }
 
 // TCP - tcp setting

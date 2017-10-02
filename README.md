@@ -94,7 +94,7 @@ The ``GetInformation`` API returns the information section for the passed server
 ```
 
 ## Dealing with statistics
-The ``GetStatistics`` API returns all statistics data for a server node name
+The ``GetStatistics`` API returns all the statistics resources for a server node name
 ```
     stats, err := client.GetStatistics(<server name>)
 ```

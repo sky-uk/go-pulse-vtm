@@ -17,20 +17,20 @@ func TestSetPool(t *testing.T) {
 		t.Fatal("Connection error: ", err)
 	}
 	resource := Pool{}
-    tf := true
-    ff := false
+	tf := true
+	ff := false
 	resource.Properties.Basic = Basic{
-        Monitors: []string{"ping"},
-        NodesTable: []MemberNode{{
-            Node: "127.0.0.1:80",
-            Priority: 1,
-            State: "active",
-            Weight: 1,
-        }},
-        MaxConnectionAttempts: 10,
-        MaxIdleConnectionsPerNode: 20,
-        MaxTimeoutConnectionAttempts: 20,
-        NodeCloseWithReset: &tf,
+		Monitors: []string{"ping"},
+		NodesTable: []MemberNode{{
+			Node:     "127.0.0.1:80",
+			Priority: 1,
+			State:    "active",
+			Weight:   1,
+		}},
+		MaxConnectionAttempts:        10,
+		MaxIdleConnectionsPerNode:    20,
+		MaxTimeoutConnectionAttempts: 20,
+		NodeCloseWithReset:           &tf,
 	}
 	resource.Properties.Connection.MaxConnectTime = 60
 	resource.Properties.Connection.MaxConnectionsPerNode = 10
@@ -40,7 +40,7 @@ func TestSetPool(t *testing.T) {
 	resource.Properties.HTTP.HTTPKeepAlive = &ff
 	resource.Properties.HTTP.HTTPKeepAliveNonIdempotent = &ff
 	resource.Properties.LoadBalancing.PriorityEnabled = &ff
-    resource.Properties.LoadBalancing.PriorityNodes = 8
+	resource.Properties.LoadBalancing.PriorityNodes = 8
 	resource.Properties.LoadBalancing.Algorithm = "least_connections"
 	resource.Properties.TCP.Nagle = &tf
 	resource.Properties.DNSAutoScale.Enabled = &ff
@@ -60,6 +60,7 @@ func TestGetPool(t *testing.T) {
 	if err != nil {
 		t.Fatal("Connection error: ", err)
 	}
+	client.WorkWithConfigurationResources()
 
 	pool := Pool{}
 	err = client.GetByName("pools", name, &pool)

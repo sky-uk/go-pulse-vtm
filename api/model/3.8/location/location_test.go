@@ -39,6 +39,7 @@ func TestGetLocation(t *testing.T) {
 	if err != nil {
 		t.Fatal("Connection error: ", err)
 	}
+	client.WorkWithConfigurationResources()
 
 	location := Location{}
 	err = client.GetByName("locations", name, &location)

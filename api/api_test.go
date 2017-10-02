@@ -46,8 +46,14 @@ func TestGetAllResourceTypes(t *testing.T) {
 		t.Fatal("Error getting a client:", err)
 	}
 
-    res, err := client.GetAllResourceTypes()
-    log.Println("Found resources:\n", res)
+	// work with an environment
+	client.WorkWithConfigurationResources()
+
+	res, err := client.GetAllResourceTypes()
+	if err != nil {
+		t.Fatal("Error getting all resource types:", err)
+	}
+	log.Println("Found resources:\n", res)
 }
 
 func TestGet(t *testing.T) {
@@ -137,12 +143,13 @@ func TestTraverseStatus(t *testing.T) {
 		t.Fatal("Error getting a client:", err)
 	}
 
-    client.WorkWithStatus()
+	client.WorkWithStatus()
 	resources := make(map[string]interface{})
-    err = client.TraverseTree(client.RootPath, resources)
+	err = client.TraverseTree(client.RootPath, resources)
 	if err != nil {
 		t.Fatal("Error traversing tree: ", err)
 	}
+	log.Println("Traversed status: ", resources)
 	for url := range resources {
 		log.Println("Found Resource URL: ", url)
 	}
@@ -155,12 +162,12 @@ func TestGetStatistics(t *testing.T) {
 		t.Fatal("Error getting a client:", err)
 	}
 
-    stats, err := client.GetStatistics("h1ist01-v00.paas.d50.ovp.bskyb.com")
+	stats, err := client.GetStatistics("h1ist01-v00.paas.d50.ovp.bskyb.com")
 	if err != nil {
 		t.Fatal("Error getting statistics")
 	}
 	for key := range stats {
-        log.Println("Found stat: ", stats[key])
+		log.Println("Found stat: ", key, stats[key])
 	}
 }
 
@@ -171,12 +178,12 @@ func TestGetInformation(t *testing.T) {
 		t.Fatal("Error getting a client:", err)
 	}
 
-    info, err := client.GetInformation("h1ist01-v00.paas.d50.ovp.bskyb.com")
+	info, err := client.GetInformation("h1ist01-v00.paas.d50.ovp.bskyb.com")
 	if err != nil {
 		t.Fatal("Error getting information")
 	}
 	for key := range info {
-        log.Println("Found stat: ", info[key])
+		log.Println("Found stat: ", info[key])
 	}
 }
 
@@ -186,11 +193,11 @@ func TestGetState(t *testing.T) {
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}
-    state, err := client.GetState("h1ist01-v00.paas.d50.ovp.bskyb.com")
+	state, err := client.GetState("h1ist01-v00.paas.d50.ovp.bskyb.com")
 	if err != nil {
 		t.Fatal("Error getting information")
 	}
-    log.Println("Node Status:\n", state)
+	log.Println("Node Status:\n", state)
 
 }
 

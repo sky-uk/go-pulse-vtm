@@ -53,6 +53,8 @@ func TestGetMonitor(t *testing.T) {
 		t.Fatal("Connection error: ", err)
 	}
 
+	client.WorkWithConfigurationResources()
+
 	monitor := Monitor{}
 	err = client.GetByName("monitors", name, &monitor)
 	if err != nil {

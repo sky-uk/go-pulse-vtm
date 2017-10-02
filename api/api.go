@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"sort"
+	"strings"
 	"time"
 )
 
@@ -33,7 +34,7 @@ type Client struct {
 	currentServer     string
 }
 
-// WorkWithStatus - sets basis information/statistics path...
+// WorkWithStatus - sets the root path to work with status resources
 func (client *Client) WorkWithStatus() {
 	client.RootPath = apiPrefix + "/" + client.currentVersion + "/status"
 	log.Println("Current Path: ", client.RootPath)
@@ -42,23 +43,16 @@ func (client *Client) WorkWithStatus() {
 // GetStatistics - returns all statistics...
 func (client Client) GetStatistics(node string) (map[string]interface{}, error) {
 	client.WorkWithStatus()
-    path := client.RootPath + "/" + node + "/statistics"
+	path := client.RootPath + "/" + node + "/statistics"
 	all := make(map[string]interface{})
-	api := rest.NewBaseAPI(
-		http.MethodGet,
-		path,
-		nil,
-		&all,
-		new(VTMError),
-	)
-    err := client.request(api)
-    return all, err
+	err := client.TraverseTree(path, all)
+	return all, err
 }
 
 // GetState - get a node state
 func (client Client) GetState(node string) (map[string]interface{}, error) {
 	client.WorkWithStatus()
-    path := client.RootPath + "/" + node + "/state"
+	path := client.RootPath + "/" + node + "/state"
 	state := make(map[string]interface{})
 	api := rest.NewBaseAPI(
 		http.MethodGet,
@@ -67,14 +61,14 @@ func (client Client) GetState(node string) (map[string]interface{}, error) {
 		&state,
 		new(VTMError),
 	)
-    err := client.request(api)
-    return state, err
+	err := client.request(api)
+	return state, err
 }
 
 // GetInformation - returns all information...
 func (client Client) GetInformation(node string) (map[string]interface{}, error) {
 	client.WorkWithStatus()
-    path := client.RootPath + "/" + node + "/information"
+	path := client.RootPath + "/" + node + "/information"
 	all := make(map[string]interface{})
 	api := rest.NewBaseAPI(
 		http.MethodGet,
@@ -83,12 +77,11 @@ func (client Client) GetInformation(node string) (map[string]interface{}, error)
 		&all,
 		new(VTMError),
 	)
-    err := client.request(api)
-    return all, err
+	err := client.request(api)
+	return all, err
 }
 
-// WorkWithConfigurationResources - set current path to work with
-// configuration resources
+// WorkWithConfigurationResources - set the root path to work with configuration resources
 func (client *Client) WorkWithConfigurationResources() {
 	client.RootPath = apiPrefix + "/" + client.currentVersion + "/" + configPath
 	log.Println("Current Path: ", client.RootPath)
@@ -104,8 +97,12 @@ func Connect(params Params) (*Client, error) {
 	headers := make(map[string]string)
 	headers["Content-Type"] = "application/json"
 
+	if strings.HasPrefix(params.Server, "https") == false {
+		params.Server = "https://" + params.Server
+	}
+
 	client.restClient = rest.Client{
-		URL:       "https://" + params.Server,
+		URL:       params.Server,
 		User:      params.Username,
 		Password:  params.Password,
 		IgnoreSSL: params.IgnoreSSL,
@@ -224,9 +221,7 @@ func (client Client) TraverseTree(url string, resources map[string]interface{}) 
 			}
 		}
 	} else {
-		if _, exists := res["properties"]; exists {
-			resources[url] = res
-		}
+		resources[url] = res
 	}
 
 	return nil
@@ -263,7 +258,6 @@ func (client Client) GetAllResources(resType string) ([]map[string]interface{}, 
 
 // GetByName - gets a resource profile given its type and name
 func (client Client) GetByName(resType, resName string, out interface{}) error {
-	client.WorkWithConfigurationResources()
 	path := client.RootPath + "/" + resType + "/" + resName
 	api := rest.NewBaseAPI(
 		http.MethodGet,
@@ -311,7 +305,7 @@ func (client Client) Set(resType, name string, profile interface{}, out interfac
 // Delete - deletes a resource
 func (client Client) Delete(resType, name string) error {
 
-	// you can only set configuration resources...
+	// you can only delete configuration resources...
 	client.WorkWithConfigurationResources()
 	path := client.RootPath + "/" + resType + "/" + name
 	api := rest.NewBaseAPI(http.MethodDelete, path, nil, nil, new(VTMError))
