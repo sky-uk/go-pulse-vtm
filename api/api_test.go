@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/rand"
 	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -156,13 +157,19 @@ func TestTraverseStatus(t *testing.T) {
 }
 
 func TestGetStatistics(t *testing.T) {
+
+	server := getServer()
+	if server == "" {
+		t.Fatal("Error getting a valid server")
+	}
+
 	// get a client
 	client, err := GetClient()
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}
 
-	stats, err := client.GetStatistics("h1ist01-v00.paas.d50.ovp.bskyb.com")
+	stats, err := client.GetStatistics(server)
 	if err != nil {
 		t.Fatal("Error getting statistics")
 	}
@@ -172,13 +179,19 @@ func TestGetStatistics(t *testing.T) {
 }
 
 func TestGetInformation(t *testing.T) {
+
+	server := getServer()
+	if server == "" {
+		t.Fatal("Error getting a valid server")
+	}
+
 	// get a client
 	client, err := GetClient()
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}
 
-	info, err := client.GetInformation("h1ist01-v00.paas.d50.ovp.bskyb.com")
+	info, err := client.GetInformation(server)
 	if err != nil {
 		t.Fatal("Error getting information")
 	}
@@ -187,13 +200,42 @@ func TestGetInformation(t *testing.T) {
 	}
 }
 
+func getServer() string {
+
+	// get a client
+	client, err := GetClient()
+	if err != nil {
+		return ""
+	}
+
+	// traverse the status section...
+	client.WorkWithStatus()
+	resources := make(map[string]interface{})
+	err = client.TraverseTree(client.RootPath, resources)
+	if err != nil {
+		return ""
+	}
+	for url := range resources {
+		tokens := strings.Split(url, "/")
+		server := tokens[5]
+		log.Println("Server: ", server)
+		return server
+	}
+	return ""
+}
+
 func TestGetState(t *testing.T) {
+	server := getServer()
+	if server == "" {
+		t.Fatal("Error getting a valid server")
+	}
+
 	// get a client
 	client, err := GetClient()
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}
-	state, err := client.GetState("h1ist01-v00.paas.d50.ovp.bskyb.com")
+	state, err := client.GetState(server)
 	if err != nil {
 		t.Fatal("Error getting information")
 	}
