@@ -23,6 +23,7 @@ type Params struct {
 	IgnoreSSL  bool
 	Debug      bool
 	Timeout    time.Duration
+	Headers    map[string]string
 }
 
 // Client - the Brocade vTM Client struct
@@ -94,8 +95,13 @@ func Connect(params Params) (*Client, error) {
 	client := new(Client)
 	client.currentVersion = params.APIVersion
 
-	headers := make(map[string]string)
-	headers["Content-Type"] = "application/json"
+	if params.Headers == nil {
+		// if client doesn't pass any header, we only set
+		// the content type to be the default one...
+		headers := make(map[string]string)
+		headers["Content-Type"] = "application/json"
+		params.Headers = headers
+	}
 
 	if strings.HasPrefix(params.Server, "https") == false {
 		params.Server = "https://" + params.Server
@@ -107,7 +113,7 @@ func Connect(params Params) (*Client, error) {
 		Password:  params.Password,
 		IgnoreSSL: params.IgnoreSSL,
 		Debug:     params.Debug,
-		Headers:   headers,
+		Headers:   params.Headers,
 		Timeout:   params.Timeout,
 	}
 
