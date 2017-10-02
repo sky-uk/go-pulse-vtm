@@ -65,7 +65,6 @@ slackHelper.notificationWrapper(slackChannel, currentBuild, env, true) {
                 stage 'test'
                 inContainer {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'BROCADEVTM_CREDENTIALS', usernameVariable: 'BROCADEVTM_USERNAME', passwordVariable: 'BROCADEVTM_PASSWORD']]) {
-                        env.BROCADEVTM_SERVER=${env.BROCADEVTM_SERVER}
                         env.BROCADEVTM_ALLOW_UNVERIFIED_SSL=true
                         goHelper.goTest(project_src_path)
                     }
