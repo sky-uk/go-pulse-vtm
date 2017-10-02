@@ -43,13 +43,13 @@ type Basic struct {
 
 // AutoScaling - AutoScaling settings
 type AutoScaling struct {
-	AddNodeDelayTime uint     `json:"transparent"`
+	AddNodeDelayTime uint     `json:"addnode_delaytime"`
 	CloudCredentials string   `json:"cloud_credentials,omitempty"`
 	Cluster          string   `json:"cluster,omitempty"`
 	DataCenter       string   `json:"data_center,omitempty"`
 	DataStore        string   `json:"data_store,omitempty"`
-	Enabled          bool     `json:"enabled"`
-	External         bool     `json:"external"`
+	Enabled          *bool     `json:"enabled,omitempty"`
+	External         *bool     `json:"external,omitempty"`
 	ExtraArgs        string   `json:"extraargs,omitempty"`
 	Hysteresis       uint     `json:"hysteresis"`
 	ImageID          string   `json:"imageid,omitempty"`
@@ -58,7 +58,7 @@ type AutoScaling struct {
 	MaxNodes         uint     `json:"max_nodes"`
 	MinNodes         uint     `json:"min_nodes"`
 	Name             string   `json:"name,omitempty"`
-	Port             uint     `json:"port"`
+	Port             uint     `json:"port,omitempty"`
 	Refractory       uint     `json:"refractory"`
 	ResponseTime     uint     `json:"response_time"`
 	ScaleDownLevel   uint     `json:"scale_down_level"`
@@ -79,14 +79,14 @@ type Connection struct {
 
 // DNSAutoScale - DNSAutoScale settings
 type DNSAutoScale struct {
-	Enabled   bool     `json:"enabled"`
-	Hostnames []string `json:"hostnames"`
-	Port      uint     `json:"port"`
+	Enabled   *bool     `json:"enabled,omitempty"`
+	Hostnames []string `json:"hostnames,omitempty"`
+	Port      uint     `json:"port,omitempty"`
 }
 
 // FTP - FTP settings
 type FTP struct {
-	SupportRFC2428 bool `json:"support_rfc_2428"`
+	SupportRFC2428 *bool `json:"support_rfc_2428,omitempty"`
 }
 
 // HTTP - http settings
@@ -116,7 +116,7 @@ type Node struct {
 
 // SMTP - SMTP settings
 type SMTP struct {
-	SendSTARTTLS bool `json:"send_starttls"`
+	SendSTARTTLS *bool `json:"send_starttls,omitempty"`
 }
 
 // Ssl - SSL related settings
@@ -134,7 +134,7 @@ type Ssl struct {
 	SSLSupportSSL3      string   `json:"ssl_support_ssl3,omitempty"`
 	SSLSupportTLS1      string   `json:"ssl_support_tls1,omitempty"`
 	SSLSupportTLS2      string   `json:"ssl_support_tls2,omitempty"`
-	StrictVerify        bool     `json:"strict_verify"`
+	StrictVerify        *bool     `json:"strict_verify,omitempty"`
 }
 
 // TCP - tcp setting
