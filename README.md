@@ -18,8 +18,12 @@ The Connect API returns a client object or an error in case of issues.
 The APIVersion parameter can be used to specify a server API version to use;
 in case it is not provided, the list of available API versions is retrieved
 from the server and the highest available is used.
+Custom headers can be passed at connection time, if not passed the content type
+is anyhow set to "application/json"
 
 ```
+    headers := make(map[string]string)
+    // set your custom headers...
 	params := Params{
 		APIVersion: "3.8",
 		Server:    server,
@@ -27,6 +31,7 @@ from the server and the highest available is used.
 		Password:  password,
 		IgnoreSSL: true,
 		Debug:     true,
+        Headers:   headers,
 	}
 
 	client, err := Connect(params)
