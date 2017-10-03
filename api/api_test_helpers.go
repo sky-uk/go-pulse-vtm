@@ -2,8 +2,8 @@ package api
 
 import (
 	"math/rand"
-	"time"
 	"strconv"
+	"time"
 )
 
 // SetTestResourceName : used by resource tests to generate a random unique name.

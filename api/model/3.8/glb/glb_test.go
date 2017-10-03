@@ -2,12 +2,11 @@ package glb
 
 import (
 	"github.com/sky-uk/go-brocade-vtm/api"
-	"testing"
 	"github.com/stretchr/testify/assert"
 	"log"
 	"sort"
+	"testing"
 )
-
 
 func TestGLB(t *testing.T) {
 
