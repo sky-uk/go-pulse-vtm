@@ -2,9 +2,9 @@ package sslServerKey
 
 import (
 	"github.com/sky-uk/go-brocade-vtm/api"
+	"github.com/stretchr/testify/assert"
 	"log"
 	"testing"
-	"github.com/stretchr/testify/assert"
 )
 
 var csr = `
