@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var csr string = `
+var csr = `
 -----BEGIN CERTIFICATE REQUEST-----
 MIIEvDCCAqQCAQAwGzEZMBcGA1UEAwwQdGVzdC5leGFtcGxlLmNvbTCCAiIwDQYJ
 KoZIhvcNAQEBBQADggIPADCCAgoCggIBAOMc9Kz6ksGyae4/u+/ni1RuyFotUlwD
@@ -38,7 +38,7 @@ OE/+FhDYt7wCqngrV4HVKQ==
 -----END CERTIFICATE REQUEST-----
 `
 
-var certificate string = `
+var certificate = `
 -----BEGIN CERTIFICATE-----
 MIIFNTCCAx2gAwIBAgIJAOlCmaDJjTLEMA0GCSqGSIb3DQEBCwUAMBsxGTAXBgNV
 BAMMEHRlc3QuZXhhbXBsZS5jb20wHhcNMTcxMDA0MTAxMjMxWhcNMTgxMDA0MTAx
@@ -71,7 +71,7 @@ fsBpN2irCanEmYFunUwr0yfBUqksW484OEmMKCISB99PxMp9DK8fqsI/86MbMD8P
 -----END CERTIFICATE-----
 `
 
-var privateKey string = `
+var privateKey = `
 -----BEGIN RSA PRIVATE KEY-----
 MIIJKwIBAAKCAgEA4xz0rPqSwbJp7j+77+eLVG7IWi1SXAMxiEpdEGj/f8gW5fvz
 Vn7cXMaqW1Hn3smRwjGAWkh71EZN6sXLdtUEXsodda5UldumtVHY68GVmLwEi9hO
