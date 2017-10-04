@@ -18,26 +18,13 @@ func TestTrafficIPGroup(t *testing.T) {
 
 func setTrafficIPGroup(name string, t *testing.T) {
 
-	setTrue := true
-
 	client, err := api.GetClient()
 	if err != nil {
 		t.Fatal("Connection error: ", err)
 	}
 
-	// We need to get a list of traffic managers to use when creating the traffic IP group.
-	client.WorkWithConfigurationResources()
-	trafficManagers := trafficManager.TrafficManagers{}
-	err = client.GetByName("traffic_managers", "", &trafficManagers)
-	if err != nil {
-		t.Fatal("Error getting resource: ", err)
-	}
-	log.Println("Found Traffic Managers: ", trafficManagers)
-
-	trafficManagerList := make([]string, 0)
-	for _, trafficManager := range trafficManagers.Children {
-		trafficManagerList = append(trafficManagerList, trafficManager.Name)
-	}
+	setTrue := true
+	trafficManagers := getTrafficManagers(t)
 
 	resource := TrafficIPGroup{}
 	resource.Properties.Basic.Enabled = &setTrue
@@ -45,7 +32,7 @@ func setTrafficIPGroup(name string, t *testing.T) {
 	resource.Properties.Basic.HashSourcePort = &setTrue
 	resource.Properties.Basic.IPAssignmentMode = "alphabetic"
 	resource.Properties.Basic.IPAddresses = []string{"10.0.34.5"}
-	resource.Properties.Basic.Machines = trafficManagerList
+	resource.Properties.Basic.Machines = trafficManagers
 	resource.Properties.Basic.Mode = "singlehosted"
 
 	newTrafficIPGroup := TrafficIPGroup{}
@@ -60,7 +47,7 @@ func setTrafficIPGroup(name string, t *testing.T) {
 	assert.Equal(t, true, *newTrafficIPGroup.Properties.Basic.HashSourcePort)
 	assert.Equal(t, "alphabetic", newTrafficIPGroup.Properties.Basic.IPAssignmentMode)
 	assert.Equal(t, []string{"10.0.34.5"}, newTrafficIPGroup.Properties.Basic.IPAddresses)
-	assert.Equal(t, trafficManagerList, newTrafficIPGroup.Properties.Basic.Machines)
+	assert.Equal(t, trafficManagers, newTrafficIPGroup.Properties.Basic.Machines)
 	assert.Equal(t, "singlehosted", newTrafficIPGroup.Properties.Basic.Mode)
 }
 
@@ -79,25 +66,13 @@ func getTrafficIPGroup(name string, t *testing.T) {
 	}
 	log.Println("Found Traffic IP Group: ", trafficIPGroup)
 
-	// We need to get a list of traffic managers to use when checking the traffic IP group.
-	trafficManagers := trafficManager.TrafficManagers{}
-	err = client.GetByName("traffic_managers", "", &trafficManagers)
-	if err != nil {
-		t.Fatal("Error getting resource: ", err)
-	}
-	log.Println("Found Traffic Managers: ", trafficManagers)
-
-	trafficManagerList := make([]string, 0)
-	for _, trafficManager := range trafficManagers.Children {
-		trafficManagerList = append(trafficManagerList, trafficManager.Name)
-	}
 
 	assert.Equal(t, true, *trafficIPGroup.Properties.Basic.Enabled)
 	assert.Equal(t, "go-brocade-vtm test traffic IP group", trafficIPGroup.Properties.Basic.Note)
 	assert.Equal(t, true, *trafficIPGroup.Properties.Basic.HashSourcePort)
 	assert.Equal(t, "alphabetic", trafficIPGroup.Properties.Basic.IPAssignmentMode)
 	assert.Equal(t, []string{"10.0.34.5"}, trafficIPGroup.Properties.Basic.IPAddresses)
-	assert.Equal(t, trafficManagerList, trafficIPGroup.Properties.Basic.Machines)
+	assert.Equal(t, getTrafficManagers(t), trafficIPGroup.Properties.Basic.Machines)
 	assert.Equal(t, "singlehosted", trafficIPGroup.Properties.Basic.Mode)
 }
 
@@ -113,4 +88,27 @@ func deleteTrafficIPGroup(name string, t *testing.T) {
 	} else {
 		log.Printf("Resource %s deleted", name)
 	}
+}
+
+func getTrafficManagers(t *testing.T) []string {
+
+	client, err := api.GetClient()
+	if err != nil {
+		t.Fatal("Connection error: ", err)
+	}
+	client.WorkWithConfigurationResources()
+
+	trafficManagers := trafficManager.TrafficManagers{}
+	err = client.GetByName("traffic_managers", "", &trafficManagers)
+	if err != nil {
+		t.Fatal("Error getting resource: ", err)
+	}
+	log.Println("Found Traffic Managers: ", trafficManagers)
+
+	trafficManagerList := make([]string, 0)
+	for _, trafficManager := range trafficManagers.Children {
+		trafficManagerList = append(trafficManagerList, trafficManager.Name)
+	}
+
+	return trafficManagerList
 }
