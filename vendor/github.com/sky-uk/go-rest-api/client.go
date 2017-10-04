@@ -184,11 +184,22 @@ func (restClient *Client) handleResponse(apiObj *BaseAPI, res *http.Response) er
 			}
 
 		case "octet-stream":
-			apiObj.SetResponseObject(&bodyText)
+			if apiObj.ResponseObject() != nil {
+				if pstream, is := apiObj.ResponseObject().(*[]byte); is {
+					*pstream = bodyText
+				} else {
+					log.Println("[WARN]: Response object expected to be *[]byte")
+				}
+			}
 
 		case "plain", "html":
-			plainStr := string(bodyText)
-			apiObj.SetResponseObject(&plainStr)
+			if apiObj.ResponseObject() != nil {
+				if pstream, is := apiObj.ResponseObject().(*string); is {
+					*pstream = string(bodyText)
+				} else {
+					log.Println("[WARN]: Response object expected to be *string")
+				}
+			}
 
 		default:
 			log.Printf("Content type %s not supported yet", contentType)
