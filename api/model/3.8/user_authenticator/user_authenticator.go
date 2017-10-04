@@ -1,4 +1,4 @@
-package userauthenticators
+package userAuthenticator
 
 // UserAuthenticator : The over all UserAuthenticator data structure
 type UserAuthenticator struct {
@@ -62,8 +62,8 @@ type TACACSPlus struct {
 	Timeout       uint   `json:"timeout"`
 }
 
-// UserAuthenticatorList : List of ChildUserAuthenticator
-type UserAuthenticatorList struct {
+// UserAuthenticators : List of ChildUserAuthenticator
+type UserAuthenticators struct {
 	Children []ChildUserAuthenticator `json:"children"`
 }
 
