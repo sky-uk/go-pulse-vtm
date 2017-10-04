@@ -12,14 +12,12 @@ import (
 var name = api.SetTestResourceName("dns_zone_file_")
 var zoneFileTemplate = []byte(`
  $TTL 3600
-@                       30  IN  SOA h1ist01-v00.paas.d50.ovp.bskyb.com. hostmaster.isp.sky.com. (
+@                       30  IN  SOA example.com. hostmaster.isp.example.com. (
                                     2017092901 ; serial
                                     3600       ; refresh after 1 hour
                                     300        ; retry after 5 minutes
                                     1209600    ; expire after 2 weeks
                                     30 )       ; minimum TTL of 30 seconds
-; We may have more than one NS here.
-@                       30  IN  NS  h1ist01-v00.paas.d50.ovp.bskyb.com.
 ;
 ; Services - Each service in a location has a unique IP address. Two locations = two IPs.
 ;
