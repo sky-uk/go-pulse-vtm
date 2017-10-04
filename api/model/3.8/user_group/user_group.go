@@ -1,4 +1,4 @@
-package usergroups
+package userGroup
 
 // UserGroup : main UserGroup data structure
 type UserGroup struct {
@@ -24,8 +24,8 @@ type Permission struct {
 	AccessLevel string `json:"access_level"`
 }
 
-// UserGroupList : List of UserGroups
-type UserGroupList struct {
+// UserGroups : List of UserGroups
+type UserGroups struct {
 	Children []ChildUserGroup `json:"children"`
 }
 
