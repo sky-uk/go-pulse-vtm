@@ -109,4 +109,3 @@ The ``GetState`` API returns the current state for the passed server node name
 ```
     state, err := client.GetState(<server name>)
 ```
-
