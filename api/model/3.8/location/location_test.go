@@ -18,7 +18,7 @@ func TestSetLocation(t *testing.T) {
 	}
 	resource := Location{}
 	resource.Properties.Basic = Basic{
-		ID:        32001,
+		ID:        32002,
 		Latitude:  -36.353417,
 		Longitude: 146.687568,
 		Note:      "test location",
