@@ -1,7 +1,7 @@
-package trafficIpGroupManager
+package trafficManager
 
-// TrafficManagerChildren : A list of traffic manager children
-type TrafficManagerChildren struct {
+// TrafficManagers : A list of traffic manager children
+type TrafficManagers struct {
 	Children []TrafficMangerChild `json:"children"`
 }
 
