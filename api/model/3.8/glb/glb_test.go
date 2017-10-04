@@ -72,7 +72,7 @@ func setGLB(name string, t *testing.T) {
 	newGLB := GLB{}
 	err = client.Set("glb_services", name, resource, &newGLB)
 	if err != nil {
-		t.Fatal("Error creating a resource: ", err)
+		t.Fatal("Error creating resource: ", err)
 	}
 	log.Println("Created GLB ", name)
 
@@ -112,7 +112,7 @@ func getGLB(name string, t *testing.T) {
 	glb := GLB{}
 	err = client.GetByName("glb_services", name, &glb)
 	if err != nil {
-		t.Fatal("Error creating a resource: ", err)
+		t.Fatal("Error getting resource: ", err)
 	}
 	log.Println("Found GLB: ", glb)
 
@@ -157,7 +157,7 @@ func deleteGLB(name string, t *testing.T) {
 	}
 	err = client.Delete("glb_services", name)
 	if err != nil {
-		t.Fatal("Error deleting a resource: ", err)
+		t.Fatal("Error deleting resource: ", err)
 	} else {
 		log.Printf("Resource %s deleted", name)
 	}
