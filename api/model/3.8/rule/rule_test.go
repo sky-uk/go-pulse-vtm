@@ -15,9 +15,9 @@ var ruleTemplate = `if( string.ipmaskmatch( request.getremoteip(), "192.168.11.1
 } `
 
 func TestAll(t *testing.T) {
-    testSetRule(t)
-    testGetRule(t)
-    testDeleteRule(t)
+	testSetRule(t)
+	testGetRule(t)
+	testDeleteRule(t)
 }
 
 func getClient() (*api.Client, error) {
