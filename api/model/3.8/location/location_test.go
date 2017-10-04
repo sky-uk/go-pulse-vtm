@@ -44,7 +44,7 @@ func TestGetLocation(t *testing.T) {
 	location := Location{}
 	err = client.GetByName("locations", name, &location)
 	if err != nil {
-		t.Fatal("Error creating a resource: ", err)
+		t.Fatal("Error getting a resource: ", err)
 	}
 	log.Println("Found Location: ", location)
 	assert.Equal(t, "test location", location.Properties.Basic.Note)
