@@ -31,9 +31,9 @@ another-example-service             60  IN  A   10.100.10.6
 `)
 
 func TestAll(t *testing.T) {
-    testSetDNSZoneFile(t)
-    testGetDNSZoneFile(t)
-    testDeleteDNSZoneFile(t)
+	testSetDNSZoneFile(t)
+	testGetDNSZoneFile(t)
+	testDeleteDNSZoneFile(t)
 }
 
 func getClient() (*api.Client, error) {
