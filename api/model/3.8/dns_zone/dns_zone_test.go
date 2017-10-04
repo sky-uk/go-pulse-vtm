@@ -29,7 +29,7 @@ func setDNSZone(name string, t *testing.T) {
 	newDNSZone := DNSZone{}
 	err = client.Set("dns_server/zones", name, resource, &newDNSZone)
 	if err != nil {
-		t.Fatal("Error creating a resource: ", err)
+		t.Fatal("Error creating resource: ", err)
 	}
 	log.Println("Created DNS Zone ", name)
 
@@ -48,7 +48,7 @@ func getDNSZone(name string, t *testing.T) {
 	dnsZone := DNSZone{}
 	err = client.GetByName("dns_server/zones", name, &dnsZone)
 	if err != nil {
-		t.Fatal("Error creating a resource: ", err)
+		t.Fatal("Error getting resource: ", err)
 	}
 	log.Println("Found DNS Zone: ", dnsZone)
 
@@ -64,7 +64,7 @@ func deleteDNSZone(name string, t *testing.T) {
 	}
 	err = client.Delete("dns_server/zones", name)
 	if err != nil {
-		t.Fatal("Error deleting a resource: ", err)
+		t.Fatal("Error deleting resource: ", err)
 	} else {
 		log.Printf("Resource %s deleted", name)
 	}
