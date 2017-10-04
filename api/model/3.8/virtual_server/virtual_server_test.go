@@ -87,7 +87,7 @@ func setVirtualServer(name string, t *testing.T) {
 	newVirtualServer := VirtualServer{}
 	err = client.Set("virtual_servers", name, resource, &newVirtualServer)
 	if err != nil {
-		t.Fatal("Error creating a resource: ", err)
+		t.Fatal("Error creating resource: ", err)
 	}
 	log.Println("Created Virtual Server ", name)
 
@@ -141,7 +141,7 @@ func getVirtualServer(name string, t *testing.T) {
 	virtualServer := VirtualServer{}
 	err = client.GetByName("virtual_servers", name, &virtualServer)
 	if err != nil {
-		t.Fatal("Error getting a resource: ", err)
+		t.Fatal("Error getting resource: ", err)
 	}
 	log.Println("Found Virtual Server: ", virtualServer)
 
@@ -192,7 +192,7 @@ func deleteVirtualServer(name string, t *testing.T) {
 	}
 	err = client.Delete("virtual_servers", name)
 	if err != nil {
-		t.Fatal("Error deleting a resource: ", err)
+		t.Fatal("Error deleting resource: ", err)
 	} else {
 		log.Printf("Resource %s deleted", name)
 	}
