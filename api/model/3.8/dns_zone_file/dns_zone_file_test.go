@@ -20,7 +20,6 @@ var zoneFileTemplate = []byte(`
                                     30 )       ; minimum TTL of 30 seconds
 ; We may have more than one NS here.
 @                       30  IN  NS  h1ist01-v00.paas.d50.ovp.bskyb.com.
-h1ist01-v00                     30  IN  A   10.77.13.9
 ;
 ; Services - Each service in a location has a unique IP address. Two locations = two IPs.
 ;
