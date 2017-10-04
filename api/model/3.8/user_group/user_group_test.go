@@ -1,4 +1,4 @@
-package usergroups
+package userGroup
 
 import (
 	"github.com/sky-uk/go-brocade-vtm/api"
