@@ -66,7 +66,6 @@ func getTrafficIPGroup(name string, t *testing.T) {
 	}
 	log.Println("Found Traffic IP Group: ", trafficIPGroup)
 
-
 	assert.Equal(t, true, *trafficIPGroup.Properties.Basic.Enabled)
 	assert.Equal(t, "go-brocade-vtm test traffic IP group", trafficIPGroup.Properties.Basic.Note)
 	assert.Equal(t, true, *trafficIPGroup.Properties.Basic.HashSourcePort)
