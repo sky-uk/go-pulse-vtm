@@ -33,12 +33,15 @@ type Client struct {
 	currentVersion    string
 	RootPath          string
 	currentServer     string
+	params            Params
 }
 
 // WorkWithStatus - sets the root path to work with status resources
 func (client *Client) WorkWithStatus() {
 	client.RootPath = apiPrefix + "/" + client.currentVersion + "/status"
-	log.Println("Current Path: ", client.RootPath)
+	if client.params.Debug {
+		log.Println("Current Path: ", client.RootPath)
+	}
 }
 
 // GetStatistics - returns all statistics...
@@ -85,7 +88,9 @@ func (client Client) GetInformation(node string) (map[string]interface{}, error)
 // WorkWithConfigurationResources - set the root path to work with configuration resources
 func (client *Client) WorkWithConfigurationResources() {
 	client.RootPath = apiPrefix + "/" + client.currentVersion + "/" + configPath
-	log.Println("Current Path: ", client.RootPath)
+	if client.params.Debug {
+		log.Println("Current Path: ", client.RootPath)
+	}
 }
 
 // Connect - connect to the Brocade REST API server
@@ -94,6 +99,7 @@ func (client *Client) WorkWithConfigurationResources() {
 func Connect(params Params) (*Client, error) {
 	client := new(Client)
 	client.currentVersion = params.APIVersion
+	client.params = params
 
 	if params.Headers == nil {
 		// if client doesn't pass any header, we only set
@@ -131,7 +137,9 @@ func Connect(params Params) (*Client, error) {
 		log.Println(err)
 		return nil, err
 	}
-	log.Printf("Got:\n%+v", supportedVersionsMap)
+	if client.params.Debug {
+		log.Printf("Got:\n%+v", supportedVersionsMap)
+	}
 
 	versions := make([]string, 0)
 	for _, version := range supportedVersionsMap["children"].([]interface{}) {
@@ -158,7 +166,9 @@ func (client Client) GetAllResourceTypes() ([]map[string]interface{}, error) {
 	path := client.RootPath
 	res := make(map[string]interface{}, 0)
 
-	log.Println("Going to get all resource types, using PATH:\n", path)
+	if client.params.Debug {
+		log.Println("Going to get all resource types, using PATH:\n", path)
+	}
 	api := rest.NewBaseAPI(
 		http.MethodGet,
 		path,
@@ -201,7 +211,9 @@ func (client Client) TraverseTree(url string, resources map[string]interface{}) 
 		return fmt.Errorf("Invalid path")
 	}
 
-	log.Println("Going to get PATH: ", url)
+	if client.params.Debug {
+		log.Println("Going to get PATH: ", url)
+	}
 	api := rest.NewBaseAPI(
 		http.MethodGet,
 		url,
@@ -215,7 +227,6 @@ func (client Client) TraverseTree(url string, resources map[string]interface{}) 
 		return err
 	}
 	if children, exists := res["children"]; exists {
-		log.Println("Going deeper...")
 		for _, item := range children.([]interface{}) {
 			if itemAsMap, ok := item.(map[string]interface{}); ok {
 				err = client.TraverseTree(itemAsMap["href"].(string), resources)
@@ -238,7 +249,9 @@ func (client Client) GetAllResources(resType string) ([]map[string]interface{}, 
 	path := client.RootPath + "/" + resType
 	res := make(map[string]interface{})
 
-	log.Println("Going to get all resources, using PATH: ", path)
+	if client.params.Debug {
+		log.Println("Going to get all resources, using PATH: ", path)
+	}
 	api := rest.NewBaseAPI(
 		http.MethodGet,
 		path,
@@ -256,8 +269,6 @@ func (client Client) GetAllResources(resType string) ([]map[string]interface{}, 
 		for _, item := range list {
 			resources = append(resources, item.(map[string]interface{}))
 		}
-	} else {
-		log.Println("Key \"children\" not found in response")
 	}
 	return resources, nil
 }

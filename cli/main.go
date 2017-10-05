@@ -89,7 +89,7 @@ func main() {
 		Username:   brocadeVTMUsername,
 		Password:   brocadeVTMPassword,
 		IgnoreSSL:  true,
-		Debug:      true,
+		Debug:      debug,
 	}
 
 	client, err := api.Connect(params)
