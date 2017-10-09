@@ -94,6 +94,32 @@ func TestGet(t *testing.T) {
 	}
 }
 
+func TestSetNil(t *testing.T) {
+	// get a client
+	client, err := GetClient()
+	if err != nil {
+		t.Fatal("Error getting a client:", err)
+	}
+
+	profile := make(map[string]interface{})
+	name := "test_vs" + strconv.Itoa(rand.Int())
+	template := getJSONProfile()
+	err = json.Unmarshal(template, &profile)
+
+	log.Println("Going to create virtual server: ", name)
+	err = client.Set("virtual_servers", name, profile, nil)
+	if err != nil {
+		t.Fatal("Error creating a resource:", err)
+	}
+
+	err = client.Delete("virtual_servers", name)
+	if err != nil {
+		log.Println(err)
+	} else {
+		log.Printf("Resource %s deleted", name)
+	}
+}
+
 func TestSetAndDelete(t *testing.T) {
 	// get a client
 	client, err := GetClient()

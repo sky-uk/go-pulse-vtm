@@ -309,6 +309,10 @@ func (client Client) Set(resType, name string, profile interface{}, out interfac
 	client.WorkWithConfigurationResources()
 
 	path := client.RootPath + "/" + resType + "/" + name
+	if out == nil {
+		res := make(map[string]interface{})
+		out = &res
+	}
 	api := rest.NewBaseAPI(
 		http.MethodPut,
 		path,
