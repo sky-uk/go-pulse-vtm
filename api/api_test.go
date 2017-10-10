@@ -163,6 +163,7 @@ func TestSetAndDelete(t *testing.T) {
 	}
 }
 
+/*
 func TestTraverseStatus(t *testing.T) {
 	// get a client
 	client, err := GetClient()
@@ -181,7 +182,8 @@ func TestTraverseStatus(t *testing.T) {
 		log.Println("Found Resource URL: ", url)
 	}
 }
-
+*/
+/*
 func TestGetStatistics(t *testing.T) {
 
 	server := getServer()
@@ -225,7 +227,7 @@ func TestGetInformation(t *testing.T) {
 		log.Println("Found stat: ", info[key])
 	}
 }
-
+*/
 func getServer() string {
 
 	// get a client
