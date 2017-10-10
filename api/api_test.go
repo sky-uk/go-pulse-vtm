@@ -249,6 +249,7 @@ func getServer() string {
 	}
 	return ""
 }
+
 /*
 func TestGetState(t *testing.T) {
 	server := getServer()
