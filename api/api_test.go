@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestConnect(t *testing.T) {
@@ -102,6 +103,7 @@ func TestSetNil(t *testing.T) {
 	}
 
 	profile := make(map[string]interface{})
+	rand.Seed(time.Now().UTC().UnixNano())
 	name := "test_vs" + strconv.Itoa(rand.Int())
 	template := getJSONProfile()
 	err = json.Unmarshal(template, &profile)
@@ -128,6 +130,7 @@ func TestSetAndDelete(t *testing.T) {
 	}
 
 	profile := make(map[string]interface{})
+	rand.Seed(time.Now().UTC().UnixNano())
 	name := "test_vs" + strconv.Itoa(rand.Int())
 	template := getJSONProfile()
 	err = json.Unmarshal(template, &profile)
@@ -140,6 +143,7 @@ func TestSetAndDelete(t *testing.T) {
 	}
 	properties := newRes["properties"].(map[string]interface{})
 	basic := properties["basic"].(map[string]interface{})
+	assert.Equal(t, 201, client.StatusCode)
 	assert.Equal(t, true, basic["add_cluster_ip"])
 
 	//update the same resource
@@ -153,6 +157,7 @@ func TestSetAndDelete(t *testing.T) {
 	}
 	properties = updatedRes["properties"].(map[string]interface{})
 	basic = properties["basic"].(map[string]interface{})
+	assert.Equal(t, 200, client.StatusCode)
 	assert.Equal(t, false, basic["add_cluster_ip"])
 
 	err = client.Delete("virtual_servers", name)
