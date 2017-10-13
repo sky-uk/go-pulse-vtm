@@ -19,28 +19,42 @@ func TestSetPool(t *testing.T) {
 	resource := Pool{}
 	tf := true
 	ff := false
+
+	priority := uint(1)
+	weight := 1
+	maxConnectionAttempts := uint(10)
+	maxConnectTime := uint(60)
+	maxConnectionsPerNode := uint(10)
+	maxQueueSize := uint(20)
+	maxReplyTime := uint(60)
+	queueTimeout := uint(60)
+	priorityNodes := uint(8)
+
 	resource.Properties.Basic = Basic{
 		Monitors: []string{"ping"},
 		NodesTable: []MemberNode{{
 			Node:     "127.0.0.1:80",
-			Priority: 1,
+			Priority: &priority,
 			State:    "active",
-			Weight:   1,
+			Weight:   &weight,
 		}},
-		MaxConnectionAttempts:        10,
+		MaxConnectionAttempts:        &maxConnectionAttempts,
 		MaxIdleConnectionsPerNode:    20,
 		MaxTimeoutConnectionAttempts: 20,
-		NodeCloseWithReset:           &tf,
+		NodeCloseWithReset:           true,
 	}
-	resource.Properties.Connection.MaxConnectTime = 60
-	resource.Properties.Connection.MaxConnectionsPerNode = 10
-	resource.Properties.Connection.MaxQueueSize = 20
-	resource.Properties.Connection.MaxReplyTime = 60
-	resource.Properties.Connection.QueueTimeout = 60
+	resource.Properties.Connection.MaxConnectTime = &maxConnectTime
+	resource.Properties.Connection.MaxConnectionsPerNode = &maxConnectionsPerNode
+	resource.Properties.Connection.MaxQueueSize = &maxQueueSize
+	resource.Properties.Connection.MaxReplyTime = &maxReplyTime
+	resource.Properties.Connection.QueueTimeout = &queueTimeout
+
 	resource.Properties.HTTP.HTTPKeepAlive = &ff
 	resource.Properties.HTTP.HTTPKeepAliveNonIdempotent = &ff
 	resource.Properties.LoadBalancing.PriorityEnabled = &ff
-	resource.Properties.LoadBalancing.PriorityNodes = 8
+
+	resource.Properties.LoadBalancing.PriorityNodes = &priorityNodes
+
 	resource.Properties.LoadBalancing.Algorithm = "least_connections"
 	resource.Properties.TCP.Nagle = &tf
 	resource.Properties.DNSAutoScale.Enabled = &ff
@@ -52,7 +66,7 @@ func TestSetPool(t *testing.T) {
 		t.Fatal("Error creating a resource: ", err)
 	}
 	log.Println("Resource created: ", name)
-	assert.Equal(t, uint(10), newPool.Properties.Basic.MaxConnectionAttempts)
+	assert.Equal(t, uint(10), *newPool.Properties.Basic.MaxConnectionAttempts)
 }
 
 func TestGetPool(t *testing.T) {
@@ -68,7 +82,7 @@ func TestGetPool(t *testing.T) {
 		t.Fatal("Error getting a resource: ", err)
 	}
 	log.Println("Resource found: ", pool)
-	assert.Equal(t, uint(10), pool.Properties.Basic.MaxConnectionAttempts)
+	assert.Equal(t, uint(10), *pool.Properties.Basic.MaxConnectionAttempts)
 }
 
 func TestDeletePool(t *testing.T) {
