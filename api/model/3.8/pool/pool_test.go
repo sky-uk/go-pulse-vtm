@@ -29,6 +29,9 @@ func TestSetPool(t *testing.T) {
 	maxReplyTime := uint(60)
 	queueTimeout := uint(60)
 	priorityNodes := uint(8)
+	maxIdleConnectionsPerNode := uint(20)
+	maxTimeoutConnectionAttempts := uint(20)
+	nodeCloseWithReset := true
 
 	resource.Properties.Basic = Basic{
 		Monitors: []string{"ping"},
@@ -39,9 +42,9 @@ func TestSetPool(t *testing.T) {
 			Weight:   &weight,
 		}},
 		MaxConnectionAttempts:        &maxConnectionAttempts,
-		MaxIdleConnectionsPerNode:    20,
-		MaxTimeoutConnectionAttempts: 20,
-		NodeCloseWithReset:           true,
+		MaxIdleConnectionsPerNode:    &maxIdleConnectionsPerNode,
+		MaxTimeoutConnectionAttempts: &maxTimeoutConnectionAttempts,
+		NodeCloseWithReset:           &nodeCloseWithReset,
 	}
 	resource.Properties.Connection.MaxConnectTime = &maxConnectTime
 	resource.Properties.Connection.MaxConnectionsPerNode = &maxConnectionsPerNode
