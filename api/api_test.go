@@ -16,7 +16,10 @@ func TestConnect(t *testing.T) {
 	if err != nil {
 		t.Fatal("Error getting a client:", err)
 	}
-	log.Printf("Supported versions:\n%+v\n", client.VersionsSupported)
+
+	if client.VersionsSupported != nil {
+		log.Printf("Supported versions:\n%+v\n", client.VersionsSupported)
+	}
 }
 
 func TestTraverseAllConfigurationResources(t *testing.T) {
