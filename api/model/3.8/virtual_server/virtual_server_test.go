@@ -10,6 +10,7 @@ import (
 func TestVirtualServer(t *testing.T) {
 
 	name := api.SetTestResourceName("virtual_servers")
+
 	setVirtualServer(name, t)
 	getVirtualServer(name, t)
 	deleteVirtualServer(name, t)
@@ -31,7 +32,6 @@ func setVirtualServer(name string, t *testing.T) {
 		ConnectTimeout:       30,
 		Enabled:              true,
 		ListenOnAny:          true,
-		MSS:                  uint(0),
 		Note:                 "Created by go-brocade-vtm test",
 		Pool:                 "test-pool",
 		Port:                 80,
@@ -98,7 +98,6 @@ func setVirtualServer(name string, t *testing.T) {
 	assert.Equal(t, uint(30), newVirtualServer.Properties.Basic.ConnectTimeout)
 	assert.Equal(t, true, newVirtualServer.Properties.Basic.Enabled)
 	assert.Equal(t, true, newVirtualServer.Properties.Basic.ListenOnAny)
-	assert.Equal(t, uint(0), newVirtualServer.Properties.Basic.MSS)
 	assert.Equal(t, "Created by go-brocade-vtm test", newVirtualServer.Properties.Basic.Note)
 	assert.Equal(t, "test-pool", newVirtualServer.Properties.Basic.Pool)
 	assert.Equal(t, uint(80), newVirtualServer.Properties.Basic.Port)
@@ -152,7 +151,6 @@ func getVirtualServer(name string, t *testing.T) {
 	assert.Equal(t, uint(30), virtualServer.Properties.Basic.ConnectTimeout)
 	assert.Equal(t, true, virtualServer.Properties.Basic.Enabled)
 	assert.Equal(t, true, virtualServer.Properties.Basic.ListenOnAny)
-	assert.Equal(t, uint(0), virtualServer.Properties.Basic.MSS)
 	assert.Equal(t, "Created by go-brocade-vtm test", virtualServer.Properties.Basic.Note)
 	assert.Equal(t, "test-pool", virtualServer.Properties.Basic.Pool)
 	assert.Equal(t, uint(80), virtualServer.Properties.Basic.Port)
