@@ -45,25 +45,51 @@ func TestTraverseAllConfigurationResources(t *testing.T) {
 	}
 }
 
+func TestFormatErrorTextEasyError(t *testing.T) {
+	errStruct := VTMError{
+		ErrorID:   "json.field_unknown",
+		ErrorText: "Unexpected field 'foo' in main JSON object.",
+	}
+	errStr := FormatErrorText(&errStruct)
+	log.Println(errStr)
+}
+
+func TestFormatErrorTextNotSoEasy(t *testing.T) {
+	errStruct := VTMError{
+		ErrorID:   "resource.validation_error",
+		ErrorText: "The resource provided is invalid",
+		ErrorInfo: map[string]interface{}{
+			"basic": map[string]interface{}{
+				"one_to_one": map[string]interface{}{
+					"error_id":   "json.invalid_table",
+					"error_text": "The table is badly formed. Expected an array of table rows",
+				},
+			},
+		},
+	}
+	errStr := FormatErrorText(&errStruct)
+	log.Println(errStr)
+}
+
 func TestFormatErrorText(t *testing.T) {
 	errStruct := VTMError{
 		ErrorID:   "error id",
 		ErrorText: "Generic Error Text",
 		ErrorInfo: map[string]interface{}{
 			"section1": map[string]interface{}{
-				"key1.1": VTMError{
-					ErrorID:   "key error id",
-					ErrorText: "key error text",
+				"attr1.1": map[string]interface{}{
+					"ErrorID":   "key error id",
+					"ErrorText": "key error text",
 				},
-				"key1.2": VTMError{
-					ErrorID:   "key error id",
-					ErrorText: "key error text",
+				"attr1.2": map[string]interface{}{
+					"ErrorID":   "key error id",
+					"ErrorText": "key error text",
 				},
 			},
 			"section2": map[string]interface{}{
-				"key2.1": VTMError{
-					ErrorID:   "key error id",
-					ErrorText: "key error text",
+				"attr2.1": map[string]interface{}{
+					"ErrorID":   "key error id",
+					"ErrorText": "key error text",
 				},
 			},
 		},

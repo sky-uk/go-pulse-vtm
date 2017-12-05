@@ -189,14 +189,17 @@ func (client *Client) GetAllResourceTypes() ([]map[string]interface{}, error) {
 	return resTypes, nil
 }
 
-// FormatErrorText - formats error strings
+// FormatErrorText - formats the error message including attributes error strings
 func FormatErrorText(tmErr *VTMError) string {
-	retStr := tmErr.ErrorText + "\n"
+	retStr := tmErr.ErrorID + ": " + tmErr.ErrorText + "\n"
 
 	for section, sectionMap := range tmErr.ErrorInfo {
 		sectionErrorStr := section + ":\n"
-		for attr := range sectionMap.(map[string]interface{}) {
+		for attr, attrErrMap := range sectionMap.(map[string]interface{}) {
 			sectionErrorStr += "    " + attr + ":\n"
+			for attrErrKey, attrErrValue := range attrErrMap.(map[string]interface{}) {
+				sectionErrorStr += "        " + attrErrKey + ": " + attrErrValue.(string) + "\n"
+			}
 		}
 
 		retStr += sectionErrorStr
