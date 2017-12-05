@@ -45,6 +45,35 @@ func TestTraverseAllConfigurationResources(t *testing.T) {
 	}
 }
 
+func TestFormatErrorText(t *testing.T) {
+	errStruct := VTMError{
+		ErrorID:   "error id",
+		ErrorText: "Generic Error Text",
+		ErrorInfo: map[string]interface{}{
+			"section1": map[string]interface{}{
+				"key1.1": VTMError{
+					ErrorID:   "key error id",
+					ErrorText: "key error text",
+				},
+				"key1.2": VTMError{
+					ErrorID:   "key error id",
+					ErrorText: "key error text",
+				},
+			},
+			"section2": map[string]interface{}{
+				"key2.1": VTMError{
+					ErrorID:   "key error id",
+					ErrorText: "key error text",
+				},
+			},
+		},
+	}
+
+	errStr := FormatErrorText(&errStruct)
+	log.Println(errStr)
+
+}
+
 func TestGetAllResourceTypes(t *testing.T) {
 	client, err := GetClient()
 	if err != nil {

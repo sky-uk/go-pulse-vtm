@@ -189,12 +189,29 @@ func (client *Client) GetAllResourceTypes() ([]map[string]interface{}, error) {
 	return resTypes, nil
 }
 
+// FormatErrorText - formats error strings
+func FormatErrorText(tmErr *VTMError) string {
+	retStr := tmErr.ErrorText + "\n"
+
+	for section, sectionMap := range tmErr.ErrorInfo {
+		sectionErrorStr := section + ":\n"
+		for attr := range sectionMap.(map[string]interface{}) {
+			sectionErrorStr += "    " + attr + ":\n"
+		}
+
+		retStr += sectionErrorStr
+	}
+
+	return retStr
+}
+
 func (client *Client) request(api *rest.BaseAPI) error {
 	err := client.restClient.Do(api)
 	client.StatusCode = client.restClient.StatusCode
 	tmErr := api.ErrorObject().(*VTMError)
 	if tmErr.ErrorText != "" {
-		err = fmt.Errorf(tmErr.ErrorText)
+		errStr := FormatErrorText(tmErr)
+		err = fmt.Errorf(errStr)
 	}
 	return err
 }
