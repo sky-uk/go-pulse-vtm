@@ -14,11 +14,11 @@ import (
 func TestConnect(t *testing.T) {
 	client, err := GetClient()
 	if err != nil {
-		t.Fatal("Error getting a client:", err)
+		t.Fatal("[ERROR] Error getting a client:", err)
 	}
 
 	if client.VersionsSupported != nil {
-		log.Printf("Supported versions:\n%+v\n", client.VersionsSupported)
+		log.Printf("[ERROR] Supported versions:\n%+v\n", client.VersionsSupported)
 	}
 }
 
@@ -26,29 +26,29 @@ func TestTraverseAllConfigurationResources(t *testing.T) {
 	// get a client
 	client, err := GetClient()
 	if err != nil {
-		t.Fatal("Error getting a client:", err)
+		t.Fatal("[ERROR] Error getting a client:", err)
 	}
 
 	// work with an environment
 	client.WorkWithConfigurationResources()
 
-	log.Println("Root Path: ", client.RootPath)
+	log.Println("[DEBUG] Root Path: ", client.RootPath)
 
 	// Traversing the tree!!
 	resources := make(map[string]interface{})
 	err = client.TraverseTree(client.RootPath, resources)
 	if err != nil {
-		t.Fatal("Error traversing tree: ", err)
+		t.Fatal("[ERROR] Error traversing tree: ", err)
 	}
 	for url := range resources {
-		log.Println("Found Resource URL: ", url)
+		log.Println("[DEBUG] Found Resource URL: ", url)
 	}
 }
 
 func TestFormatErrorTextEasyError(t *testing.T) {
 	errStruct := VTMError{
 		ErrorID:   "json.field_unknown",
-		ErrorText: "Unexpected field 'foo' in main JSON object.",
+		ErrorText: "[ERROR] Unexpected field 'foo' in main JSON object.",
 	}
 	errStr := FormatErrorText(&errStruct)
 	log.Println(errStr)
@@ -62,7 +62,7 @@ func TestFormatErrorTextNotSoEasy(t *testing.T) {
 			"basic": map[string]interface{}{
 				"one_to_one": map[string]interface{}{
 					"error_id":   "json.invalid_table",
-					"error_text": "The table is badly formed. Expected an array of table rows",
+					"error_text": "[ERROR] The table is badly formed. Expected an array of table rows",
 				},
 			},
 		},
@@ -74,7 +74,7 @@ func TestFormatErrorTextNotSoEasy(t *testing.T) {
 func TestFormatErrorText(t *testing.T) {
 	errStruct := VTMError{
 		ErrorID:   "error id",
-		ErrorText: "Generic Error Text",
+		ErrorText: "[ERROR] Generic Error Text",
 		ErrorInfo: map[string]interface{}{
 			"section1": map[string]interface{}{
 				"attr1.1": map[string]interface{}{
@@ -103,7 +103,7 @@ func TestFormatErrorText(t *testing.T) {
 func TestGetAllResourceTypes(t *testing.T) {
 	client, err := GetClient()
 	if err != nil {
-		t.Fatal("Error getting a client:", err)
+		t.Fatal("[ERROR] Error getting a client:", err)
 	}
 
 	// work with an environment
@@ -111,15 +111,15 @@ func TestGetAllResourceTypes(t *testing.T) {
 
 	res, err := client.GetAllResourceTypes()
 	if err != nil {
-		t.Fatal("Error getting all resource types:", err)
+		t.Fatal("[ERROR] Error getting all resource types:", err)
 	}
-	log.Println("Found resources:\n", res)
+	log.Println("[DEBUG] Found resources:\n", res)
 }
 
 func TestGet(t *testing.T) {
 	client, err := GetClient()
 	if err != nil {
-		t.Fatal("Error getting a client:", err)
+		t.Fatal("[ERROR] Error getting a client:", err)
 	}
 
 	// work with an environment
@@ -130,7 +130,7 @@ func TestGet(t *testing.T) {
 
 	objs, err := client.GetAllResources("virtual_servers")
 	if err != nil {
-		t.Fatal("Error getting all configuration resources: ", err)
+		t.Fatal("[ERROR]Error getting all configuration resources: ", err)
 	}
 
 	for _, obj := range objs {
@@ -138,18 +138,18 @@ func TestGet(t *testing.T) {
 		objByName := make(map[string]interface{})
 		err := client.GetByName("virtual_servers", obj["name"].(string), &objByName)
 		if err != nil {
-			t.Fatal("Error getting object by name: ", obj["name"].(string))
+			t.Fatal("[ERROR] Error getting object by name: ", obj["name"].(string))
 		}
 
-		log.Printf("Retrieved resource:\n%+v\n", objByName)
+		log.Printf("[DEBUG] Retrieved resource:\n%+v\n", objByName)
 
 		// ...or get it by URL
 		objByURL := make(map[string]interface{})
 		err = client.GetByURL(obj["href"].(string), &objByURL)
 		if err != nil {
-			t.Fatal("Error getting object by URL: ", obj["href"].(string))
+			t.Fatal("[ERROR] Error getting object by URL: ", obj["href"].(string))
 		}
-		log.Printf("Retrieved resource:\n%+v\n", objByURL)
+		log.Printf("[DEBUG] Retrieved resource:\n%+v\n", objByURL)
 	}
 }
 
@@ -157,7 +157,7 @@ func TestSetNil(t *testing.T) {
 	// get a client
 	client, err := GetClient()
 	if err != nil {
-		t.Fatal("Error getting a client:", err)
+		t.Fatal("[ERROR] Error getting a client:", err)
 	}
 
 	profile := make(map[string]interface{})
@@ -166,17 +166,17 @@ func TestSetNil(t *testing.T) {
 	template := getJSONProfile()
 	err = json.Unmarshal(template, &profile)
 
-	log.Println("Going to create virtual server: ", name)
+	log.Println("[DEBUG] Going to create virtual server: ", name)
 	err = client.Set("virtual_servers", name, profile, nil)
 	if err != nil {
-		t.Fatal("Error creating a resource:", err)
+		t.Fatal("[ERROR] Error creating a resource:", err)
 	}
 
 	err = client.Delete("virtual_servers", name)
 	if err != nil {
 		log.Println(err)
 	} else {
-		log.Printf("Resource %s deleted", name)
+		log.Printf("[DEBUG] Resource %s deleted", name)
 	}
 }
 
@@ -184,7 +184,7 @@ func TestSetAndDelete(t *testing.T) {
 	// get a client
 	client, err := GetClient()
 	if err != nil {
-		t.Fatal("Error getting a client:", err)
+		t.Fatal("[ERROR] Error getting a client:", err)
 	}
 
 	profile := make(map[string]interface{})
@@ -197,7 +197,7 @@ func TestSetAndDelete(t *testing.T) {
 	newRes := make(map[string]interface{})
 	err = client.Set("virtual_servers", name, profile, &newRes)
 	if err != nil {
-		t.Fatal("Error creating a resource:", err)
+		t.Fatal("[ERROR] Error creating a resource:", err)
 	}
 	properties := newRes["properties"].(map[string]interface{})
 	basic := properties["basic"].(map[string]interface{})
@@ -205,13 +205,13 @@ func TestSetAndDelete(t *testing.T) {
 	assert.Equal(t, true, basic["add_cluster_ip"])
 
 	//update the same resource
-	log.Println("Going to update virtual server: ", name)
+	log.Println("[DEBUG] Going to update virtual server: ", name)
 	template = getJSONUpdatedProfile()
 	err = json.Unmarshal(template, &profile)
 	updatedRes := make(map[string]interface{})
 	err = client.Set("virtual_servers", name, profile, &updatedRes)
 	if err != nil {
-		t.Fatal("Error updating a resource", err)
+		t.Fatal("[ERROR] Error updating a resource", err)
 	}
 	properties = updatedRes["properties"].(map[string]interface{})
 	basic = properties["basic"].(map[string]interface{})
@@ -222,7 +222,7 @@ func TestSetAndDelete(t *testing.T) {
 	if err != nil {
 		log.Println(err)
 	} else {
-		log.Printf("Resource %s deleted", name)
+		log.Printf("[DEBUG] Resource %s deleted", name)
 	}
 }
 
@@ -309,7 +309,7 @@ func getServer() string {
 	for url := range resources {
 		tokens := strings.Split(url, "/")
 		server := tokens[5]
-		log.Println("Server: ", server)
+		log.Println("[DEBUG] Server: ", server)
 		return server
 	}
 	return ""
