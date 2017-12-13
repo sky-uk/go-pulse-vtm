@@ -45,6 +45,20 @@ func TestTraverseAllConfigurationResources(t *testing.T) {
 	}
 }
 
+func TestFormatNestedStruct(t *testing.T) {
+	m := make(map[string]interface{})
+	m["error_id"] = "resource.validation_error"
+	m["ErrorText"] = "The resource provided is invalid"
+	errorInfo := make(map[string]interface{})
+	basicError := make(map[string]interface{})
+	basicError["one_to_one"] = "json error"
+	errorInfo["basic"] = basicError
+	m["ErrorInfo"] = errorInfo
+
+	str := FormatNestedStruct(m, 0)
+	log.Println(str)
+}
+
 func TestFormatErrorTextEasyError(t *testing.T) {
 	errStruct := VTMError{
 		ErrorID:   "json.field_unknown",
@@ -96,6 +110,19 @@ func TestFormatErrorText(t *testing.T) {
 	}
 
 	errStr := FormatErrorText(&errStruct)
+	log.Println(errStr)
+}
+
+func TestFormatErrorTextFromJson(t *testing.T) {
+	jsonText := []byte(`{"error_id":"resource.validation_error","error_text":"The resource provided is invalid","error_info":{"basic":{"many_to_one_port_locked":{"20002":{"pool":{"error_id":"filename.forbiddenpath","error_text":"The supplied value '%zeushome%/zxtm/conf/pools/acctest_brocadevtm_appliance_nat-7990588414990758798' is not allowed."}}}}}}`)
+
+	ve := VTMError{}
+
+	err := json.Unmarshal(jsonText, &ve)
+	if err != nil {
+		log.Println(err)
+	}
+	errStr := FormatErrorText(&ve)
 	log.Println(errStr)
 
 }
