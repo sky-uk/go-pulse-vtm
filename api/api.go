@@ -194,12 +194,12 @@ func (client *Client) GetAllResourceTypes() ([]map[string]interface{}, error) {
 func FormatNestedStruct(str map[string]interface{}, level int) string {
 	var outStr string
 	outStr += "\n"
+	level++
 	for key, value := range str {
 		outStr += strings.Repeat("\t", level) + key
 		if vAsStr, ok := value.(string); ok {
 			outStr += " : " + vAsStr
 		} else {
-			level++
 			outStr += FormatNestedStruct(value.(map[string]interface{}), level)
 		}
 		outStr += "\n"

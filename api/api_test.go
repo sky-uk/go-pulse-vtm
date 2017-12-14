@@ -127,6 +127,20 @@ func TestFormatErrorTextFromJson(t *testing.T) {
 
 }
 
+func TestFormatErrorTextFromJsonDeepNesting(t *testing.T) {
+	jsonText := []byte(`{"error_id":"resource.validation_error","error_text":"The resource provided is invalid","error_info":{"appliance":{"shim_client_id":{"error_id":"json.unknown_property","error_text":"Property is unknown"},"shim_client_key":{"error_id":"json.unknown_property","error_text":"Property is unknown"},"shim_enabled":{"error_id":"json.unknown_property","error_text":"Property is unknown"},"shim_ips":{"error_id":"json.unknown_property","error_text":"Property is unknown"},"shim_load_balance":{"error_id":"json.unknown_property","error_text":"Property is unknown"},"shim_log_level":{"error_id":"json.unknown_property","error_text":"Property is unknown"},"shim_mode":{"error_id":"json.unknown_property","error_text":"Property is unknown"},"shim_portal_url":{"error_id":"json.unknown_property","error_text":"Property is unknown"},"shim_proxy_host":{"error_id":"json.unknown_property","error_text":"Property is unknown"},"shim_proxy_port":{"error_id":"json.unknown_property","error_text":"Property is unknown"}}}}`)
+
+	ve := VTMError{}
+
+	err := json.Unmarshal(jsonText, &ve)
+	if err != nil {
+		log.Println(err)
+	}
+	errStr := FormatErrorText(&ve)
+	log.Println(errStr)
+
+}
+
 func TestGetAllResourceTypes(t *testing.T) {
 	client, err := GetClient()
 	if err != nil {
