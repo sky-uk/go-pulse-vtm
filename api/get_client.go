@@ -24,7 +24,7 @@ func GetClient() (*Client, error) {
 	}
 
 	params := Params{
-		APIVersion: "3.8",
+		APIVersion: "5.1",
 		Server:     server,
 		Username:   username,
 		Password:   password,

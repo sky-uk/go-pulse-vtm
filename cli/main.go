@@ -6,6 +6,7 @@ import (
 	"github.com/sky-uk/go-brocade-vtm/api"
 	"os"
 	"time"
+	"github.com/davecgh/go-spew/spew"
 )
 
 var apiVersion string
@@ -43,7 +44,7 @@ func InitFlags() {
 		"Brocade vTM authentication username (Env: BROCADEVTM_USERNAME)")
 	flag.StringVar(&brocadeVTMPassword, "password", os.Getenv("BROCADEVTM_PASSWORD"),
 		"Brocade vTM authentication password (Env: BROCADEVTM_PASSWORD)")
-	flag.StringVar(&brocadeAPIVersion, "api_version", "3.8",
+	flag.StringVar(&brocadeAPIVersion, "api_version", "5.1",
 		"Brocade vTM REST API version")
 	flag.BoolVar(&debug, "debug", false, "Debug output. Default:false")
 	flag.DurationVar(&timeout, "timeout", 0, "Client timeout value. Default: 0")
@@ -81,7 +82,7 @@ func main() {
 	}
 
 	headers := make(map[string]string)
-	headers["Content-Type"] = "application/json"
+	headers["Content-Type"] = "application/x-tar"
 
 	params := api.Params{
 		APIVersion: brocadeAPIVersion,
@@ -93,6 +94,7 @@ func main() {
 	}
 
 	client, err := api.Connect(params)
+
 	if err != nil {
 		fmt.Println("Error connecting to the BrocadevTM server")
 		os.Exit(1)
