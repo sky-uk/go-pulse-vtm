@@ -64,7 +64,7 @@ slackHelper.notificationWrapper(slackChannel, currentBuild, env, true) {
 
                 stage 'test'
                 inContainer {
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'PULSEVTM_CREDENTIALS', usernameVariable: 'PULSEVTM_USERNAME', passwordVariable: 'PULSEEVTM_PASSWORD']]) {
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'PULSEVTM_CREDENTIALS', usernameVariable: 'PULSEVTM_USERNAME', passwordVariable: 'PULSEVTM_PASSWORD']]) {
                         env.PULSEVTM_ALLOW_UNVERIFIED_SSL=true
                         goHelper.goTest(project_src_path)
                     }
