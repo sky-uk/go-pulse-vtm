@@ -27,7 +27,7 @@ type Params struct {
 	Headers    map[string]string
 }
 
-// Client - the Pulse vTM Client struct
+// Client - the Pulse Secure vTM Client struct
 type Client struct {
 	VersionsSupported []string
 	restClient        rest.Client
@@ -95,14 +95,13 @@ func (client *Client) WorkWithConfigurationResources() {
 	}
 }
 
-// Connect - connect to the Pulse REST API server
+// Connect - connect to the Pulse Secure vTM REST API server
 // and get the list of supported API versions
 // Returns a new client object if everything is fine
 func Connect(params Params) (*Client, error) {
 	client := new(Client)
 	client.currentVersion = params.APIVersion
 	client.params = params
-
 	if params.Headers == nil {
 		// if client doesn't pass any header, we only set
 		// the content type to be the default one...
@@ -365,4 +364,135 @@ func (client *Client) Delete(resType, name string) error {
 		return fmt.Errorf(" [ERROR] Error deleting resource %s, status: %d", name, api.StatusCode())
 	}
 	return nil
+}
+
+// GetAllBackups - retrieve all backups of the vTM
+func (client *Client) GetAllBackups(tm string) ([]map[string]interface{}, error) {
+	res := make(map[string]interface{})
+	client.WorkWithStatus()
+	path := client.RootPath + "/" + tm + "/backups/full"
+
+	api := rest.NewBaseAPI(
+		http.MethodGet,
+		path,
+		nil,
+		&res,
+		new(VTMError),
+	)
+
+	err := client.request(api)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+
+	backups := make([]map[string]interface{}, 0)
+	if list, exists := res["children"].([]interface{}); exists {
+		for _, item := range list {
+			backups = append(backups, item.(map[string]interface{}))
+		}
+	}
+
+	return backups, nil
+}
+
+// GetBackup - retrieve information about a backup
+func (client *Client) GetBackup(tm, backupName string) (map[string]interface{}, error) {
+	res := make(map[string]interface{})
+	client.WorkWithStatus()
+	path := client.RootPath + "/" + tm + "/backups/full/" + backupName
+
+	api := rest.NewBaseAPI(
+		http.MethodGet,
+		path,
+		nil,
+		&res,
+		new(VTMError),
+	)
+
+	err := client.request(api)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+
+	return res, nil
+}
+
+// CreateBackup - creates a new backup
+func (client *Client) CreateBackup(tm, backupName, description string) (map[string]interface{}, error) {
+	backup := make(map[string]interface{})
+	backupProperties := make(map[string]interface{})
+	backupInfo := make(map[string]string)
+
+	backupInfo["description"] = description
+	backupProperties["backup"] = backupInfo
+	backup["properties"] = backupProperties
+
+	res := make(map[string]interface{})
+	client.WorkWithStatus()
+	path := client.RootPath + "/" + tm + "/backups/full/" + backupName
+
+	api := rest.NewBaseAPI(
+		http.MethodPut,
+		path,
+		backup,
+		&res,
+		new(VTMError),
+	)
+
+	err := client.request(api)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+
+	return res, nil
+
+}
+
+// DeleteBackup - deletes a backup
+func (client *Client) DeleteBackup(tm, backupName string) error {
+	client.WorkWithStatus()
+	path := client.RootPath + "/" + tm + "/backups/full/" + backupName
+
+	api := rest.NewBaseAPI(
+		http.MethodDelete,
+		path,
+		nil,
+		nil,
+		new(VTMError),
+	)
+
+	err := client.request(api)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	return nil
+}
+
+// RestoreBackup - Restores a backup
+func (client *Client) RestoreBackup(tm, backupName string) (map[string]interface{}, error) {
+	backup := make(map[string]interface{})
+	backup["properties"] = make(map[string]interface{})
+
+	res := make(map[string]interface{})
+	client.WorkWithStatus()
+	path := client.RootPath + "/" + tm + "/backups/full/" + backupName + "?restore"
+	api := rest.NewBaseAPI(
+		http.MethodPut,
+		path,
+		backup,
+		&res,
+		new(VTMError),
+	)
+
+	err := client.request(api)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+	return res, err
 }
