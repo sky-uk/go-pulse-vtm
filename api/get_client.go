@@ -8,19 +8,19 @@ import (
 //GetClient - returns an API client
 func GetClient() (*Client, error) {
 
-	server, ok := os.LookupEnv("BROCADEVTM_SERVER")
+	server, ok := os.LookupEnv("PULSEVTM_SERVER")
 	if ok == false || server == "" {
-		return nil, errors.New("[ERROR] BROCADEVTM_SERVER env var not set")
+		return nil, errors.New("[ERROR] PULSEVTM_SERVER env var not set")
 	}
 
-	username, ok := os.LookupEnv("BROCADEVTM_USERNAME")
+	username, ok := os.LookupEnv("PULSEVTM_USERNAME")
 	if ok == false {
-		return nil, errors.New("[ERROR] BROCADEVTM_USERNAME env var not set")
+		return nil, errors.New("[ERROR] PULSEVTM_USERNAME env var not set")
 	}
 
-	password, ok := os.LookupEnv("BROCADEVTM_PASSWORD")
+	password, ok := os.LookupEnv("PULSEVTM_PASSWORD")
 	if ok == false {
-		return nil, errors.New("[ERROR] BROCADEVTM_PASSWORD env var not set")
+		return nil, errors.New("[ERROR] PULSEVTM_PASSWORD env var not set")
 	}
 
 	params := Params{

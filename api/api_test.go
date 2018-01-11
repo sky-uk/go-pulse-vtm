@@ -114,7 +114,7 @@ func TestFormatErrorText(t *testing.T) {
 }
 
 func TestFormatErrorTextFromJson(t *testing.T) {
-	jsonText := []byte(`{"error_id":"resource.validation_error","error_text":"The resource provided is invalid","error_info":{"basic":{"many_to_one_port_locked":{"20002":{"pool":{"error_id":"filename.forbiddenpath","error_text":"The supplied value '%zeushome%/zxtm/conf/pools/acctest_brocadevtm_appliance_nat-7990588414990758798' is not allowed."}}}}}}`)
+	jsonText := []byte(`{"error_id":"resource.validation_error","error_text":"The resource provided is invalid","error_info":{"basic":{"many_to_one_port_locked":{"20002":{"pool":{"error_id":"filename.forbiddenpath","error_text":"The supplied value '%zeushome%/zxtm/conf/pools/acctest_pulsevtm_appliance_nat-7990588414990758798' is not allowed."}}}}}}`)
 
 	ve := VTMError{}
 

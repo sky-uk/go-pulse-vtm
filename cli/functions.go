@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/crackcomm/go-clitable"
-	"github.com/sky-uk/go-brocade-vtm/api"
+	"github.com/sky-uk/go-pulse-vtm/api"
 )
 
 // PrettyPrintMany - Pretty prints maps as tables

@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/davecgh/go-spew/spew"
-	"github.com/sky-uk/go-brocade-vtm/api"
+	"github.com/sky-uk/go-pulse-vtm/api"
 	"os"
 )
 

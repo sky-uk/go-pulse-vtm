@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/sky-uk/go-brocade-vtm/api"
+	"github.com/sky-uk/go-pulse-vtm/api"
 	"os"
 	"time"
 )
@@ -20,12 +20,12 @@ type Command struct {
 }
 
 var (
-	brocadeVTMServer   string
-	debug              bool
-	timeout            time.Duration
-	brocadeVTMUsername string
-	brocadeVTMPassword string
-	brocadeAPIVersion  string
+	pulseVTMServer   string
+	debug            bool
+	timeout          time.Duration
+	pulseVTMUsername string
+	pulseVTMPassword string
+	pulseAPIVersion  string
 
 	commandMap = make(map[string]Command, 0)
 )
@@ -37,14 +37,14 @@ func RegisterCliCommand(name string, flagSet *flag.FlagSet, exec ExecFunc) {
 
 // InitFlags - initiall cli flags.
 func InitFlags() {
-	flag.StringVar(&brocadeVTMServer, "server", os.Getenv("BROCADEVTM_SERVER"),
-		"Brocade vTM API server hostname or address. (Env: BROCADEVTM_SERVER)")
-	flag.StringVar(&brocadeVTMUsername, "username", os.Getenv("BROCADEVTM_USERNAME"),
-		"Brocade vTM authentication username (Env: BROCADEVTM_USERNAME)")
-	flag.StringVar(&brocadeVTMPassword, "password", os.Getenv("BROCADEVTM_PASSWORD"),
-		"Brocade vTM authentication password (Env: BROCADEVTM_PASSWORD)")
-	flag.StringVar(&brocadeAPIVersion, "api_version", "3.8",
-		"Brocade vTM REST API version")
+	flag.StringVar(&pulseVTMServer, "server", os.Getenv("PULSEVTM_SERVER"),
+		"Pulse vTM API server hostname or address. (Env: PULSEVTM_SERVER)")
+	flag.StringVar(&pulseVTMUsername, "username", os.Getenv("PULSEVTM_USERNAME"),
+		"Pulse vTM authentication username (Env: PULSEVTM_USERNAME)")
+	flag.StringVar(&pulseVTMPassword, "password", os.Getenv("PULSEVTM_PASSWORD"),
+		"Pulse vTM authentication password (Env: PULSEVTM_PASSWORD)")
+	flag.StringVar(&pulseAPIVersion, "api_version", "3.8",
+		"Pulse vTM REST API version")
 	flag.BoolVar(&debug, "debug", false, "Debug output. Default:false")
 	flag.DurationVar(&timeout, "timeout", 0, "Client timeout value. Default: 0")
 
@@ -84,17 +84,17 @@ func main() {
 	headers["Content-Type"] = "application/json"
 
 	params := api.Params{
-		APIVersion: brocadeAPIVersion,
-		Server:     brocadeVTMServer,
-		Username:   brocadeVTMUsername,
-		Password:   brocadeVTMPassword,
+		APIVersion: pulseAPIVersion,
+		Server:     pulseVTMServer,
+		Username:   pulseVTMUsername,
+		Password:   pulseVTMPassword,
 		IgnoreSSL:  true,
 		Debug:      debug,
 	}
 
 	client, err := api.Connect(params)
 	if err != nil {
-		fmt.Println("Error connecting to the BrocadevTM server")
+		fmt.Println("Error connecting to the PulsevTM server")
 		os.Exit(1)
 	}
 
