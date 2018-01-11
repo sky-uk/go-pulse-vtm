@@ -43,7 +43,7 @@ func InitFlags() {
 		"Pulse vTM authentication username (Env: PULSEVTM_USERNAME)")
 	flag.StringVar(&pulseVTMPassword, "password", os.Getenv("PULSEVTM_PASSWORD"),
 		"Pulse vTM authentication password (Env: PULSEVTM_PASSWORD)")
-	flag.StringVar(&pulseAPIVersion, "api_version", "3.8",
+	flag.StringVar(&pulseAPIVersion, "api_version", os.Getenv("PULSEVTM_API_VERSION"),
 		"Pulse vTM REST API version")
 	flag.BoolVar(&debug, "debug", false, "Debug output. Default:false")
 	flag.DurationVar(&timeout, "timeout", 0, "Client timeout value. Default: 0")
