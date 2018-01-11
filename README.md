@@ -5,6 +5,8 @@
 This is the GoLang API wrapper for Pulse Secure  Virtual Traffic Manager (vTM).
 Starting from version 0.4.0 the API has been redesigned.
 
+This repository used to be called go-brocade-vtm. Since version 0.4.50, this repository has been renamed to go-pulse-vtm.
+
 # API usage
 
 ## Importing the API
