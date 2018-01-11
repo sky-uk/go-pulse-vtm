@@ -27,7 +27,7 @@ type Params struct {
 	Headers    map[string]string
 }
 
-// Client - the Brocade vTM Client struct
+// Client - the Pulse vTM Client struct
 type Client struct {
 	VersionsSupported []string
 	restClient        rest.Client
@@ -95,7 +95,7 @@ func (client *Client) WorkWithConfigurationResources() {
 	}
 }
 
-// Connect - connect to the Brocade REST API server
+// Connect - connect to the Pulse REST API server
 // and get the list of supported API versions
 // Returns a new client object if everything is fine
 func Connect(params Params) (*Client, error) {

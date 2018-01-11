@@ -1,8 +1,8 @@
-# go-brocadev-tm - Go Bindings for the Brocade Virtual Traffic Manager (vTM)
+# go-pulse-vtm - Go Bindings for the Pulse Secure Virtual Traffic Manager (vTM)
 
 ## Overview
 
-This is the GoLang API wrapper for Brocade Virtual Traffic Manager (vTM).
+This is the GoLang API wrapper for Pulse Secure  Virtual Traffic Manager (vTM).
 Starting from version 0.4.0 the API has been redesigned.
 
 # API usage
@@ -10,10 +10,10 @@ Starting from version 0.4.0 the API has been redesigned.
 ## Importing the API
 
 ```
-    import("github.com/sky-uk/go-brocade-vtm/api")
+    import("github.com/sky-uk/go-pulse-vtm/api")
 ```
 
-## Connecting to a BrocadevTM server
+## Connecting to a Pulse vTM server
 The Connect API returns a client object or an error in case of issues.
 The APIVersion parameter can be used to specify a server API version to use;
 in case it is not provided, the list of available API versions is retrieved

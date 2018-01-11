@@ -1,6 +1,6 @@
 #!groovy
 
-project_name = 'go-brocade-vtm'
+project_name = 'go-pulse-vtm'
 project_owner = 'sky-uk'
 
 project_src_path = "github.com/${project_owner}/${project_name}"
@@ -64,16 +64,16 @@ slackHelper.notificationWrapper(slackChannel, currentBuild, env, true) {
 
                 stage 'test'
                 inContainer {
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'BROCADEVTM_CREDENTIALS', usernameVariable: 'BROCADEVTM_USERNAME', passwordVariable: 'BROCADEVTM_PASSWORD']]) {
-                        env.BROCADEVTM_ALLOW_UNVERIFIED_SSL=true
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'PULSEVTM_CREDENTIALS', usernameVariable: 'PULSEVTM_USERNAME', passwordVariable: 'PULSEEVTM_PASSWORD']]) {
+                        env.PULSEVTM_ALLOW_UNVERIFIED_SSL=true
                         goHelper.goTest(project_src_path)
                     }
                 }
 
                 stage 'coverage'
                 inContainer {
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'BROCADEVTM_CREDENTIALS', usernameVariable: 'BROCADEVTM_USERNAME', passwordVariable: 'BROCADEVTM_PASSWORD']]) {
-                        env.BROCADEVTM_ALLOW_UNVERIFIED_SSL=true
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'PULSEVTM_CREDENTIALS', usernameVariable: 'PULSEVTM_USERNAME', passwordVariable: 'PULSEVTM_PASSWORD']]) {
+                        env.PULSEVTM_ALLOW_UNVERIFIED_SSL=true
                         goHelper.goCoverage(project_src_path)
                     }
                 }
