@@ -21,8 +21,8 @@ type Command struct {
 
 var (
 	pulseVTMServer   string
-	debug              bool
-	timeout            time.Duration
+	debug            bool
+	timeout          time.Duration
 	pulseVTMUsername string
 	pulseVTMPassword string
 	pulseAPIVersion  string
