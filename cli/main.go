@@ -8,8 +8,6 @@ import (
 	"time"
 )
 
-var apiVersion string
-
 // ExecFunc executes the function for cli.
 type ExecFunc func(client *api.Client, flagSet *flag.FlagSet)
 
@@ -43,7 +41,7 @@ func InitFlags() {
 		"Brocade vTM authentication username (Env: BROCADEVTM_USERNAME)")
 	flag.StringVar(&brocadeVTMPassword, "password", os.Getenv("BROCADEVTM_PASSWORD"),
 		"Brocade vTM authentication password (Env: BROCADEVTM_PASSWORD)")
-	flag.StringVar(&brocadeAPIVersion, "api_version", "3.8",
+	flag.StringVar(&brocadeAPIVersion, "api_version", "5.1",
 		"Brocade vTM REST API version")
 	flag.BoolVar(&debug, "debug", false, "Debug output. Default:false")
 	flag.DurationVar(&timeout, "timeout", 0, "Client timeout value. Default: 0")
@@ -81,7 +79,11 @@ func main() {
 	}
 
 	headers := make(map[string]string)
-	headers["Content-Type"] = "application/json"
+	headers["Content-Type"] = contentType(command)
+
+	if isFileDownload(command) {
+		headers["Accept"] = "application/x-tar"
+	}
 
 	params := api.Params{
 		APIVersion: brocadeAPIVersion,
@@ -90,6 +92,7 @@ func main() {
 		Password:   brocadeVTMPassword,
 		IgnoreSSL:  true,
 		Debug:      debug,
+		Headers:    headers,
 	}
 
 	client, err := api.Connect(params)
@@ -99,4 +102,22 @@ func main() {
 	}
 
 	cmd.exec(client, flagSet)
+}
+
+func contentType(command string) string {
+	switch command {
+	case "upload-backup", "download-backup":
+		return "application/x-tar"
+	default:
+		return "application/json"
+	}
+}
+
+func isFileDownload(command string) bool {
+	switch command {
+	case "upload-backup":
+		return true
+	default:
+		return false
+	}
 }

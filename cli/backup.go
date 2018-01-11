@@ -46,6 +46,9 @@ func createBackup(client *api.Client, flagSet *flag.FlagSet) {
 		fmt.Println("backup-name must be set - usage: -backup-name <a valid backup name>")
 		os.Exit(2)
 	}
+
+	backupName += "_" + time.Now().UTC().Format(time.RFC822)
+
 	res, err := client.CreateBackup(flagSet.Lookup("tm").Value.String(), backupName, flagSet.Lookup("description").Value.String())
 	if err != nil {
 		fmt.Println("Error creating backup: ", err)
@@ -104,7 +107,7 @@ func downloadBackup(client *api.Client, flagSet *flag.FlagSet) {
 	err := client.DownloadBackup(flagSet.Lookup("tm").Value.String(), backupName, "backups/")
 
 	if err != nil {
-		fmt.Println("Error restoring backup: ", err)
+		fmt.Println("Error Downloading backup: ", err)
 		os.Exit(1)
 	}
 }
@@ -120,13 +123,13 @@ func uploadBackup(client *api.Client, flagSet *flag.FlagSet) {
 	err := client.UploadBackup(flagSet.Lookup("tm").Value.String(), flagSet.Lookup("backuppath").Value.String())
 
 	if err != nil {
-		fmt.Println("Error restoring backup: ", err)
+		fmt.Println("Error uploading backup: ", err)
 		os.Exit(1)
 	}
 }
 
 func init() {
-	backupFlags := flag.NewFlagSet("get-backup", flag.ExitOnError)
+	backupFlags := flag.NewFlagSet("backupFlags", flag.ExitOnError)
 	backupFlags.String("backup-name", "", "usage: -backup-name <backup name>")
 	backupFlags.String("tm", "local_tm", "usage: -tm <traffic manager name>")
 	backupFlags.String("description", "", "usage: -description <backup description>")
@@ -137,4 +140,5 @@ func init() {
 	RegisterCliCommand("delete-backup", backupFlags, deleteBackup)
 	RegisterCliCommand("restore-backup", backupFlags, restoreBackup)
 	RegisterCliCommand("upload-backup", backupFlags, uploadBackup)
+	RegisterCliCommand("download-backup", backupFlags, downloadBackup)
 }

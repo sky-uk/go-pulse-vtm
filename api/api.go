@@ -8,9 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"archive/tar"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/sky-uk/go-rest-api"
+	"io"
 	"os"
 )
 
@@ -105,9 +104,6 @@ func Connect(params Params) (*Client, error) {
 	client := new(Client)
 	client.currentVersion = params.APIVersion
 	client.params = params
-
-	spew.Dump(params.Headers)
-
 	if params.Headers == nil {
 		// if client doesn't pass any header, we only set
 		// the content type to be the default one...
@@ -506,22 +502,23 @@ func (client *Client) RestoreBackup(tm, backupName string) (map[string]interface
 // DownloadBackup - Downloads a backup
 func (client *Client) DownloadBackup(tm, backupName, downloadPath string) error {
 
-	f, err := os.Open(downloadPath)
+	out, err := os.Create(downloadPath)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
-	defer f.Close()
-	reader := tar.NewReader(f)
+	defer out.Close()
 
 	client.WorkWithStatus()
 	client.params.Headers["Accept"] = "application/x-tar"
 	path := client.RootPath + "/" + tm + "/backups/full/" + backupName
+
+	var testInterface io.Reader
+
 	api := rest.NewBaseAPI(
 		http.MethodGet,
 		path,
-		reader,
 		nil,
+		testInterface,
 		new(VTMError),
 	)
 
@@ -530,25 +527,53 @@ func (client *Client) DownloadBackup(tm, backupName, downloadPath string) error 
 		log.Println(err)
 		return err
 	}
+
+	_, err = io.Copy(out, testInterface)
+
+	fi, err := out.Stat()
+	fmt.Println(fi.Size())
+
+	fmt.Println(client.StatusCode)
 	return nil
 }
 
 // UploadBackup - Uploads a backup
 func (client *Client) UploadBackup(tm, filePath string) error {
 
-	f, err := os.Open(filePath)
+	//tr := &http.Transport{
+	//	TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	//}
+	//httpClient := &http.Client{Transport: tr}
+	//req, err := http.NewRequest(http.MethodPost,"https://s1acctest-lb-v51.dev.pe.bskyb.com:9070/api/tm" + client.RootPath + "/" + tm + "/backups/full",)
+	//req.SetBasicAuth("admin","yRamKVytPSz9C6o")
+	//resp, err := httpClient.Do(req)
+	//
+	////file, err := os.Open(filePath)
+	//if err != nil {
+	//	return err
+	//}
+	//defer file.Close()
+	//
+	//httpClient.
+	//res, err := httpClient.Get("https://s1acctest-lb-v51.dev.pe.bskyb.com:9070/api/tm" + client.RootPath + "/" + tm + "/backups/full")
+	//
+	////res, err := http.Post("https://s1acctest-lb-v51.dev.pe.bskyb.com:9070/api/tm"+ httpClient.RootPath+"/"+tm+"/backups/full", "binary/octet-stream", file)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//fmt.Println(res.StatusCode)
+
+	file, err := os.Open("/Users/cdu16/go/src/github.com/sky-uk/go-brocade-vtm/backups/PulseSecure_vTM_config_Backup_1.tar")
+
 	if err != nil {
-		log.Println(err)
 		return err
 	}
-	defer f.Close()
-	reader := tar.NewReader(f)
+	defer file.Close()
 
-	headers := make(map[string]string)
-	headers["Content-Type"] = "application/x-tar"
-	client.params.Headers = headers
-
-	spew.Dump(client.params.Headers)
+	fmt.Println(file.Name())
+	fi, err := file.Stat()
+	fmt.Println(fi.Size())
 
 	res := make(map[string]interface{})
 	client.WorkWithStatus()
@@ -556,7 +581,7 @@ func (client *Client) UploadBackup(tm, filePath string) error {
 	api := rest.NewBaseAPI(
 		http.MethodPost,
 		path,
-		reader,
+		file,
 		&res,
 		new(VTMError),
 	)
@@ -566,7 +591,11 @@ func (client *Client) UploadBackup(tm, filePath string) error {
 		log.Println(err)
 		return err
 	}
-	//spew.Dump(client.params.Headers)
-	//spew.Dump(res)
+
 	return nil
+
+	//defer res.Body.Close()
+	//message, _ := ioutil.ReadAll(res.Body)
+	//fmt.Printf(string(message))
+	//return nil
 }
