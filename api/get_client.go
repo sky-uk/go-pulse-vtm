@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"log"
 	"os"
 )
 
@@ -23,8 +24,14 @@ func GetClient() (*Client, error) {
 		return nil, errors.New("[ERROR] PULSEVTM_PASSWORD env var not set")
 	}
 
+	apiVersion, ok := os.LookupEnv("PULSEVTM_API_VERSION")
+	if ok == false {
+		log.Println("The env var PULSEVTM_API_VERSION is not set, defaulting to 5.1")
+		apiVersion = "5.1"
+	}
+
 	params := Params{
-		APIVersion: "3.8",
+		APIVersion: apiVersion,
 		Server:     server,
 		Username:   username,
 		Password:   password,

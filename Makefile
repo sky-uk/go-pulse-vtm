@@ -1,5 +1,5 @@
-PACKAGE  = github.com/sky-uk/go-brocade-vtm
-BINARYNAME = go-brocade-vtm-cli
+PACKAGE  = github.com/sky-uk/go-pulse-vtm
+BINARYNAME = go-pulse-vtm-cli
 DATE    ?= $(shell date +%FT%T%z)
 VERSION ?= $(shell git describe --tags --always --dirty --match=v* 2> /dev/null || \
 			cat $(CURDIR)/VERSION 2> /dev/null || echo v0)
@@ -60,7 +60,7 @@ fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
 clean: ; $(info $(M) cleaning…)	@ ## Cleanup everything
 	@rm -rf $(GOPATH)
 	@rm -rf bin
-	@rm -rf go-brocade-vtm-cli
+	@rm -rf go-pulse-vtm-cli
 	@rm -rf test/tests.* test/coverage.*
 
 .PHONY: help
